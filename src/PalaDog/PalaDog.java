@@ -1,7 +1,5 @@
 package PalaDog;
 
-import java.awt.Graphics;
-import java.awt.Image;
 import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
@@ -93,7 +91,7 @@ public class PalaDog extends JLabel {
 			}).start();
 		}
 	}
-	public static void 펀치어택(ArrayList<PalaDogPunch> punchlist,ArrayList<Zombie> zombie,GamePanel panel) {
+	public static void punchAttack(ArrayList<PalaDogPunch> punchlist, ArrayList<Zombie> zombie, GamePanel panel) {
 		new Thread(new Runnable() {
 			@Override
 			public void run() {
