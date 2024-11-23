@@ -4,8 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b31e0590-2f0d-4958-b218-26fccf8df671" name="변경" comment="Feat : 각 클라이언트 팔라독 움직이면 상대 화면에 다크독 움직이도록 함. 근데 샤샤샥 있음">
     <list default="true" id="b31e0590-2f0d-4958-b218-26fccf8df671" name="변경" comment="trash file">
+    <list default="true" id="b31e0590-2f0d-4958-b218-26fccf8df671" name="변경" comment="Feat : 각 클라이언트 팔라독 움직이면 상대 화면에 다크독 움직이도록 함. 근데 샤샤샥 있음">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Main/GameClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main/GameClient.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Main/GamePanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main/GamePanel.java" afterDir="false" />
@@ -43,6 +43,36 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
     "git-widget-placeholder": "junghun",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "C:/Users/admin/Desktop/precapston",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "vue.rearranger.settings.migration": "true",
+    "애플리케이션.GameClient.executor": "Run",
+    "애플리케이션.GameServer.executor": "Run",
+    "애플리케이션.PalaDogApp.executor": "Run"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;junghun&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/admin/Desktop/precapston&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;,
+    &quot;애플리케이션.GameClient.executor&quot;: &quot;Run&quot;,
+    &quot;애플리케이션.GameServer.executor&quot;: &quot;Run&quot;,
+    &quot;애플리케이션.PalaDogApp.executor&quot;: &quot;Run&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "git-widget-placeholder": "haedam",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "C:/Users/admin/Desktop/precapston",
     "node.js.detected.package.eslint": "true",
@@ -150,15 +180,6 @@
       <option name="project" value="LOCAL" />
       <updated>1732361970284</updated>
     </task>
-    <task id="LOCAL-00003" summary="Feat : 각 클라이언트 팔라독 움직이면 상대 화면에 다크독 움직이도록 함. 근데 샤샤샥 있음">
-      <option name="closed" value="true" />
-      <created>1732371643622</created>
-      <option name="number" value="00003" />
-      <option name="presentableId" value="LOCAL-00003" />
-      <option name="project" value="LOCAL" />
-      <updated>1732371643622</updated>
-    </task>
-    <option name="localTasksCounter" value="4" />
     <task id="LOCAL-00003" summary="trash file">
       <option name="closed" value="true" />
       <created>1732374209295</created>
@@ -166,6 +187,15 @@
       <option name="presentableId" value="LOCAL-00003" />
       <option name="project" value="LOCAL" />
       <updated>1732374209295</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00003" summary="Feat : 각 클라이언트 팔라독 움직이면 상대 화면에 다크독 움직이도록 함. 근데 샤샤샥 있음">
+      <option name="closed" value="true" />
+      <created>1732371643622</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1732371643622</updated>
     </task>
     <option name="localTasksCounter" value="4" />
     <servers />
