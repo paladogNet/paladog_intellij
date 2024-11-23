@@ -15,6 +15,8 @@ public class DarkDog extends JLabel {
 	public int y = 190;
 	public int hp = 100;
 	public final static String TAG = "DarkDog:";
+	public boolean isRight = false;
+	public boolean isLeft = false;
 	public boolean isMoving = true;
 
 	public DarkDog() {
@@ -26,6 +28,63 @@ public class DarkDog extends JLabel {
 		setLocation(x, y);
 	
 	}
+	public void Right() {
+		setIcon(darkIcon);
+	}
 
+	public void Letf() {
+		setIcon(darkIcon);
+	}
+
+	public void moveRight() {
+		if (true) {
+			new Thread(new Runnable() {
+
+				@Override
+				public void run() {
+					setIcon(darkIcon);
+					isRight = true;
+					while (isRight) {
+						x++;
+						setLocation(x, y); // 내부에 repaint() 존재
+						try {
+
+							Thread.sleep(10);
+						} catch (InterruptedException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+					}
+				}
+			}).start();
+		}
+	}
+
+	public void moveLeft() {
+		if (!isLeft) {
+			new Thread(new Runnable() {
+
+				@Override
+				public void run() {
+					setIcon(darkIcon);
+					isLeft = true;
+					while (true) {
+						x--;
+						setLocation(x, y); // 내부에 repaint() 존재
+						try {
+							if (x < 0) {
+								break;
+							}
+							Thread.sleep(10);
+
+						} catch (InterruptedException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+					}
+				}
+			}).start();
+		}
+	}
 
 }
