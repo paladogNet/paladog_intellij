@@ -91,7 +91,7 @@ public class GamePanel extends JFrame {
 		bearhplist = new ArrayList<>();
 		punchlist = new ArrayList<>();
 		ZombieSoHwan zombiesohwan = new ZombieSoHwan();
-		zombiesohwan.start();
+		//zombiesohwan.start();
 
 		GoldLabel goldLabel = new GoldLabel();
 		goldLabel.start();
@@ -436,6 +436,10 @@ public class GamePanel extends JFrame {
 	}
 
 
+
+	public int getPaladogX() {
+		return this.paladog.x;
+	}
 
 
 	class 죽는스레드 extends Thread {
@@ -812,4 +816,41 @@ public class GamePanel extends JFrame {
 			// g.drawImage(backimg, back2X, 0, this);
 		}
 	}
+
+	public void spawnZombieForDarkDog() {
+		Zombie zombie = new Zombie();
+		ZombieHpLabel zombieHpLabel = new ZombieHpLabel();
+
+		// DarkDog 근처에 좀비 소환
+		zombie.setLocation(darkdog.x - 50, darkdog.y);
+		zombieHpLabel.setLocation(zombie.x, zombie.y - 20);
+
+		zombielist.add(zombie);
+		Zombiehplabellist.add(zombieHpLabel);
+
+		panel.add(zombie);
+		panel.add(zombieHpLabel);
+		panel.repaint();
+
+		// 좀비 이동 로직
+		new Thread(() -> {
+			try {
+				while (zombie.x > 0) { // 화면 왼쪽으로 이동
+					zombie.MoveLeft();
+					Thread.sleep(20); // 이동 속도 조절
+					zombie.setBounds(zombie.x, zombie.y, 50, 50);
+					zombieHpLabel.setLocation(zombie.x, zombie.y - 20);
+				}
+
+				// 화면 밖으로 나가면 좀비 제거
+				panel.remove(zombie);
+				panel.remove(zombieHpLabel);
+				zombielist.remove(zombie);
+				Zombiehplabellist.remove(zombieHpLabel);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}).start();
+	}
+
 }
