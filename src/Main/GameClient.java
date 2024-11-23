@@ -121,11 +121,11 @@ public class GameClient {
                 case "SPAWN_UNIT": // 유닛 생성      SPAWN_UNIT : mouse
                     gamePanel.spawnUnit(data);
                     break;
-                case "START_GAME":
-                    new GamePanel();
-                    break;
-                default: // 알 수 없는 명령은 무시
-                    break;
+//                case "START_GAME":
+//                    new GamePanel();
+//                    break;
+//                default: // 알 수 없는 명령은 무시
+//                    break;
             }
         });
     }
