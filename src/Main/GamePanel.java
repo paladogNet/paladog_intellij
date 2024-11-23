@@ -251,7 +251,7 @@ public class GamePanel extends JFrame {
 							punch.moveRight();
 							punch.Punchx = paladog.x+50;
 							punch.Punchy = paladog.y + 50;
-							;
+
 
 						}
 					}).start();
@@ -280,6 +280,7 @@ public class GamePanel extends JFrame {
 	public PalaDog getPaladog() {
 		return this.paladog ;
 	}
+	public DarkDog getDarkdog() { return this.darkdog ; }
 
 	public void punchAttack() {
 		// 펀치 생성 및 추가
@@ -433,6 +434,8 @@ public class GamePanel extends JFrame {
 				System.out.println("Unknown unit type: " + data);
 		}
 	}
+
+
 
 
 	class 죽는스레드 extends Thread {
@@ -774,7 +777,24 @@ public class GamePanel extends JFrame {
 		}).start();
 	}
 
-
+	/**
+	 * DarkDog의 위치를 업데이트하는 메서드.
+	 * 서버에서 받은 메시지를 바탕으로 x, y 좌표를 업데이트합니다.
+	 *
+	 * @param x DarkDog의 새로운 x 좌표
+	 * @param y DarkDog의 새로운 y 좌표
+	 */
+	public void updateDarkDogPosition(int x, int y) {
+		darkdog.setLocation(x, y); // DarkDog의 위치 업데이트
+		repaint(); // UI 갱신
+	}
+	// DarkDog의 현재 x, y 좌표를 반환
+	public int getDarkDogX() {
+		return darkdog.getX();
+	}
+	public int getDarkDogY() {
+		return darkdog.getY();
+	}
 
 	class MyPanel extends JPanel {
 		public boolean isBackMoving = false;

@@ -2,54 +2,8 @@ package Main;
 
 import java.io.*;
 import java.net.*;
-//
-//public class GameClient {
-//    private Socket socket;
-//    private BufferedReader in;
-//    private PrintWriter out;
-//
-//    public GameClient(String serverAddress, int port) {
-//        try {
-//            socket = new Socket(serverAddress, port);
-//            in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-//            out = new PrintWriter(socket.getOutputStream(), true);
-//
-//            // 수신 스레드 시작
-//            new Thread(new IncomingMessagesHandler()).start();
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//    }
-//
-//    public void sendMessage(String message) {
-//        out.println(message);
-//    }
-//
-//    private class IncomingMessagesHandler implements Runnable {
-//        @Override
-//        public void run() {
-//            try {
-//                String message;
-//                while ((message = in.readLine()) != null) {
-//                    System.out.println("서버로부터 메시지 수신: " + message);
-//                    // 게임 상태 업데이트
-//                }
-//            } catch (IOException e) {
-//                e.printStackTrace();
-//            }
-//        }
-//    }
-//
-//    public static void main(String[] args) {
-//        GameClient client = new GameClient("localhost", 12345);
-//        // 예: 키보드 입력으로 메시지 전송
-//        client.sendMessage("팔라독 움직임 좌표: x=100, y=200");
-//    }
-//}
-
-import java.io.*;
-import java.net.*;
 import java.awt.event.*;
+import java.util.concurrent.atomic.AtomicInteger;
 import javax.swing.*;
 
 public class GameClient {
@@ -57,6 +11,7 @@ public class GameClient {
     private BufferedReader in; // 서버로부터 메시지를 읽기 위한 입력 스트림
     private PrintWriter out; // 서버로 메시지를 보내기 위한 출력 스트림
     private GamePanel gamePanel; // 게임 화면을 관리하는 GamePanel 객체
+    private String clientId; // 클라이언트의 고유 ID
 
     // 생성자: 서버에 연결하고 입력/출력 스트림 초기화
     public GameClient(String serverAddress, int port, GamePanel gamePanel) {
@@ -67,6 +22,10 @@ public class GameClient {
             in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             out = new PrintWriter(socket.getOutputStream(), true);
 
+            // 서버로부터 고유 ID를 수신
+            clientId = in.readLine().split(":")[1]; // 서버에서 "YOUR_ID:CLIENT_X" 형식으로 전달
+            System.out.println("Assigned Client ID: " + clientId);
+
             // 서버로부터 메시지를 처리하는 스레드를 시작
             new Thread(new IncomingMessagesHandler()).start();
         } catch (IOException e) {
@@ -74,9 +33,9 @@ public class GameClient {
         }
     }
 
-    // 서버로 메시지를 전송
-    public void sendMessage(String message) {
-        out.println(message); // 메시지를 서버로 보냄
+    // 서버로 메시지를 전송 (ID 포함)
+    public void sendMessage(String action) {
+        out.println(clientId + ":" + action); // 메시지에 ID 포함
     }
 
     // 서버로부터 메시지를 처리하는 내부 클래스
@@ -97,76 +56,165 @@ public class GameClient {
         }
     }
 
-    // 서버로부터 받은 메시지를 처리하는 메서드
-    private void processServerMessage(String message) {
-        // 메시지 형식: "ACTION:DATA"
-        String[] parts = message.split(":"); // ":"를 기준으로 메시지를 분리
-        if (parts.length < 2) return; // 형식이 잘못된 메시지는 무시
+//    private void processServerMessage(String message) {
+//        // 메시지 형식: "CLIENT_ID:ACTION:DATA" 또는 "CLIENT_ID:UPDATE_POSITION:x,y"
+//
+//
+//        String[] parts = message.split(":");
+//        if (parts.length < 3) return; // 형식이 잘못된 메시지는 무시
+//
+//        String senderId = parts[0]; // 메시지를 보낸 클라이언트 ID
+//        String action = parts[1]; // 메시지의 동작 (예: MOVE_LEFT, UPDATE_POSITION)
+//        String data = parts[2]; // 추가 데이터 (예: 유닛 정보 또는 좌표)
+//
+//        SwingUtilities.invokeLater(() -> {
+//            if (senderId.equals(clientId)) {
+//                // 자신의 캐릭터인 PalaDog에 대한 동작
+//                switch (action) {
+//                    case "MOVE_LEFT":
+//                        gamePanel.getPaladog().moveLeft();
+//                        break;
+//                    case "MOVE_RIGHT":
+//                        gamePanel.getPaladog().moveRight();
+//                        break;
+//                    case "ATTACK":
+//                        gamePanel.punchAttack();
+//                        break;
+//                    case "SPAWN_UNIT":
+//                        gamePanel.spawnUnit(data);
+//                        break;
+//                    default:
+//                        break;
+//                }
+//            } else {
+//                // 상대방 캐릭터인 DarkDog에 대한 동작
+//                switch (action) {
+//                    case "MOVE_LEFT":
+//                        gamePanel.getDarkdog().moveLeft();
+//                        break;
+//                    case "MOVE_RIGHT":
+//                        gamePanel.getDarkdog().moveRight();
+//                        break;
+//                    case "UPDATE_POSITION":
+//                        // "x,y" 형식의 좌표 데이터 처리
+//                        String[] coords = data.split(",");
+//                        if (coords.length == 2) {
+//                            try {
+//                                int x = Integer.parseInt(coords[0].trim());
+//                                int y = Integer.parseInt(coords[1].trim());
+//                                gamePanel.updateDarkDogPosition(x, y); // DarkDog 위치 업데이트
+//                            } catch (NumberFormatException e) {
+//                                e.printStackTrace(); // 좌표 파싱 실패 시 예외 처리
+//                            }
+//                        }
+//                        break;
+//                    default:
+//                        break;
+//                }
+//            }
+//        });
+//    }
+private void processServerMessage(String message) {
+    // 메시지 형식: "CLIENT_ID:ACTION:DATA" 또는 "CLIENT_ID:UPDATE_POSITION:x,y"
+    String[] parts = message.split(":");
+    if (parts.length < 3) return;
 
-        String action = parts[0]; // 메시지의 동작 (예: MOVE_LEFT)
-        String data = parts[1]; // 메시지의 데이터 (예: 유닛 정보)
+    String senderId = parts[0]; // 메시지를 보낸 클라이언트 ID
+    String action = parts[1];  // 동작
+    String data = parts[2];    // 좌표 데이터
 
-        // 메시지에 따른 동작 수행 (Swing 스레드에서 실행)
-        SwingUtilities.invokeLater(() -> {
+    SwingUtilities.invokeLater(() -> {
+        if (senderId.equals(clientId)) {
+            // 자신의 캐릭터 동작
             switch (action) {
-                case "MOVE_LEFT": // 왼쪽으로 이동
+                case "MOVE_LEFT":
                     gamePanel.getPaladog().moveLeft();
                     break;
-                case "MOVE_RIGHT": // 오른쪽으로 이동
+                case "MOVE_RIGHT":
                     gamePanel.getPaladog().moveRight();
                     break;
-                case "ATTACK": // 펀치 공격
+                case "ATTACK":
                     gamePanel.punchAttack();
                     break;
-                case "SPAWN_UNIT": // 유닛 생성      SPAWN_UNIT : mouse
+                case "SPAWN_UNIT":
                     gamePanel.spawnUnit(data);
                     break;
-//                case "START_GAME":
-//                    new GamePanel();
-//                    break;
-//                default: // 알 수 없는 명령은 무시
-//                    break;
             }
-        });
-    }
-
-    public static void main(String[] args) {
-
-
-        // GamePanel 생성 (게임 화면 초기화)
-        GamePanel gamePanel = new GamePanel();
-
-        // GameClient 생성 및 서버 연결
-        GameClient client = new GameClient("localhost", 12345, gamePanel);
-
-        // 키보드 입력 처리: 사용자가 키를 눌렀을 때 동작
-        gamePanel.addKeyListener(new KeyAdapter() {
-            @Override
-            public void keyPressed(KeyEvent e) {
-                // 왼쪽 화살표 키 입력 시 "MOVE_LEFT" 메시지 전송
-                if (e.getKeyCode() == KeyEvent.VK_LEFT) {
-                    client.sendMessage("MOVE_LEFT");
-                }
-                // 오른쪽 화살표 키 입력 시 "MOVE_RIGHT" 메시지 전송
-                else if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
-                    client.sendMessage("MOVE_RIGHT");
-                }
-                // 'j' 키 입력 시 "ATTACK" 메시지 전송
-                else if (e.getKeyChar() == 'j') {
-                    client.sendMessage("ATTACK");
-                }
-                // '1' 키 입력 시 "SPAWN_UNIT:MOUSE" 메시지 전송 (마우스 유닛 생성)
-                else if (e.getKeyChar() == '1') {
-                    client.sendMessage("SPAWN_UNIT:MOUSE");
-                }
-                // '3' 키 입력 시 "SPAWN_UNIT:BEAR" 메시지 전송 (곰 유닛 생성)
-                else if (e.getKeyChar() == '3') {
-                    client.sendMessage("SPAWN_UNIT:BEAR");
-                }
+        } else {
+            // DarkDog의 좌표 업데이트
+            switch (action) {
+                case "UPDATE_POSITION":
+                    String[] coords = data.split(",");
+                    if (coords.length == 2) {
+                        try {
+                            int x = Integer.parseInt(coords[0].trim());
+                            int y = Integer.parseInt(coords[1].trim());
+                            gamePanel.updateDarkDogPosition(x, y); // DarkDog 위치 업데이트
+                        } catch (NumberFormatException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                    break;
             }
-        });
-    }
+        }
+    });
 }
 
+public static void main(String[] args) {
+    GamePanel gamePanel = new GamePanel();
+    GameClient client = new GameClient("localhost", 12345, gamePanel);
 
+    gamePanel.addKeyListener(new KeyAdapter() {
+        private boolean isLeftPressed = false;  // 왼쪽 이동 상태
+        private boolean isRightPressed = false; // 오른쪽 이동 상태
 
+        @Override
+        public void keyPressed(KeyEvent e) {
+            AtomicInteger darkdogX = new AtomicInteger(gamePanel.getDarkDogX());
+            int darkdogY = gamePanel.getDarkDogY();
+
+            if (e.getKeyCode() == KeyEvent.VK_LEFT && !isLeftPressed) {
+                isLeftPressed = true;  // 왼쪽 이동 활성화
+                new Thread(() -> {
+                    while (isLeftPressed) {
+                        if (darkdogX.get() > 0) { // x 좌표가 0보다 클 때만 감소
+                            darkdogX.getAndDecrement();
+                            client.sendMessage("UPDATE_POSITION:" + darkdogX + "," + darkdogY); // 서버에 위치 전송
+                        }
+                        try {
+                            Thread.sleep(10); // 움직임 속도 조절
+                        } catch (InterruptedException ex) {
+                            ex.printStackTrace();
+                        }
+                    }
+                }).start();
+            } else if (e.getKeyCode() == KeyEvent.VK_RIGHT && !isRightPressed) {
+                isRightPressed = true;  // 오른쪽 이동 활성화
+                new Thread(() -> {
+                    while (isRightPressed) {
+                        if (darkdogX.get() < 1000) { // x 좌표가 1000보다 작을 때만 증가
+                            darkdogX.getAndIncrement();
+                            client.sendMessage("UPDATE_POSITION:" + darkdogX + "," + darkdogY); // 서버에 위치 전송
+                        }
+                        try {
+                            Thread.sleep(10); // 움직임 속도 조절
+                        } catch (InterruptedException ex) {
+                            ex.printStackTrace();
+                        }
+                    }
+                }).start();
+            }
+        }
+
+        @Override
+        public void keyReleased(KeyEvent e) {
+            if (e.getKeyCode() == KeyEvent.VK_LEFT) {
+                isLeftPressed = false;  // 왼쪽 이동 중지
+            } else if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
+                isRightPressed = false;  // 오른쪽 이동 중지
+            }
+        }
+    });
+}
+
+}
