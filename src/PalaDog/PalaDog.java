@@ -15,7 +15,7 @@ public class PalaDog extends JLabel {
 	public PalaDog Paladog = this;
 	public int x = 0;
 	public int y = 160;
-	public int hp = 80;
+	public int hp = 100;
 	public boolean isRight = false;
 	public boolean isLeft = false;
 	public boolean isPunch = true;

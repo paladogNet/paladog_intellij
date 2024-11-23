@@ -87,7 +87,7 @@ public  class Mouse extends JLabel {
 							for (int j = 0; j < zombie.size(); j++) {
 								try {
 									if (mouse.get(i).x >= zombie.get(j).x - 100 && zombie.get(j).getX() <= mouse.get(i).getX()+100) {
-										System.out.println("false½ÇÇà");
+										System.out.println("falseï¿½ï¿½ï¿½ï¿½");
 										mouse.get(i).isMoving = false;
 										mouse.get(i).setIcon(mouse.get(i).mouse_attackstopicon);
 										Thread.sleep(300);
@@ -114,7 +114,7 @@ public  class Mouse extends JLabel {
 
 						for (int i = 0; i < mouse.size(); i++) {
 								if (mouse.get(i).x >= darkdog.getX() - 100 && darkdog.getX() <= mouse.get(i).getX()+100) {
-									System.out.println("´ÙÅ©µ¶°ø°Ý½ÇÇà");
+									System.out.println("ï¿½ï¿½Å©ï¿½ï¿½ï¿½ï¿½ï¿½Ý½ï¿½ï¿½ï¿½");
 									mouse.get(i).isMoving = false;
 									mouse.get(i).setIcon(mouse.get(i).mouse_attackstopicon);
 									Thread.sleep(300);

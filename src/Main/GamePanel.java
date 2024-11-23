@@ -4,6 +4,8 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Image;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
@@ -23,6 +25,7 @@ import PalaDog.Bear;
 import PalaDog.Mouse;
 import PalaDog.PalaDog;
 import PalaDog.PalaDogPunch;
+import javax.swing.Timer;
 
 public class GamePanel extends JFrame {
 	private MyPanel m1, m2;
@@ -164,15 +167,15 @@ public class GamePanel extends JFrame {
 	public void listener() {
 
 		addKeyListener(new KeyAdapter() {
+			private boolean isMouseCooldown = false; // Mouse 생성 쿨다운 플래그
+
 			@Override
 			public void keyPressed(KeyEvent e) {
 				if (e.getKeyChar() == '1') {
-					new Thread(new Runnable() {
-
-						@Override
-						public void run() {
-							if (sohwanhp > 10) {
-
+					// 쿨다운이 아니고 소환 포인트가 충분한 경우
+					if (!isMouseCooldown) {
+						if (sohwanhp > 10) {
+							new Thread(() -> {
 								sohwanhp -= 10;
 								mouse = new Mouse();
 								mousehplabel = new MouseHpLabel();
@@ -180,100 +183,91 @@ public class GamePanel extends JFrame {
 								mousehplabellist.add(mousehplabel);
 								panel.add(mousehplabel);
 								panel.add(mouse);
+								panel.repaint();
+							}).start();
 
-							}
+							// 쿨다운 활성화
+							isMouseCooldown = true;
 
+							// 쿨다운 타이머 설정
+							Timer mouseCooldownTimer = new Timer(1000, new ActionListener() {
+								@Override
+								public void actionPerformed(ActionEvent e) {
+									isMouseCooldown = false; // 쿨다운 해제
+								}
+							});
+
+							mouseCooldownTimer.setRepeats(false); // 반복 실행 방지
+							mouseCooldownTimer.start(); // 타이머 시작
+						} else {
+							System.out.println("소환 포인트가 부족합니다.");
 						}
-					}).start();
-
+					} else {
+						System.out.println("잠시 기다려주세요. (쿨다운 중)");
+					}
 				}
 
 				if (e.getKeyChar() == '3') {
-					new Thread(new Runnable() {
-
-						@Override
-						public void run() {
-							if (sohwanhp > 30) {
-								sohwanhp -= 30;
-								bear = new Bear();
-								bearlist.add(bear);
-								bearhplabel = new BearHpLabel();
-								bearhplist.add(bearhplabel);
-								panel.add(bear);
-								panel.add(bearhplabel);
-
-							}
+					new Thread(() -> {
+						if (sohwanhp > 30) {
+							sohwanhp -= 30;
+							bear = new Bear();
+							bearlist.add(bear);
+							bearhplabel = new BearHpLabel();
+							bearhplist.add(bearhplabel);
+							panel.add(bear);
+							panel.add(bearhplabel);
 						}
 					}).start();
-
 				}
 
 				if (e.getKeyCode() == KeyEvent.VK_LEFT) {
 					paladog.moveLeft();
-
-					// System.out.println("팔라독 x좌표 : " + paladog.x);
-
 				} else if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
 					paladog.moveRight();
-
-					// System.out.println("팔라독 x좌표 : " + paladog.x);
 				}
+
 				if (e.getKeyChar() == 'j') {
-
-					new Thread(new Runnable() {
-
-						@Override
-						synchronized public void run() {
+					new Thread(() -> {
+						synchronized (this) {
 							if (skillmp > 10) {
-
 								punch = new PalaDogPunch();
 								punchlist.add(punch);
 								panel.add(punch);
 								punch.moveRight();
-								punch.Punchx = paladog.x+50;
+								punch.Punchx = paladog.x + 50;
 								punch.Punchy = paladog.y + 50;
-								skillmp = skillmp - 10;
-								
-
+								skillmp -= 10;
 							}
-
 						}
 					}).start();
-
 				} else if (e.getKeyChar() == 'J') {
-
-					new Thread(new Runnable() {
-						@Override
-						synchronized public void run() {
+					new Thread(() -> {
+						synchronized (this) {
 							punch = new PalaDogPunch();
 							punchlist.add(punch);
 							panel.add(punch);
 							punch.moveRight();
-							punch.Punchx = paladog.x+50;
+							punch.Punchx = paladog.x + 50;
 							punch.Punchy = paladog.y + 50;
-
-
 						}
 					}).start();
 				}
-
 			}
 
 			@Override
 			public void keyReleased(KeyEvent e) {
-				// TODO Auto-generated method stub
 				if (e.getKeyCode() == KeyEvent.VK_LEFT) {
 					paladog.isLeft = false;
 					paladog.Letf();
-
 				}
 				if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
 					paladog.isRight = false;
 					paladog.Right();
-
 				}
 			}
 		});
+
 
 	}
 
@@ -282,163 +276,20 @@ public class GamePanel extends JFrame {
 	}
 	public DarkDog getDarkdog() { return this.darkdog ; }
 
-	public void punchAttack() {
-		// 펀치 생성 및 추가
-		PalaDogPunch punch = new PalaDogPunch();
-		punchlist.add(punch);
-		panel.add(punch);
-
-		// 펀치 초기 위치 설정 (팔라독 위치 기준)
-		punch.Punchx = paladog.x + 50; // 팔라독 오른쪽에서 시작
-		punch.Punchy = paladog.y + 50;
-
-		// 펀치 이동 스레드 시작
-		new Thread(() -> {
-			try {
-				while (punch.Punchx < 1000) { // 화면 끝까지 이동
-					punch.moveRight();
-					Thread.sleep(10);
-					punch.setBounds(punch.Punchx, punch.Punchy, 50, 50);
-
-					// 적과의 충돌 체크
-					for (int i = 0; i < zombielist.size(); i++) {
-						if (punch.Punchx >= zombielist.get(i).x - 50 &&
-								punch.Punchy >= zombielist.get(i).y - 50 &&
-								punch.Punchy <= zombielist.get(i).y + 50) {
-
-							// 좀비 데미지 처리
-							zombielist.get(i).hp -= punch.attack;
-							if (zombielist.get(i).hp <= 0) {
-								panel.remove(zombielist.get(i));
-								zombielist.remove(i);
-							}
-
-							// 펀치 제거
-							panel.remove(punch);
-							punchlist.remove(punch);
-							return;
-						}
-					}
-				}
-
-				// 화면 밖으로 나가면 펀치 제거
-				panel.remove(punch);
-				punchlist.remove(punch);
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		}).start();
-	}
-
-	public void spawnUnit(String data) {
-		switch (data) {
-			case "MOUSE":
-				if (sohwanhp >= 10) {
-					sohwanhp -= 10;
-					Mouse mouse = new Mouse();
-					MouseHpLabel mouseHpLabel = new MouseHpLabel();
-
-					// 유닛과 HP 라벨 추가
-					mouselist.add(mouse);
-					mousehplabellist.add(mouseHpLabel);
-
-					panel.add(mouse);
-					panel.add(mouseHpLabel);
-
-					// 유닛 초기 위치 설정
-					mouse.setLocation(paladog.x + 50, paladog.y);
-					mouseHpLabel.setLocation(mouse.x + 30, mouse.y - 50);
-
-					// 유닛 이동 및 공격 스레드 실행
-					new Thread(() -> {
-						try {
-							while (mouse.x < 1000) {
-								mouse.MoveLight();
-								Thread.sleep(10);
-								mouse.setBounds(mouse.x, mouse.y, 50, 50);
-								mouseHpLabel.setLocation(mouse.x + 30, mouse.y - 50);
-
-								// 적과의 충돌 체크
-								for (int i = 0; i < zombielist.size(); i++) {
-									if (mouse.x >= zombielist.get(i).x - 50) {
-										zombielist.get(i).hp -= mouse.attack;
-										if (zombielist.get(i).hp <= 0) {
-											panel.remove(zombielist.get(i));
-											zombielist.remove(i);
-										}
-										return; // 충돌 시 멈춤
-									}
-								}
-							}
-
-							// 화면 밖으로 나가면 유닛 제거
-							panel.remove(mouse);
-							mouselist.remove(mouse);
-						} catch (Exception e) {
-							e.printStackTrace();
-						}
-					}).start();
-				}
-				break;
-
-			case "BEAR":
-				if (sohwanhp >= 30) {
-					sohwanhp -= 30;
-					Bear bear = new Bear();
-					BearHpLabel bearHpLabel = new BearHpLabel();
-
-					// 유닛과 HP 라벨 추가
-					bearlist.add(bear);
-					bearhplist.add(bearHpLabel);
-
-					panel.add(bear);
-					panel.add(bearHpLabel);
-
-					// 유닛 초기 위치 설정
-					bear.setLocation(paladog.x + 50, paladog.y);
-					bearHpLabel.setLocation(bear.x + 55, bear.y - 47);
-
-					// 유닛 이동 및 공격 스레드 실행
-					new Thread(() -> {
-						try {
-							while (bear.x < 1000) {
-								bear.moveRight();
-								Thread.sleep(20);
-								bear.setBounds(bear.x, bear.y, 70, 70);
-								bearHpLabel.setLocation(bear.x + 55, bear.y - 47);
-
-								// 적과의 충돌 체크
-								for (int i = 0; i < zombielist.size(); i++) {
-									if (bear.x >= zombielist.get(i).x - 50) {
-										zombielist.get(i).hp -= bear.attack;
-										if (zombielist.get(i).hp <= 0) {
-											panel.remove(zombielist.get(i));
-											zombielist.remove(i);
-										}
-										return; // 충돌 시 멈춤
-									}
-								}
-							}
-
-							// 화면 밖으로 나가면 유닛 제거
-							panel.remove(bear);
-							bearlist.remove(bear);
-						} catch (Exception e) {
-							e.printStackTrace();
-						}
-					}).start();
-				}
-				break;
-
-			default:
-				System.out.println("Unknown unit type: " + data);
-		}
-	}
-
-
-
 	public int getPaladogX() {
 		return this.paladog.x;
+	}
+
+	public JPanel getPanel() {
+		return panel;
+	}
+
+	public ArrayList<Zombie> getZombielist() {
+		return zombielist;
+	}
+
+	public Object getZombiehplabellist() {
+		return Zombiehplabellist;
 	}
 
 
@@ -717,28 +568,76 @@ public class GamePanel extends JFrame {
 
 		}
 	}
-	class ZombieSoHwan extends Thread {
-		@Override
-		public void run() {
-			while (is좀비소환) {
-				zombie = new Zombie();
-				zombie.MoveLeft();
-				zombielist.add(zombie);
-				panel.add(zombie);
-				zombiehplabel = new ZombieHpLabel();
-				panel.add(zombiehplabel);
-				Zombiehplabellist.add(zombiehplabel);
-				System.out.println("좀비 소환" + zombielist.size());
+	/////////////////////////////////////////////////////////////////////////////////////////////
+//	class ZombieSoHwan extends Thread {
+//		@Override
+//		public void run() {
+//			while (is좀비소환) {
+//				zombie = new Zombie();
+//				zombie.MoveLeft();
+//				zombielist.add(zombie);
+//				panel.add(zombie);
+//				zombiehplabel = new ZombieHpLabel();
+//				panel.add(zombiehplabel);
+//				Zombiehplabellist.add(zombiehplabel);
+//				System.out.println("좀비 소환" + zombielist.size());
+//				try {
+//					Thread.sleep(10000);
+//				} catch (InterruptedException e) {
+//					// TODO Auto-generated catch block
+//					e.printStackTrace();
+//				}
+//			}
+//		}
+//	}
+
+	public class ZombieSoHwan {
+
+		// 좀비를 소환하는 메서드
+		public void spawnZombie(JPanel panel, DarkDog darkdog, ArrayList<Zombie> zombielist, ArrayList<ZombieHpLabel> Zombiehplabellist) {
+			// 새로운 좀비와 좀비 HP 라벨 생성
+			Zombie zombie = new Zombie();
+			ZombieHpLabel zombieHpLabel = new ZombieHpLabel();
+
+			// DarkDog 근처에 좀비 소환
+			zombie.setLocation(darkdog.getX() - 50, darkdog.getY());
+			zombieHpLabel.setLocation(zombie.getX(), zombie.getY() - 20);
+
+			// 좀비와 라벨을 리스트 및 패널에 추가
+			zombielist.add(zombie);
+			Zombiehplabellist.add(zombieHpLabel);
+
+			panel.add(zombie);
+			panel.add(zombieHpLabel);
+			panel.repaint();
+
+			System.out.println("좀비 소환: 현재 좀비 개수 = " + zombielist.size());
+
+			// 좀비 이동 로직
+			new Thread(() -> {
 				try {
-					Thread.sleep(10000);
-				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
+					while (zombie.getX() > 0) { // 화면 왼쪽으로 이동
+						zombie.MoveLeft();
+						Thread.sleep(20); // 이동 속도 조절
+						zombie.setBounds(zombie.getX(), zombie.getY(), 50, 50);
+						zombieHpLabel.setLocation(zombie.getX(), zombie.getY() - 20);
+					}
+
+					// 화면 밖으로 나가면 좀비 제거
+					panel.remove(zombie);
+					panel.remove(zombieHpLabel);
+					zombielist.remove(zombie);
+					Zombiehplabellist.remove(zombieHpLabel);
+					panel.repaint();
+				} catch (Exception e) {
 					e.printStackTrace();
 				}
-			}
+			}).start();
 		}
 	}
-	
+
+
+
 	public void 펀치어택(ArrayList<PalaDogPunch> punchlist,ArrayList<Zombie> zombie) {
 		new Thread(new Runnable() {
 			@Override
@@ -825,32 +724,33 @@ public class GamePanel extends JFrame {
 		zombie.setLocation(darkdog.x - 50, darkdog.y);
 		zombieHpLabel.setLocation(zombie.x, zombie.y - 20);
 
+		zombie = new Zombie();
+		zombie.MoveLeft();
 		zombielist.add(zombie);
-		Zombiehplabellist.add(zombieHpLabel);
-
 		panel.add(zombie);
-		panel.add(zombieHpLabel);
-		panel.repaint();
-
-		// 좀비 이동 로직
-		new Thread(() -> {
-			try {
-				while (zombie.x > 0) { // 화면 왼쪽으로 이동
-					zombie.MoveLeft();
-					Thread.sleep(20); // 이동 속도 조절
-					zombie.setBounds(zombie.x, zombie.y, 50, 50);
-					zombieHpLabel.setLocation(zombie.x, zombie.y - 20);
-				}
-
-				// 화면 밖으로 나가면 좀비 제거
-				panel.remove(zombie);
-				panel.remove(zombieHpLabel);
-				zombielist.remove(zombie);
-				Zombiehplabellist.remove(zombieHpLabel);
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		}).start();
+		zombiehplabel = new ZombieHpLabel();
+		panel.add(zombiehplabel);
+		Zombiehplabellist.add(zombiehplabel);
+		System.out.println("좀비 소환" + zombielist.size());
+//		// 좀비 이동 로직
+//		new Thread(() -> {
+//			try {
+//				while (zombie.x > 0) { // 화면 왼쪽으로 이동
+//					zombie.MoveLeft();
+//					Thread.sleep(1000); // 이동 속도 조절
+//					zombie.setBounds(zombie.x, zombie.y, 90, 90);
+//					zombieHpLabel.setLocation(zombie.x, zombie.y - 20);
+//				}
+//
+//				// 화면 밖으로 나가면 좀비 제거
+//				panel.remove(zombie);
+//				panel.remove(zombieHpLabel);
+//				zombielist.remove(zombie);
+//				Zombiehplabellist.remove(zombieHpLabel);
+//			} catch (Exception e) {
+//				e.printStackTrace();
+//			}
+//		}).start();
 	}
 
 }

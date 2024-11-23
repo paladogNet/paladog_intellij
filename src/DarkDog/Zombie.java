@@ -18,7 +18,7 @@ public class Zombie extends JLabel {
 	public Zombie zombie = this;
 	public int x = 1100;
 	public int y = 240;
-	public int hp = 10;
+	public int hp = 30;
 	public int attack = 5;
 	public final static String TAG = "Zombie:";
 	public Boolean isMoving2 = true;
@@ -70,7 +70,12 @@ public class Zombie extends JLabel {
 			public void run() {
 
 				while (true) {
-
+					try {
+						Thread.sleep(1);
+					} catch (InterruptedException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
 					try {
 						for (int i = 0; i < zombie.size(); i++) {
 							for (int j = 0; j < mouse.size(); j++) {
@@ -82,7 +87,7 @@ public class Zombie extends JLabel {
 										zombie.get(i).isMoving2 = false;
 
 										zombie.get(i).setIcon(zombie.get(i).zombie_attackIcon);
-										Thread.sleep(150);
+										Thread.sleep(300);
 
 										try {
 											zombie.get(i).setIcon(zombie.get(i).zombie_attackIcon2);
@@ -90,7 +95,7 @@ public class Zombie extends JLabel {
 											// TODO: handle exception
 										}
 
-										Thread.sleep(150);
+										Thread.sleep(300);
 										// zombie.get(i).hp = zombie.get(i).hp - mouse.get(j).attack;
 
 										try {
@@ -114,10 +119,10 @@ public class Zombie extends JLabel {
 								zombie.get(i).isMoving2 = false;
 
 								zombie.get(i).setIcon(zombie.get(i).zombie_attackIcon);
-								Thread.sleep(400);
+								Thread.sleep(300);
 
 								zombie.get(i).setIcon(zombie.get(i).zombie_attackIcon2);
-								Thread.sleep(400);
+								Thread.sleep(300);
 								paladog.hp = paladog.hp - zombie.get(i).attack;
 								System.out.println(paladog.hp);
 
