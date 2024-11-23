@@ -79,7 +79,7 @@ public class Bear extends JLabel {
 							for (int j = 0; j < zombie.size(); j++) {
 								try {
 									if (bear.get(i).x >= zombie.get(j).x - 100) {
-										System.out.println("false½ÇÇà");
+										System.out.println("falseï¿½ï¿½ï¿½ï¿½");
 										bear.get(i).isMoving = false;
 										bear.get(i).setIcon(bear.get(i).bear_attackicon);
 										Thread.sleep(500);
@@ -102,7 +102,7 @@ public class Bear extends JLabel {
 						for (int i = 0; i < bear.size(); i++) {
 							for (int j = 0; j < zombie.size(); j++) {
 								if (bear.get(i).x >= darkdog.getX() - 100 && darkdog.getX() <= bear.get(i).x +100) {
-									System.out.println("´ÙÅ©µ¶°ø°Ý½ÇÇà");
+									System.out.println("ï¿½ï¿½Å©ï¿½ï¿½ï¿½ï¿½ï¿½Ý½ï¿½ï¿½ï¿½");
 									bear.get(i).isMoving = false;
 									bear.get(i).setIcon(bear.get(i).bear_attackicon);
 									Thread.sleep(500);
@@ -133,5 +133,32 @@ public class Bear extends JLabel {
 
 		}).start();
 	}
-	
+
+    public void moveRight() {
+		new Thread(new Runnable() {
+
+			@Override
+			public void run() {
+				while (true) {
+
+					try {
+						Thread.sleep(1);
+					} catch (InterruptedException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+					while (isMoving) {
+						bear.x += 10;
+						setLocation(x, y);
+						try {
+							Thread.sleep(200);
+						} catch (InterruptedException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+					}
+				}
+			}
+		}).start();
+    }
 }

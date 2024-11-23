@@ -277,6 +277,164 @@ public class GamePanel extends JFrame {
 
 	}
 
+	public PalaDog getPaladog() {
+		return this.paladog ;
+	}
+
+	public void punchAttack() {
+		// 펀치 생성 및 추가
+		PalaDogPunch punch = new PalaDogPunch();
+		punchlist.add(punch);
+		panel.add(punch);
+
+		// 펀치 초기 위치 설정 (팔라독 위치 기준)
+		punch.Punchx = paladog.x + 50; // 팔라독 오른쪽에서 시작
+		punch.Punchy = paladog.y + 50;
+
+		// 펀치 이동 스레드 시작
+		new Thread(() -> {
+			try {
+				while (punch.Punchx < 1000) { // 화면 끝까지 이동
+					punch.moveRight();
+					Thread.sleep(10);
+					punch.setBounds(punch.Punchx, punch.Punchy, 50, 50);
+
+					// 적과의 충돌 체크
+					for (int i = 0; i < zombielist.size(); i++) {
+						if (punch.Punchx >= zombielist.get(i).x - 50 &&
+								punch.Punchy >= zombielist.get(i).y - 50 &&
+								punch.Punchy <= zombielist.get(i).y + 50) {
+
+							// 좀비 데미지 처리
+							zombielist.get(i).hp -= punch.attack;
+							if (zombielist.get(i).hp <= 0) {
+								panel.remove(zombielist.get(i));
+								zombielist.remove(i);
+							}
+
+							// 펀치 제거
+							panel.remove(punch);
+							punchlist.remove(punch);
+							return;
+						}
+					}
+				}
+
+				// 화면 밖으로 나가면 펀치 제거
+				panel.remove(punch);
+				punchlist.remove(punch);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}).start();
+	}
+
+	public void spawnUnit(String data) {
+		switch (data) {
+			case "MOUSE":
+				if (sohwanhp >= 10) {
+					sohwanhp -= 10;
+					Mouse mouse = new Mouse();
+					MouseHpLabel mouseHpLabel = new MouseHpLabel();
+
+					// 유닛과 HP 라벨 추가
+					mouselist.add(mouse);
+					mousehplabellist.add(mouseHpLabel);
+
+					panel.add(mouse);
+					panel.add(mouseHpLabel);
+
+					// 유닛 초기 위치 설정
+					mouse.setLocation(paladog.x + 50, paladog.y);
+					mouseHpLabel.setLocation(mouse.x + 30, mouse.y - 50);
+
+					// 유닛 이동 및 공격 스레드 실행
+					new Thread(() -> {
+						try {
+							while (mouse.x < 1000) {
+								mouse.MoveLight();
+								Thread.sleep(10);
+								mouse.setBounds(mouse.x, mouse.y, 50, 50);
+								mouseHpLabel.setLocation(mouse.x + 30, mouse.y - 50);
+
+								// 적과의 충돌 체크
+								for (int i = 0; i < zombielist.size(); i++) {
+									if (mouse.x >= zombielist.get(i).x - 50) {
+										zombielist.get(i).hp -= mouse.attack;
+										if (zombielist.get(i).hp <= 0) {
+											panel.remove(zombielist.get(i));
+											zombielist.remove(i);
+										}
+										return; // 충돌 시 멈춤
+									}
+								}
+							}
+
+							// 화면 밖으로 나가면 유닛 제거
+							panel.remove(mouse);
+							mouselist.remove(mouse);
+						} catch (Exception e) {
+							e.printStackTrace();
+						}
+					}).start();
+				}
+				break;
+
+			case "BEAR":
+				if (sohwanhp >= 30) {
+					sohwanhp -= 30;
+					Bear bear = new Bear();
+					BearHpLabel bearHpLabel = new BearHpLabel();
+
+					// 유닛과 HP 라벨 추가
+					bearlist.add(bear);
+					bearhplist.add(bearHpLabel);
+
+					panel.add(bear);
+					panel.add(bearHpLabel);
+
+					// 유닛 초기 위치 설정
+					bear.setLocation(paladog.x + 50, paladog.y);
+					bearHpLabel.setLocation(bear.x + 55, bear.y - 47);
+
+					// 유닛 이동 및 공격 스레드 실행
+					new Thread(() -> {
+						try {
+							while (bear.x < 1000) {
+								bear.moveRight();
+								Thread.sleep(20);
+								bear.setBounds(bear.x, bear.y, 70, 70);
+								bearHpLabel.setLocation(bear.x + 55, bear.y - 47);
+
+								// 적과의 충돌 체크
+								for (int i = 0; i < zombielist.size(); i++) {
+									if (bear.x >= zombielist.get(i).x - 50) {
+										zombielist.get(i).hp -= bear.attack;
+										if (zombielist.get(i).hp <= 0) {
+											panel.remove(zombielist.get(i));
+											zombielist.remove(i);
+										}
+										return; // 충돌 시 멈춤
+									}
+								}
+							}
+
+							// 화면 밖으로 나가면 유닛 제거
+							panel.remove(bear);
+							bearlist.remove(bear);
+						} catch (Exception e) {
+							e.printStackTrace();
+						}
+					}).start();
+				}
+				break;
+
+			default:
+				System.out.println("Unknown unit type: " + data);
+		}
+	}
+
+
 	class 죽는스레드 extends Thread {
 		@Override
 		public void run() {

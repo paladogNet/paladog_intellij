@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="b31e0590-2f0d-4958-b218-26fccf8df671" name="변경" comment="Feat : 두 클라이언트 간 메시지 통신구현완료. 각 클라이언트 화면 렌더링로직 수정필요.">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
+  "lastFilter": {
+    "state": "OPEN",
+    "assignee": "hhd1337"
+  }
+}]]></component>
+  <component name="GithubPullRequestsUISettings"><![CDATA[{
+  "selectedUrlAndAccountId": {
+    "url": "https://github.com/paladogNet/paladog_intellij.git",
+    "accountId": "47f5d65d-be29-4c9c-84b2-8f9b138946ca"
+  }
+}]]></component>
+  <component name="ProjectColorInfo"><![CDATA[{
+  "associatedIndex": 5
+}]]></component>
+  <component name="ProjectId" id="2pFNScNjyg0VcpiB95FLVaaQZq2" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "git-widget-placeholder": "haedam",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "C:/Users/admin/Desktop/precapston",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "vue.rearranger.settings.migration": "true",
+    "애플리케이션.GameClient.executor": "Run",
+    "애플리케이션.GameServer.executor": "Run",
+    "애플리케이션.PalaDogApp.executor": "Run"
+  }
+}]]></component>
+  <component name="RunManager" selected="애플리케이션.GameClient">
+    <configuration name="GameClient" type="Application" factoryName="Application" singleton="false" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="Main.GameClient" />
+      <module name="palaDog" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="Main.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="GameServer" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="Main.GameServer" />
+      <module name="palaDog" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="Main.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="PalaDogApp" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="Main.PalaDogApp" />
+      <module name="palaDog" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="Main.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <list>
+      <item itemvalue="애플리케이션.GameClient" />
+      <item itemvalue="애플리케이션.GameServer" />
+      <item itemvalue="애플리케이션.PalaDogApp" />
+    </list>
+    <recent_temporary>
+      <list>
+        <item itemvalue="애플리케이션.GameClient" />
+        <item itemvalue="애플리케이션.GameServer" />
+        <item itemvalue="애플리케이션.PalaDogApp" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-jdk-9823dce3aa75-28b599e66164-intellij.indexing.shared.core-IU-242.23726.103" />
+        <option value="bundled-js-predefined-d6986cc7102b-5c90d61e3bab-JavaScript-IU-242.23726.103" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="애플리케이션 수준" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="디폴트 작업">
+      <changelist id="b31e0590-2f0d-4958-b218-26fccf8df671" name="변경" comment="" />
+      <created>1732357867427</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1732357867427</updated>
+      <workItem from="1732357868448" duration="4035000" />
+    </task>
+    <task id="LOCAL-00001" summary="Feat : 두 클라이언트 간 메시지 통신구현완료. 각 클라이언트 화면 렌더링로직 수정필요.">
+      <option name="closed" value="true" />
+      <created>1732361320914</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1732361320914</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Feat : 두 클라이언트 간 메시지 통신구현완료. 각 클라이언트 화면 렌더링로직 수정필요." />
+    <option name="LAST_COMMIT_MESSAGE" value="Feat : 두 클라이언트 간 메시지 통신구현완료. 각 클라이언트 화면 렌더링로직 수정필요." />
+  </component>
+</project>
