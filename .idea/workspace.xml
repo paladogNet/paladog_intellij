@@ -4,44 +4,41 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c904a422-c85c-4fa0-b682-33e5458ac497" name="변경" comment="Feat : first commit" />
+    <list default="true" id="b31e0590-2f0d-4958-b218-26fccf8df671" name="변경" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/24__11__23___6_19__________.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/24__11__23__오후_6_19,_체크아웃_전에_커밋되지_않은_변경_내용_[변경]/shelved.patch" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/24__11__23__오후_6_19,_체크아웃_전에_커밋되지_않은_변경_내용_[변경]1/shelved.patch" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Main/GameClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main/GameClient.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Main/GamePanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main/GamePanel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Main/GameServer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main/GameServer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/PalaDog/Bear.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/PalaDog/Bear.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="FileTemplateManagerImpl">
-    <option name="RECENT_TEMPLATES">
-      <list>
-        <option value="Class" />
-      </list>
-    </option>
-  </component>
   <component name="Git.Settings">
-    <option name="RECENT_BRANCH_BY_REPOSITORY">
-      <map>
-        <entry key="$PROJECT_DIR$" value="main" />
-      </map>
-    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="GitHubPullRequestSearchHistory">{
-  &quot;lastFilter&quot;: {
-    &quot;state&quot;: &quot;OPEN&quot;,
-    &quot;assignee&quot;: &quot;hhd1337&quot;
+  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
+  "lastFilter": {
+    "state": "OPEN",
+    "assignee": "hhd1337"
   }
-}</component>
-  <component name="GithubPullRequestsUISettings">{
-  &quot;selectedUrlAndAccountId&quot;: {
-    &quot;url&quot;: &quot;https://github.com/paladogNet/paladog_intellij.git&quot;,
-    &quot;accountId&quot;: &quot;47f5d65d-be29-4c9c-84b2-8f9b138946ca&quot;
+}]]></component>
+  <component name="GithubPullRequestsUISettings"><![CDATA[{
+  "selectedUrlAndAccountId": {
+    "url": "https://github.com/paladogNet/paladog_intellij.git",
+    "accountId": "47f5d65d-be29-4c9c-84b2-8f9b138946ca"
   }
-}</component>
-  <component name="ProjectColorInfo">{
-  &quot;associatedIndex&quot;: 5
-}</component>
-  <component name="ProjectId" id="2pFAouXSzlpVNvXuMTpGAXGR392" />
-  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+}]]></component>
+  <component name="ProjectColorInfo"><![CDATA[{
+  "associatedIndex": 5
+}]]></component>
+  <component name="ProjectId" id="2pFNScNjyg0VcpiB95FLVaaQZq2" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -49,17 +46,14 @@
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "main",
+    "git-widget-placeholder": "haedam",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/admin/Desktop/paladog_intellij-main/paladog_intellij-main",
+    "last_opened_file_path": "C:/Users/admin/Desktop/precapston",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
-    "project.structure.last.edited": "모듈",
-    "project.structure.proportion": "0.15",
-    "project.structure.side.proportion": "0.0",
     "vue.rearranger.settings.migration": "true",
     "애플리케이션.GameClient.executor": "Run",
     "애플리케이션.GameServer.executor": "Run",
@@ -67,7 +61,7 @@
   }
 }]]></component>
   <component name="RunManager" selected="애플리케이션.GameClient">
-    <configuration name="GameClient" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+    <configuration name="GameClient" type="Application" factoryName="Application" singleton="false" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="Main.GameClient" />
       <module name="palaDog" />
       <extension name="coverage">
@@ -94,8 +88,6 @@
       </method>
     </configuration>
     <configuration name="PalaDogApp" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="ALTERNATIVE_JRE_PATH" value="corretto-1.8" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
       <option name="MAIN_CLASS_NAME" value="Main.PalaDogApp" />
       <module name="palaDog" />
       <extension name="coverage">
@@ -108,6 +100,11 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <list>
+      <item itemvalue="애플리케이션.GameClient" />
+      <item itemvalue="애플리케이션.GameServer" />
+      <item itemvalue="애플리케이션.PalaDogApp" />
+    </list>
     <recent_temporary>
       <list>
         <item itemvalue="애플리케이션.GameClient" />
@@ -127,41 +124,16 @@
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="애플리케이션 수준" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="디폴트 작업">
-      <changelist id="c904a422-c85c-4fa0-b682-33e5458ac497" name="변경" comment="" />
-      <created>1732351632603</created>
+      <changelist id="b31e0590-2f0d-4958-b218-26fccf8df671" name="변경" comment="" />
+      <created>1732357867427</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1732351632603</updated>
-      <workItem from="1732351633625" duration="3406000" />
-      <workItem from="1732355091187" duration="1493000" />
+      <updated>1732357867427</updated>
+      <workItem from="1732357868448" duration="3288000" />
     </task>
-    <task id="LOCAL-00001" summary="Feat : first commit">
-      <option name="closed" value="true" />
-      <created>1732352980539</created>
-      <option name="number" value="00001" />
-      <option name="presentableId" value="LOCAL-00001" />
-      <option name="project" value="LOCAL" />
-      <updated>1732352980539</updated>
-    </task>
-    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
-  </component>
-  <component name="VcsManagerConfiguration">
-    <MESSAGE value="Feat : first commit" />
-    <option name="LAST_COMMIT_MESSAGE" value="Feat : first commit" />
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/Main/IntroImg.java</url>
-          <line>38</line>
-          <option name="timeStamp" value="1" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
   </component>
 </project>
