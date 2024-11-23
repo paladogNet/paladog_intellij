@@ -4,8 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
+    <list default="true" id="b31e0590-2f0d-4958-b218-26fccf8df671" name="변경" comment="Feat : 각 클라이언트 팔라독 움직이면 상대 화면에 다크독 움직이도록 함. 근데 샤샤샥 있음">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     <list default="true" id="b31e0590-2f0d-4958-b218-26fccf8df671" name="변경" comment="trash file">
       <change beforePath="$PROJECT_DIR$/src/Main/GameClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main/GameClient.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Main/GamePanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main/GamePanel.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -166,5 +169,7 @@
     <MESSAGE value="Feat : 각 클라이언트 팔라독 움직이면 상대 화면에 다크독 움직이도록 함. 근데 샤샤샥 있음" />
     <MESSAGE value="trash file" />
     <option name="LAST_COMMIT_MESSAGE" value="trash file" />
+    <MESSAGE value="Feat : 각 클라이언트 팔라독 움직이면 상대 화면에 다크독 움직이도록 함. 근데 샤샤샥 있음" />
+    <option name="LAST_COMMIT_MESSAGE" value="Feat : 각 클라이언트 팔라독 움직이면 상대 화면에 다크독 움직이도록 함. 근데 샤샤샥 있음" />
   </component>
 </project>
