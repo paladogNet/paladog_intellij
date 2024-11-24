@@ -8,7 +8,6 @@
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/DarkDog/DarkDog.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/DarkDog/DarkDog.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Main/GamePanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main/GamePanel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/PalaDog/Mouse.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/PalaDog/Mouse.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/PalaDog/PalaDog.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/PalaDog/PalaDog.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -59,9 +58,9 @@
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
-    "project.structure.last.edited": "프로젝트",
+    "project.structure.last.edited": "Modules",
     "project.structure.proportion": "0.0",
-    "project.structure.side.proportion": "0.0",
+    "project.structure.side.proportion": "0.2",
     "vue.rearranger.settings.migration": "true",
     "애플리케이션.GameClient.executor": "Run",
     "애플리케이션.GameServer.executor": "Run",

@@ -109,6 +109,7 @@ public class DarkDog extends JLabel {
 
 										mouse.get(j).hp = mouse.get(j).hp - punchlist.get(i).attack;
 
+										panel.setLayout(null);
 										panel.remove(punchlist.get(i));
 										punchlist.remove(i);
 										panel.repaint();
@@ -120,19 +121,23 @@ public class DarkDog extends JLabel {
 								}
 
 							}
+							try {
+								if (punchlist.get(i).getX() <= paladog.x + 50) {
+									System.out.println("다크독 펀치 맞음");
+									paladog.hp -= punchlist.get(i).attack;
 
-						}
-
-						for (int i = 0; i < punchlist.size(); i++){
-							if(punchlist.get(i).getX() <= paladog.getX() + 30){
-								System.out.println("팔라독 펀치 맞음");
-								paladog.hp -= punchlist.get(i).attack;
-
-								panel.remove(punchlist.get(i));
-								punchlist.remove(i);
-								panel.repaint();
+									// 펀치 제거
+									panel.remove(punchlist.get(i));
+									punchlist.remove(i);
+									panel.repaint();
+								}
+							} catch (Exception e) {
+								e.printStackTrace();
 							}
+
 						}
+
+
 					}catch (Exception e) {
 						// TODO: handle exception
 					}

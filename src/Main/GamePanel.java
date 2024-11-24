@@ -690,10 +690,13 @@ public class GamePanel extends JFrame {
 				if (skillmp > 10) {
 					darkDogPunch = new DarkDogPunch();
 					darkdogpunchlist.add(darkDogPunch);
-					panel.add(darkDogPunch);
-					darkDogPunch.moveLeft();
+
+					panel.setLayout(null);
 					darkDogPunch.Punchx = darkdog.x - 50;
 					darkDogPunch.Punchy = darkdog.y + 50;
+					panel.add(darkDogPunch);
+					darkDogPunch.moveLeft();
+
 				}
 			}
 		}).start();

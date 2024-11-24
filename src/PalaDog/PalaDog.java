@@ -125,19 +125,23 @@ public class PalaDog extends JLabel {
 								}
 
 							}
+							try {
+								if (punchlist.get(i).getX() >= darkdog.x - 50 && punchlist.get(i).getX() <= darkdog.x + 50) {
+									System.out.println("다크독 펀치 맞음");
+									darkdog.hp -= punchlist.get(i).attack;
 
-						}
-
-						for (int i = 0; i < punchlist.size(); i++){
-							if(punchlist.get(i).getX() >= darkdog.getX() - 30){
-								System.out.println("다크독 펀치 맞음");
-								darkdog.hp -= punchlist.get(i).attack;
-
-								panel.remove(punchlist.get(i));
-								punchlist.remove(i);
-								panel.repaint();
+									// 펀치 제거
+									panel.remove(punchlist.get(i));
+									punchlist.remove(i);
+									panel.repaint();
+								}
+							} catch (Exception e) {
+								e.printStackTrace();
 							}
+
 						}
+
+
 					}catch (Exception e) {
 						// TODO: handle exception
 					}
