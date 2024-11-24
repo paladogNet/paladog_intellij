@@ -6,6 +6,7 @@ import PalaDog.Mouse;
 import Main.GamePanel;
 import lombok.Data;
 import java.util.ArrayList;
+import PalaDog.PalaDog;
 
 @Data
 public class DarkDog extends JLabel {
@@ -88,7 +89,7 @@ public class DarkDog extends JLabel {
 		}
 	}
 
-	public static void punchAttack(ArrayList<DarkDogPunch> punchlist, ArrayList<Mouse> mouse, GamePanel panel) {
+	public static void punchAttack(ArrayList<DarkDogPunch> punchlist, ArrayList<Mouse> mouse, PalaDog paladog, GamePanel panel) {
 		new Thread(new Runnable() {
 			@Override
 			public void run() {
@@ -120,6 +121,17 @@ public class DarkDog extends JLabel {
 
 							}
 
+						}
+
+						for (int i = 0; i < punchlist.size(); i++){
+							if(punchlist.get(i).getX() <= paladog.getX() + 30){
+								System.out.println("팔라독 펀치 맞음");
+								paladog.hp -= punchlist.get(i).attack;
+
+								panel.remove(punchlist.get(i));
+								punchlist.remove(i);
+								panel.repaint();
+							}
 						}
 					}catch (Exception e) {
 						// TODO: handle exception

@@ -9,6 +9,7 @@ import javax.swing.JLabel;
 
 import DarkDog.Zombie;
 import Main.GamePanel;
+import DarkDog.DarkDog;
 
 public class PalaDog extends JLabel {
 
@@ -93,7 +94,7 @@ public class PalaDog extends JLabel {
 			}).start();
 		}
 	}
-	public static void punchAttack(ArrayList<PalaDogPunch> punchlist,ArrayList<Zombie> zombie,GamePanel panel) {
+	public static void punchAttack(ArrayList<PalaDogPunch> punchlist,ArrayList<Zombie> zombie,DarkDog darkdog, GamePanel panel) {
 		new Thread(new Runnable() {
 			@Override
 			public void run() {
@@ -125,6 +126,17 @@ public class PalaDog extends JLabel {
 
 							}
 
+						}
+
+						for (int i = 0; i < punchlist.size(); i++){
+							if(punchlist.get(i).getX() >= darkdog.getX() - 30){
+								System.out.println("다크독 펀치 맞음");
+								darkdog.hp -= punchlist.get(i).attack;
+
+								panel.remove(punchlist.get(i));
+								punchlist.remove(i);
+								panel.repaint();
+							}
 						}
 					}catch (Exception e) {
 						// TODO: handle exception

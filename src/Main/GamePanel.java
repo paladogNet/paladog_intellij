@@ -114,9 +114,11 @@ public class GamePanel extends JFrame {
 		bear.Bear_attack(bearlist, zombielist, darkdog);
 		zombie.Zombie_attack(mouselist, zombielist, paladog);
 		zombie.Zombie_attack2(bearlist, zombielist);
-		palaDogPunchAttack(paladogpunchlist,zombielist);
-		darkDogPunchAttack(darkdogpunchlist, mouselist);
-		
+//		palaDogPunchAttack(paladogpunchlist,zombielist);
+//		darkDogPunchAttack(darkdogpunchlist, mouselist);
+		paladog.punchAttack(paladogpunchlist, zombielist, darkdog,this);
+		darkdog.punchAttack(darkdogpunchlist, mouselist, paladog,this);
+
 		죽는스레드 죽는스레드 = new 죽는스레드();
 		죽는스레드.start();
 
@@ -644,92 +646,6 @@ public class GamePanel extends JFrame {
 				}
 			}).start();
 		}
-	}
-
-
-
-	public void palaDogPunchAttack(ArrayList<PalaDogPunch> punchlist,ArrayList<Zombie> zombie) {
-		new Thread(new Runnable() {
-			@Override
-			public void run() {
-				while (true) {
-					try {
-						Thread.sleep(1);
-					} catch (InterruptedException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
-					}
-					try {
-						for (int i = 0; i < punchlist.size(); i++) {
-							for (int j = 0; j < zombie.size(); j++) {
-								try {
-									if (punchlist.get(i).getX() >= zombie.get(j).x - 50) {
-										System.out.println("펀치맞음");
-										
-										zombie.get(j).hp = zombie.get(j).hp - punchlist.get(i).attack;
-										
-										
-										panel.remove(punchlist.get(i));
-										punchlist.remove(i);
-										panel.repaint();
-										
-
-									}
-								} catch (Exception e) {
-									// TODO: handle exception
-								}
-
-							}
-
-						}
-					}catch (Exception e) {
-						// TODO: handle exception
-					}
-				}
-			}
-		}).start();
-	}
-
-	public void darkDogPunchAttack(ArrayList<DarkDogPunch> punchlist,ArrayList<Mouse> mouse) {
-		new Thread(new Runnable() {
-			@Override
-			public void run() {
-				while (true) {
-					try {
-						Thread.sleep(1);
-					} catch (InterruptedException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
-					}
-					try {
-						for (int i = 0; i < punchlist.size(); i++) {
-							for (int j = 0; j < mouse.size(); j++) {
-								try {
-									if (punchlist.get(i).getX() <= mouse.get(j).x + 50) {
-										System.out.println("펀치맞음");
-
-										mouse.get(j).hp = mouse.get(j).hp - punchlist.get(i).attack;
-
-
-										panel.remove(punchlist.get(i));
-										punchlist.remove(i);
-										panel.repaint();
-
-
-									}
-								} catch (Exception e) {
-									// TODO: handle exception
-								}
-
-							}
-
-						}
-					}catch (Exception e) {
-						// TODO: handle exception
-					}
-				}
-			}
-		}).start();
 	}
 
 	/**

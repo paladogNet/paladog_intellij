@@ -4,17 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b31e0590-2f0d-4958-b218-26fccf8df671" name="변경" comment="Feat : 좀비 안나오게 함, 팔라독 위치 반영하여 상대편에 내 위치 다크독으로 표시하기 성공">
-      <change afterPath="$PROJECT_DIR$/bin/DarkdogPunch.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/images/DarkdogPunch.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/DarkDog/DarkDogPunch.java" afterDir="false" />
+    <list default="true" id="b31e0590-2f0d-4958-b218-26fccf8df671" name="변경" comment="Feat : 일단해">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/DarkDog/DarkDog.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/DarkDog/DarkDog.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Main/GameClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main/GameClient.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Main/GamePanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main/GamePanel.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/PalaDog/Mouse.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/PalaDog/Mouse.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/PalaDog/PalaDog.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/PalaDog/PalaDog.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/PalaDog/PalaDogPunch.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/PalaDog/PalaDogPunch.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -37,12 +32,12 @@
     &quot;assignee&quot;: &quot;hhd1337&quot;
   }
 }</component>
-  <component name="GithubPullRequestsUISettings">{
-  &quot;selectedUrlAndAccountId&quot;: {
-    &quot;url&quot;: &quot;https://github.com/paladogNet/paladog_intellij.git&quot;,
-    &quot;accountId&quot;: &quot;47f5d65d-be29-4c9c-84b2-8f9b138946ca&quot;
+  <component name="GithubPullRequestsUISettings"><![CDATA[{
+  "selectedUrlAndAccountId": {
+    "url": "https://github.com/paladogNet/paladog_intellij.git",
+    "accountId": "1351787f-fa09-4b23-b2ba-c171cc80fefc"
   }
-}</component>
+}]]></component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 5
 }</component>
@@ -180,7 +175,15 @@
       <option name="project" value="LOCAL" />
       <updated>1732379656916</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="Feat : 일단해">
+      <option name="closed" value="true" />
+      <created>1732466473293</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1732466473293</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -190,6 +193,7 @@
     <MESSAGE value="Feat : 두 클라이언트 간 메시지 통신구현완료. 각 클라이언트 화면 렌더링로직 수정필요." />
     <MESSAGE value="Feat : 각 클라이언트 팔라독 움직이면 상대 화면에 다크독 움직이도록 함. 근데 샤샤샥 있음" />
     <MESSAGE value="Feat : 좀비 안나오게 함, 팔라독 위치 반영하여 상대편에 내 위치 다크독으로 표시하기 성공" />
-    <option name="LAST_COMMIT_MESSAGE" value="Feat : 좀비 안나오게 함, 팔라독 위치 반영하여 상대편에 내 위치 다크독으로 표시하기 성공" />
+    <MESSAGE value="Feat : 일단해" />
+    <option name="LAST_COMMIT_MESSAGE" value="Feat : 일단해" />
   </component>
 </project>
