@@ -23,7 +23,7 @@ public class PalaDogPunch extends JLabel {
 	}
 
 	public void moveRight() {
-		// ½º·¹µå°¡ µ¹¸é¼­ x °ªº¯°æÇÏ¸é¼­ repaint()
+		// ìŠ¤ë ˆë“œê°€ ëŒë©´ì„œ xê°’ ë³€ê²½í•˜ë©´ì„œ repaint()
 		ArrayList<PalaDogPunch> PList = new ArrayList<PalaDogPunch>();
 		PList.add(punch);
 		new Thread(new Runnable() {
@@ -37,7 +37,7 @@ public class PalaDogPunch extends JLabel {
 						Thread.sleep(20);
 						setLocation(Punchx, Punchy);
 						for (int i = 0; i < PList.size(); i++) {
-//							System.out.println("ÆİÄ¡ÀÇ  iÀÇÁÂÇ¥"+PList.get(i).getX());
+//							System.out.println("í€ì¹˜ì˜ iì˜ ì¢Œí‘œ"+PList.get(i).getX());
 						}
 
 					} catch (InterruptedException e) {

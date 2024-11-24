@@ -17,15 +17,12 @@ import javax.swing.JPanel;
 
 import DarkDog.DarkDog;
 import DarkDog.Zombie;
-import Main.GamePanel.MouseHpLabel;
-import Main.GamePanel.PalaDogHpLabel;
-import Main.GamePanel.ZombieHpLabel;
-import Main.GamePanel.죽는스레드;
 import PalaDog.Bear;
 import PalaDog.Mouse;
 import PalaDog.PalaDog;
 import PalaDog.PalaDogPunch;
 import javax.swing.Timer;
+import DarkDog.DarkDogPunch;
 
 public class GamePanel extends JFrame {
 	private MyPanel m1, m2;
@@ -33,7 +30,8 @@ public class GamePanel extends JFrame {
 	private Bear bear;
 	private Zombie zombie;
 	private PalaDog paladog;
-	private PalaDogPunch punch;
+	private PalaDogPunch palaDogPunch;
+	private DarkDogPunch darkDogPunch;
 	private DarkDog darkdog;
 	private boolean count = true;
 	public boolean isEnding = true;
@@ -49,10 +47,11 @@ public class GamePanel extends JFrame {
 	private ArrayList<Zombie> zombielist;
 	private ArrayList<Mouse> mouselist;
 	private ArrayList<Bear> bearlist;
-	private ArrayList<PalaDogPunch> punchlist;
+	private ArrayList<PalaDogPunch> paladogpunchlist;
 	public ArrayList<ZombieHpLabel> Zombiehplabellist;
 	public ArrayList<MouseHpLabel> mousehplabellist;
 	public ArrayList<BearHpLabel> bearhplist;
+	private ArrayList<DarkDogPunch> darkdogpunchlist;
 	public int sohwanhp = 0;
 	public int skillmp = 0;
 
@@ -92,7 +91,8 @@ public class GamePanel extends JFrame {
 		mousehplabellist = new ArrayList<>();
 		bearlist = new ArrayList<Bear>();
 		bearhplist = new ArrayList<>();
-		punchlist = new ArrayList<>();
+		paladogpunchlist = new ArrayList<>();
+		darkdogpunchlist = new ArrayList<>();
 		ZombieSoHwan zombiesohwan = new ZombieSoHwan();
 		//zombiesohwan.start();
 
@@ -114,7 +114,8 @@ public class GamePanel extends JFrame {
 		bear.Bear_attack(bearlist, zombielist, darkdog);
 		zombie.Zombie_attack(mouselist, zombielist, paladog);
 		zombie.Zombie_attack2(bearlist, zombielist);
-		펀치어택(punchlist,zombielist);
+		palaDogPunchAttack(paladogpunchlist,zombielist);
+		darkDogPunchAttack(darkdogpunchlist, mouselist);
 		
 		죽는스레드 죽는스레드 = new 죽는스레드();
 		죽는스레드.start();
@@ -168,6 +169,7 @@ public class GamePanel extends JFrame {
 
 		addKeyListener(new KeyAdapter() {
 			private boolean isMouseCooldown = false; // Mouse 생성 쿨다운 플래그
+			private boolean isPunchCooldown = false;
 
 			@Override
 			public void keyPressed(KeyEvent e) {
@@ -227,31 +229,39 @@ public class GamePanel extends JFrame {
 					paladog.moveRight();
 				}
 
-				if (e.getKeyChar() == 'j') {
-					new Thread(() -> {
-						synchronized (this) {
-							if (skillmp > 10) {
-								punch = new PalaDogPunch();
-								punchlist.add(punch);
-								panel.add(punch);
-								punch.moveRight();
-								punch.Punchx = paladog.x + 50;
-								punch.Punchy = paladog.y + 50;
-								skillmp -= 10;
-							}
+				if (e.getKeyChar() == 'j' || e.getKeyChar() == 'J') {
+					if (!isPunchCooldown) {
+						if (skillmp > 10) {
+							new Thread(() -> {
+								synchronized (this) {
+									if (skillmp > 10) {
+										palaDogPunch = new PalaDogPunch();
+										paladogpunchlist.add(palaDogPunch);
+										panel.add(palaDogPunch);
+										palaDogPunch.moveRight();
+										palaDogPunch.Punchx = paladog.x + 50;
+										palaDogPunch.Punchy = paladog.y + 50;
+										skillmp -= 10;
+									}
+								}
+							}).start();
+
+							isPunchCooldown = true;
+
+							// 쿨다운 타이머 설정
+							Timer punchCooldownTimer = new Timer(500, new ActionListener() {
+								@Override
+								public void actionPerformed(ActionEvent e) {
+									isPunchCooldown = false; // 쿨다운 해제
+								}
+							});
+
+							punchCooldownTimer.setRepeats(false); // 반복 실행 방지
+							punchCooldownTimer.start(); // 타이머 시작
+						} else {
+							System.out.println("MP가 부족합니다.");
 						}
-					}).start();
-				} else if (e.getKeyChar() == 'J') {
-					new Thread(() -> {
-						synchronized (this) {
-							punch = new PalaDogPunch();
-							punchlist.add(punch);
-							panel.add(punch);
-							punch.moveRight();
-							punch.Punchx = paladog.x + 50;
-							punch.Punchy = paladog.y + 50;
-						}
-					}).start();
+					}
 				}
 			}
 
@@ -327,10 +337,10 @@ public class GamePanel extends JFrame {
 						}
 					}
 					
-					for (int i = 0; i < punchlist.size(); i++) {
-						if(punchlist.get(i).getX() >1000) {
-							panel.remove(punchlist.get(i));
-							punchlist.remove(i);
+					for (int i = 0; i < paladogpunchlist.size(); i++) {
+						if(paladogpunchlist.get(i).getX() >1000) {
+							panel.remove(paladogpunchlist.get(i));
+							paladogpunchlist.remove(i);
 							panel.repaint();
 							
 						}
@@ -638,7 +648,7 @@ public class GamePanel extends JFrame {
 
 
 
-	public void 펀치어택(ArrayList<PalaDogPunch> punchlist,ArrayList<Zombie> zombie) {
+	public void palaDogPunchAttack(ArrayList<PalaDogPunch> punchlist,ArrayList<Zombie> zombie) {
 		new Thread(new Runnable() {
 			@Override
 			public void run() {
@@ -663,6 +673,48 @@ public class GamePanel extends JFrame {
 										punchlist.remove(i);
 										panel.repaint();
 										
+
+									}
+								} catch (Exception e) {
+									// TODO: handle exception
+								}
+
+							}
+
+						}
+					}catch (Exception e) {
+						// TODO: handle exception
+					}
+				}
+			}
+		}).start();
+	}
+
+	public void darkDogPunchAttack(ArrayList<DarkDogPunch> punchlist,ArrayList<Mouse> mouse) {
+		new Thread(new Runnable() {
+			@Override
+			public void run() {
+				while (true) {
+					try {
+						Thread.sleep(1);
+					} catch (InterruptedException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+					try {
+						for (int i = 0; i < punchlist.size(); i++) {
+							for (int j = 0; j < mouse.size(); j++) {
+								try {
+									if (punchlist.get(i).getX() <= mouse.get(j).x + 50) {
+										System.out.println("펀치맞음");
+
+										mouse.get(j).hp = mouse.get(j).hp - punchlist.get(i).attack;
+
+
+										panel.remove(punchlist.get(i));
+										punchlist.remove(i);
+										panel.repaint();
+
 
 									}
 								} catch (Exception e) {
@@ -715,6 +767,22 @@ public class GamePanel extends JFrame {
 			// g.drawImage(backimg, back2X, 0, this);
 		}
 	}
+
+	public void spawnDarkDogPunch(){
+		new Thread(() -> {
+			synchronized (this) {
+				if (skillmp > 10) {
+					darkDogPunch = new DarkDogPunch();
+					darkdogpunchlist.add(darkDogPunch);
+					panel.add(darkDogPunch);
+					darkDogPunch.moveLeft();
+					darkDogPunch.Punchx = darkdog.x - 50;
+					darkDogPunch.Punchy = darkdog.y + 50;
+				}
+			}
+		}).start();
+	}
+
 
 	public void spawnZombieForDarkDog() {
 		Zombie zombie = new Zombie();

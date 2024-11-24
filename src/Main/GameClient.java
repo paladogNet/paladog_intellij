@@ -384,6 +384,11 @@ public class GameClient {
                             gamePanel.spawnZombieForDarkDog();
                         }
                         break;
+                    case "SPAWN_SKILL":
+                        if (data.equals("PUNCH")) {
+                            gamePanel.spawnDarkDogPunch();
+                        }
+                        break;
                     default:
                         break;
                 }
@@ -438,39 +443,33 @@ public class GameClient {
                         System.out.println("잠시 기다려 주세요 (쿨다운 중)");
                     }
 
+                } else if (e.getKeyChar() == 'j' || e.getKeyChar() == 'J') {
+                    if (!isCooldown) { // 쿨다운이 아닐 때만 실행
+                        if (gamePanel.skillmp >= 10) {
+                            client.sendMessage("SPAWN_SKILL:PUNCH");
+
+                            // 쿨다운 시작
+                            isCooldown = true;
+
+                            // Timer를 사용한 쿨다운 설정
+                            Timer cooldownTimer = new Timer(500, new ActionListener() {
+                                @Override
+                                public void actionPerformed(ActionEvent e) {
+                                    isCooldown = false; // 쿨다운 해제
+                                }
+                            });
+
+                            cooldownTimer.setRepeats(false); // 한 번만 실행
+                            cooldownTimer.start(); // Timer 시작
+                        } else {
+                            System.out.println("MP가 부족합니다");
+                        }
+                    } else {
+                        System.out.println("잠시 기다려 주세요 (쿨다운 중)");
+                    }
                 }
             }
         });
-//        gamePanel.addKeyListener(new KeyAdapter() {
-//            @Override
-//            public void keyPressed(KeyEvent e) {
-//                if (e.getKeyCode() == KeyEvent.VK_LEFT) {
-//                    gamePanel.getPaladog().moveLeft();
-//
-//                    // 팔라독의 위치를 서버로 전송
-//                    int palaX = gamePanel.getPaladogX();
-//                    int darkdogX = 940 - palaX; // 상대 클라이언트의 다크독 위치 계산
-//                    client.sendMessage("UPDATE_POSITION:" + darkdogX + ",190");
-//                } else if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
-//                    gamePanel.getPaladog().moveRight();
-//
-//                    // 팔라독의 위치를 서버로 전송
-//                    int palaX = gamePanel.getPaladogX();
-//                    int darkdogX = 940 - palaX; // 상대 클라이언트의 다크독 위치 계산
-//                    client.sendMessage("UPDATE_POSITION:" + darkdogX + ",190");
-//
-//                } else if (e.getKeyChar() == '1') { // 1키 입력 시 좀비 유닛 소환 요청
-//                    if(gamePanel.sohwanhp >= 10){
-//                        client.sendMessage("SPAWN_UNIT:MOUSE");
-//
-//                    }
-//                    else{
-//                        System.out.println("돈이 부족합니다");
-//                    }
-//
-//                }
-//            }
-//        });
     }
 }
 

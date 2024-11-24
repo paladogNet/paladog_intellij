@@ -23,7 +23,7 @@ public  class Mouse extends JLabel {
 	public ArrayList<Mouse> mouselist;
 	public DarkDog darkdog;
 	public int x = 0;
-	public int y = 250;
+	public int y = 240;
 	public int hp = 30;
 	public int attack = 5;
 	public final static String TAG = "Mouse:";
