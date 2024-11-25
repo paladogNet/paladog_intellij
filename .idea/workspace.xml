@@ -5,10 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b31e0590-2f0d-4958-b218-26fccf8df671" name="변경" comment="Feat : 좀비 안나오게 함, 팔라독 위치 반영하여 상대편에 내 위치 다크독으로 표시하기 성공">
-      <change afterPath="$PROJECT_DIR$/src/DarkDog/DarkDogPunch.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Main/GameClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main/GameClient.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Main/GamePanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main/GamePanel.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -23,6 +21,11 @@
     </option>
   </component>
   <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="main" />
+      </map>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="GitHubPullRequestSearchHistory">{
@@ -115,8 +118,6 @@
         <item itemvalue="애플리케이션.GameClient" />
         <item itemvalue="애플리케이션.GameServer" />
         <item itemvalue="애플리케이션.PalaDogApp" />
-        <item itemvalue="애플리케이션.GameClient" />
-        <item itemvalue="애플리케이션.GameServer" />
       </list>
     </recent_temporary>
   </component>
@@ -137,7 +138,6 @@
       <option name="presentableId" value="Default" />
       <updated>1732357867427</updated>
       <workItem from="1732357868448" duration="31567000" />
-      <workItem from="1732510760425" duration="7613000" />
     </task>
     <task id="LOCAL-00001" summary="Feat : 두 클라이언트 간 메시지 통신구현완료. 각 클라이언트 화면 렌더링로직 수정필요.">
       <option name="closed" value="true" />
