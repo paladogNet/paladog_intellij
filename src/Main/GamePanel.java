@@ -1,9 +1,6 @@
 package Main;
 
-import java.awt.Color;
-import java.awt.Font;
-import java.awt.Graphics;
-import java.awt.Image;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
@@ -15,12 +12,9 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import DarkDog.DarkDogPunch;
 import DarkDog.DarkDog;
 import DarkDog.Zombie;
-import Main.GamePanel.MouseHpLabel;
-import Main.GamePanel.PalaDogHpLabel;
-import Main.GamePanel.ZombieHpLabel;
-import Main.GamePanel.죽는스레드;
 import PalaDog.Bear;
 import PalaDog.Mouse;
 import PalaDog.PalaDog;
@@ -34,6 +28,7 @@ public class GamePanel extends JFrame {
 	private Zombie zombie;
 	private PalaDog paladog;
 	private PalaDogPunch punch;
+	DarkDogPunch darkDogPunch = new DarkDogPunch();
 	private DarkDog darkdog;
 	private boolean count = true;
 	public boolean isEnding = true;
@@ -47,9 +42,10 @@ public class GamePanel extends JFrame {
 
 	public GamePanel gamepanel;
 	private ArrayList<Zombie> zombielist;
-	private ArrayList<Mouse> mouselist;
-	private ArrayList<Bear> bearlist;
-	private ArrayList<PalaDogPunch> punchlist;
+	ArrayList<Mouse> mouselist;
+	ArrayList<Bear> bearlist;
+	ArrayList<PalaDogPunch> paladogpunchlist;
+	ArrayList<DarkDogPunch> darkdogpunchlist;
 	public ArrayList<ZombieHpLabel> Zombiehplabellist;
 	public ArrayList<MouseHpLabel> mousehplabellist;
 	public ArrayList<BearHpLabel> bearhplist;
@@ -92,7 +88,11 @@ public class GamePanel extends JFrame {
 		mousehplabellist = new ArrayList<>();
 		bearlist = new ArrayList<Bear>();
 		bearhplist = new ArrayList<>();
-		punchlist = new ArrayList<>();
+
+		//
+		paladogpunchlist = new ArrayList<>();
+		darkdogpunchlist = new ArrayList<>();
+
 		ZombieSoHwan zombiesohwan = new ZombieSoHwan();
 		//zombiesohwan.start();
 
@@ -114,8 +114,9 @@ public class GamePanel extends JFrame {
 		bear.Bear_attack(bearlist, zombielist, darkdog);
 		zombie.Zombie_attack(mouselist, zombielist, paladog);
 		zombie.Zombie_attack2(bearlist, zombielist);
-		펀치어택(punchlist,zombielist);
-		
+		팔라독펀치어택(paladogpunchlist,zombielist,darkdog);
+		다크독펀치어택(darkdogpunchlist,mouselist,bearlist,paladog);
+
 		죽는스레드 죽는스레드 = new 죽는스레드();
 		죽는스레드.start();
 
@@ -232,7 +233,7 @@ public class GamePanel extends JFrame {
 						synchronized (this) {
 							if (skillmp > 10) {
 								punch = new PalaDogPunch();
-								punchlist.add(punch);
+								paladogpunchlist.add(punch);
 								panel.add(punch);
 								punch.moveRight();
 								punch.Punchx = paladog.x + 50;
@@ -245,7 +246,7 @@ public class GamePanel extends JFrame {
 					new Thread(() -> {
 						synchronized (this) {
 							punch = new PalaDogPunch();
-							punchlist.add(punch);
+							paladogpunchlist.add(punch);
 							panel.add(punch);
 							punch.moveRight();
 							punch.Punchx = paladog.x + 50;
@@ -292,6 +293,10 @@ public class GamePanel extends JFrame {
 		return Zombiehplabellist;
 	}
 
+	public DarkDogHpLabel getDarkdogHpLabel() {
+		return darkdoghplabel;
+	}
+
 
 	class 죽는스레드 extends Thread {
 		@Override
@@ -327,10 +332,10 @@ public class GamePanel extends JFrame {
 						}
 					}
 					
-					for (int i = 0; i < punchlist.size(); i++) {
-						if(punchlist.get(i).getX() >1000) {
-							panel.remove(punchlist.get(i));
-							punchlist.remove(i);
+					for (int i = 0; i < paladogpunchlist.size(); i++) {
+						if(paladogpunchlist.get(i).getX() >1000) {
+							panel.remove(paladogpunchlist.get(i));
+							paladogpunchlist.remove(i);
 							panel.repaint();
 							
 						}
@@ -402,7 +407,9 @@ public class GamePanel extends JFrame {
 				}
 				try {
 					paladoghplabel.setLocation(paladog.x + 80, paladog.y - 80);
-					darkdoghplabel.setLocation(darkdog.x + 55, darkdog.y - 70);
+					darkdoghplabel.setLocation(darkdog.x + 65, darkdog.y - 70); /////////////////////// darkdog.x 라고 하면 안됨!다크독의 x,y는 안바뀌므로.
+					//darkdoghplabel.setLocation(darkdog.x + 55, darkdog.y - 70);
+
 				} catch (Exception e) {
 					// TODO: handle exception
 				}
@@ -638,47 +645,188 @@ public class GamePanel extends JFrame {
 
 
 
-	public void 펀치어택(ArrayList<PalaDogPunch> punchlist,ArrayList<Zombie> zombie) {
-		new Thread(new Runnable() {
-			@Override
-			public void run() {
-				while (true) {
-					try {
-						Thread.sleep(1);
-					} catch (InterruptedException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
-					}
-					try {
-						for (int i = 0; i < punchlist.size(); i++) {
-							for (int j = 0; j < zombie.size(); j++) {
-								try {
-									if (punchlist.get(i).getX() >= zombie.get(j).x - 50) {
-										System.out.println("펀치맞음");
-										
-										zombie.get(j).hp = zombie.get(j).hp - punchlist.get(i).attack;
-										
-										
-										panel.remove(punchlist.get(i));
-										punchlist.remove(i);
-										panel.repaint();
-										
+//	public void 펀치어택(ArrayList<PalaDogPunch> punchlist, ArrayList<Zombie> zombie, DarkDog darkdog) {
+//		new Thread(new Runnable() {
+//			@Override
+//			public void run() {
+//				while (true) {
+//					try {
+//						Thread.sleep(1);
+//					} catch (InterruptedException e1) {
+//						// TODO Auto-generated catch block
+//						e1.printStackTrace();
+//					}
+//					try {
+//						for (int i = 0; i < punchlist.size(); i++) {
+//							for (int j = 0; j < zombie.size(); j++) {
+//								try {
+//									if (punchlist.get(i).getX() >= zombie.get(j).x - 50) {
+//										System.out.println("펀치맞음");
+//
+//										zombie.get(j).hp = zombie.get(j).hp - punchlist.get(i).attack;
+//
+//
+//										panel.remove(punchlist.get(i));
+//										punchlist.remove(i);
+//										panel.repaint();
+//
+//
+//									}
+//								} catch (Exception e) {
+//									// TODO: handle exception
+//								}
+//
+//							}
+//
+//						}
+//					}catch (Exception e) {
+//						// TODO: handle exception
+//					}
+//				}
+//			}
+//		}).start();
+//	}
+public void 팔라독펀치어택(ArrayList<PalaDogPunch> punchlist, ArrayList<Zombie> zombie, DarkDog darkdog) {
+	new Thread(new Runnable() {
+		@Override
+		public void run() {
+			while (true) {
+				try {
+					Thread.sleep(1);
+				} catch (InterruptedException e1) {
+					e1.printStackTrace();
+				}
+				try {
+					for (int i = 0; i < punchlist.size(); i++) {
+						// 좀비와 충돌 체크
+						for (int j = 0; j < zombie.size(); j++) {
+							try {
+								if (punchlist.get(i).getX() >= zombie.get(j).x - 50) {
+									System.out.println("좀비 펀치 맞음");
+									zombie.get(j).hp -= punchlist.get(i).attack;
 
-									}
-								} catch (Exception e) {
-									// TODO: handle exception
+									// 펀치 제거
+									panel.remove(punchlist.get(i));
+									punchlist.remove(i);
+									panel.repaint();
+									break; // 이미 펀치를 제거했으므로 더 이상 처리하지 않음
 								}
-
+							} catch (Exception e) {
+								e.printStackTrace();
 							}
-
 						}
-					}catch (Exception e) {
-						// TODO: handle exception
+
+						// 다크독과 충돌 체크
+						try {
+							if (punchlist.get(i).getX() >= darkdog.x - 50 && punchlist.get(i).getX() <= darkdog.x + 50) {
+								System.out.println("다크독 펀치 맞음");
+								darkdog.hp -= punchlist.get(i).attack;
+
+								// 펀치 제거
+								panel.remove(punchlist.get(i));
+								punchlist.remove(i);
+								panel.repaint();
+							}
+						} catch (Exception e) {
+							e.printStackTrace();
+						}
 					}
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		}
+	}).start();
+}
+
+	public void 다크독펀치어택(ArrayList<DarkDogPunch> punchlist, ArrayList<Mouse> mouselist, ArrayList<Bear> bearlist, PalaDog paladog) {
+		new Thread(() -> {
+			while (true) {
+				try {
+					Thread.sleep(1); // 공격 딜레이 조정
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+				try {
+					for (int i = 0; i < punchlist.size(); i++) {
+						// 쥐와 충돌 체크
+						for (int j = 0; j < mouselist.size(); j++) {
+							try {
+								if (punchlist.get(i).getX() >= mouselist.get(j).x - 50 && punchlist.get(i).getX() <= mouselist.get(j).x + 50) {
+									System.out.println("쥐가 다크독 펀치 맞음");
+									mouselist.get(j).hp -= punchlist.get(i).attack;
+
+									// 유닛 체력 0일 시 제거
+									if (mouselist.get(j).hp <= 0) {
+										panel.remove(mouselist.get(j));
+										mouselist.remove(j);
+									}
+
+									// 펀치 제거
+									panel.remove(punchlist.get(i));
+									punchlist.remove(i);
+									panel.repaint();
+									break; // 이미 펀치를 제거했으므로 루프 종료
+								}
+							} catch (Exception e) {
+								e.printStackTrace();
+							}
+						}
+
+						// 곰과 충돌 체크
+						for (int j = 0; j < bearlist.size(); j++) {
+							try {
+								if (punchlist.get(i).getX() >= bearlist.get(j).x - 50 && punchlist.get(i).getX() <= bearlist.get(j).x + 50) {
+									System.out.println("곰이 다크독 펀치 맞음");
+									bearlist.get(j).hp -= punchlist.get(i).attack;
+
+									// 유닛 체력 0일 시 제거
+									if (bearlist.get(j).hp <= 0) {
+										panel.remove(bearlist.get(j));
+										bearlist.remove(j);
+									}
+
+									// 펀치 제거
+									panel.remove(punchlist.get(i));
+									punchlist.remove(i);
+									panel.repaint();
+									break; // 이미 펀치를 제거했으므로 루프 종료
+								}
+							} catch (Exception e) {
+								e.printStackTrace();
+							}
+						}
+
+						// 팔라독과 충돌 체크
+						try {
+							if (punchlist.get(i).getX() >= paladog.x - 50 && punchlist.get(i).getX() <= paladog.x + 50) {
+								System.out.println("팔라독이 다크독 펀치 맞음");
+								paladog.hp -= punchlist.get(i).attack;
+
+								// 펀치 제거
+								panel.remove(punchlist.get(i));
+								punchlist.remove(i);
+								panel.repaint();
+
+								// 팔라독 체력 0일 시 게임 종료
+								if (paladog.hp <= 0) {
+									isEnding = false;
+									new GameOver(); // 게임 종료 화면 표시
+									setVisible(false);
+								}
+							}
+						} catch (Exception e) {
+							e.printStackTrace();
+						}
+					}
+				} catch (Exception e) {
+					e.printStackTrace();
 				}
 			}
 		}).start();
 	}
+
+
 
 	/**
 	 * DarkDog의 위치를 업데이트하는 메서드.
@@ -715,23 +863,40 @@ public class GamePanel extends JFrame {
 			// g.drawImage(backimg, back2X, 0, this);
 		}
 	}
+//	public void spawnDarkDogPunch(){
+//		new Thread(() -> {
+//			synchronized (this) {
+//
+//					darkDogPunch = new DarkDogPunch();
+//					darkdogpunchlist.add(darkDogPunch);
+//
+//					panel.setLayout(null);
+//					darkDogPunch.Punchx = darkdog.x - 50;
+//					darkDogPunch.Punchy = darkdog.y + 50;
+//					panel.add(darkDogPunch);
+//					darkDogPunch.moveLeft();
+//
+//
+//			}
+//		}).start();
+//	}
 
 	public void spawnZombieForDarkDog() {
 		Zombie zombie = new Zombie();
-		ZombieHpLabel zombieHpLabel = new ZombieHpLabel();
+		ZombieHpLabel zombiehplabel = new ZombieHpLabel();
 
 		// DarkDog 근처에 좀비 소환
-		zombie.setLocation(darkdog.x - 50, darkdog.y);
-		zombieHpLabel.setLocation(zombie.x, zombie.y - 20);
+		//zombie.setLocation(darkdog.x - 50, darkdog.y);
+		//zombie.setLocation(100, darkdog.y);
+		//zombieHpLabel.setLocation(zombie.x, zombie.y - 20);
 
-		zombie = new Zombie();
 		zombie.MoveLeft();
 		zombielist.add(zombie);
 		panel.add(zombie);
-		zombiehplabel = new ZombieHpLabel();
 		panel.add(zombiehplabel);
 		Zombiehplabellist.add(zombiehplabel);
 		System.out.println("좀비 소환" + zombielist.size());
+
 //		// 좀비 이동 로직
 //		new Thread(() -> {
 //			try {

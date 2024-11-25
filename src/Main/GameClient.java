@@ -297,6 +297,9 @@
 
 package Main;
 
+import DarkDog.DarkDogPunch;
+import PalaDog.PalaDogPunch;
+
 import java.io.*;
 import java.net.*;
 import java.awt.event.*;
@@ -374,6 +377,8 @@ public class GameClient {
                                 int x = Integer.parseInt(coords[0].trim());
                                 int y = Integer.parseInt(coords[1].trim());
                                 gamePanel.updateDarkDogPosition(x, y); // 다크독 위치 업데이트
+
+                                ////////////여기 다 날아감 ㅅㅂ 라벨
                             } catch (NumberFormatException e) {
                                 e.printStackTrace(); // 좌표 파싱 실패 시 예외 처리
                             }
