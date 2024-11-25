@@ -374,6 +374,8 @@ public class GameClient {
                                 int x = Integer.parseInt(coords[0].trim());
                                 int y = Integer.parseInt(coords[1].trim());
                                 gamePanel.updateDarkDogPosition(x, y); // 다크독 위치 업데이트
+                                gamePanel.getDarkdog().x = x;
+                                gamePanel.getDarkdog().y = y;
                             } catch (NumberFormatException e) {
                                 e.printStackTrace(); // 좌표 파싱 실패 시 예외 처리
                             }
