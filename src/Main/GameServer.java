@@ -134,6 +134,8 @@ public class GameServer extends JFrame {
         new Thread(() -> {
             try {
                 serverSocket = new ServerSocket(PORT);
+                printDisplay("서버가 시작되었습니다: " + getLocalAddr()); //서버 시작 메시지 출력
+
                 while (isRunning) {
                     Socket clientSocket = serverSocket.accept();
                     printDisplay("클라이언트 연결됨: " + clientSocket.getInetAddress());
@@ -187,7 +189,13 @@ public class GameServer extends JFrame {
         t_display.append(msg + "\n");
         t_display.setCaretPosition(t_display.getDocument().getLength());
     }
-
+    private String getLocalAddr(){
+        try{
+            return InetAddress.getLocalHost().getHostAddress(); //로컬 IP 주소 반환
+        } catch (UnknownHostException e){
+            return "Unknown"; //IP 주소를 얻지 못했을 때 기본값 반환
+        }
+    }
 
     public static void main(String[] args) {
         GameServer gameServer = new GameServer();
