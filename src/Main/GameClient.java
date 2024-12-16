@@ -8,7 +8,7 @@ import java.awt.event.*;
 import javax.swing.*;
 import javax.swing.Timer;
 
-public class GameClient extends JFrame{
+public class GameClient extends JFrame {
     private Socket socket; // 서버와의 연결을 위한 소켓
     private ObjectInputStream in; // 서버로부터 객체 메시지를 읽기 위한 입력 스트림
     private ObjectOutputStream out; // 서버로 객체 메시지를 보내기 위한 출력 스트림
@@ -69,8 +69,8 @@ public class GameClient extends JFrame{
             // 새로운 GamePanel 실행
 //            this.dispose(); // 로그인 창 닫기
 
-            new GameClientHandler(socket, gamePanel, clientId,in,out).start();
-            
+            new GameClientHandler(socket, gamePanel, clientId, in, out).start();
+
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Connection failed: " + e.getMessage());
         }
@@ -231,31 +231,15 @@ public class GameClient extends JFrame{
     }
 
 
-    // 서버로부터 메시지를 처리하는 내부 클래스
-    private class IncomingMessagesHandler implements Runnable {
-        @Override
-        public void run() {
-            try {
-                while (true) {
-                    // 서버로부터 ChatMsg 객체를 읽어들임
-                    ChatMsg msg = (ChatMsg) in.readObject();
-                    processServerMessage(msg);
-                }
-            } catch (IOException | ClassNotFoundException e) {
-                e.printStackTrace(); // 수신 중 오류 발생 시 예외 처리
-            }
-        }
-    }
-
     class GameClientHandler extends Thread {
         private Socket socket;
         private GamePanel gamePanel;
         private ObjectInputStream in;
         private ObjectOutputStream out;
         private String clientId;
-        private boolean gameStarted= false;
+        private boolean gameStarted = false;
 
-        public GameClientHandler(Socket socket, GamePanel gamePanel, String clientId,ObjectInputStream in, ObjectOutputStream out ) {
+        public GameClientHandler(Socket socket, GamePanel gamePanel, String clientId, ObjectInputStream in, ObjectOutputStream out) {
             this.socket = socket;
             this.gamePanel = gamePanel;
             this.clientId = clientId;
@@ -288,7 +272,7 @@ public class GameClient extends JFrame{
 
         private void processMessage(ChatMsg msg) {
 
-            if(!gameStarted) {
+            if (!gameStarted) {
                 return; //겜 시작 전에 exception안뜨게 어떤 메시지도 처리 안하게
             }
 
@@ -359,88 +343,10 @@ public class GameClient extends JFrame{
         }
     }
 
+    public static void main(String[] args) {
 
-    private void processServerMessage(ChatMsg msg) {
-        // 디버깅용 로그 추가
-        System.out.println("Received Message - UserID: " + msg.getUserID() + ", Mode: " + msg.getMode() + ", Message: " + msg.getMessage());
+        new GameClient();
 
-        SwingUtilities.invokeLater(() -> {
-            if (!msg.getUserID().equals(clientId)) { // 상대 클라이언트의 메시지만 처리
-                switch (msg.getMode()) {
-                    case ChatMsg.MODE_TX_COORDINATE: // 좌표 메시지 처리
-                        if (msg.getMessage().contains(",")) {
-                            String[] coords = msg.getMessage().split(",");
-                            if (coords.length == 2) {
-                                try {
-                                    int x = Integer.parseInt(coords[0].trim());
-                                    int y = Integer.parseInt(coords[1].trim());
-                                    System.out.println("Updating DarkDog Position to: " + x + ", " + y);
-                                    gamePanel.updateDarkDogPosition(x, y);
-                                    gamePanel.getDarkdog().x = x;
-                                    gamePanel.getDarkdog().y = y;
-                                } catch (NumberFormatException e) {
-                                    e.printStackTrace();
-                                }
-                            }
-                        } else {
-                            System.out.println(msg.getUserID() + " says: " + msg.getMessage());
-                        }
-                        break;
-
-                    case ChatMsg.MODE_SPAWN_UNIT: // 유닛 소환 처리
-                        if (msg.getMessage().equals("MOUSE")) {
-                            System.out.println("Spawning Zombie for DarkDog.");
-                            gamePanel.spawnZombieForDarkDog();
-                        }
-                        break;
-
-                    case ChatMsg.MODE_SPAWN_SKILL: // 스킬 소환 처리
-                        if (msg.getMessage().equals("PUNCH")) {
-                            System.out.println("Spawning DarkDog Punch.");
-                            gamePanel.spawnDarkDogPunch();
-                        }
-                        break;
-
-                    case ChatMsg.MODE_TX_STRING: // 텍스트 채팅 메시지 처리
-                        // 채팅 메시지를 UI에 추가
-                        gamePanel.appendChatMessage(msg.getUserID() + ": " + msg.getMessage());
-                        break;
-
-                    case ChatMsg.MODE_TX_IMAGE: // 이미지 채팅 메시지 처리
-                        // 이미지 데이터를 저장하거나 UI에 추가
-                        try {
-                            String fileName = "received_image_" + System.currentTimeMillis() + ".png";
-                            File imageFile = new File(fileName);
-                            try (FileOutputStream fos = new FileOutputStream(imageFile)) {
-                                fos.write(msg.getImage());
-                            }
-                            System.out.println("Image received and saved as " + fileName);
-                            gamePanel.appendChatMessage(msg.getUserID() + ": [Image received: " + fileName + "]");
-                        } catch (IOException e) {
-                            System.err.println("Failed to save received image.");
-                            e.printStackTrace();
-                        }
-                        break;
-
-                    default:
-                        System.out.println("Unhandled Mode: " + msg.getMode());
-                        break;
-                }
-            }
-        });
     }
-
-
-
-public static void main(String[] args) {
-
-    new GameClient();
-
-//    GamePanel gamePanel = new GamePanel();
-//    GameClient client = new GameClient("localhost", 12345, gamePanel);
-//
-
-
-}
 }
 
