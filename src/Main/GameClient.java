@@ -488,28 +488,99 @@ public class GameClient {
     private GamePanel gamePanel; // 게임 화면을 관리하는 GamePanel 객체
     private String clientId; // 클라이언트의 고유 ID
 
-    // 생성자: 서버에 연결하고 입력/출력 스트림 초기화
-    public GameClient(String serverAddress, int port, GamePanel gamePanel) {
-        this.gamePanel = gamePanel; // GamePanel 객체를 받아옴
-        try {
-            // 서버에 연결
-            socket = new Socket(serverAddress, port);
-            out = new ObjectOutputStream(socket.getOutputStream());
-            in = new ObjectInputStream(socket.getInputStream());
+//    // 생성자: 서버에 연결하고 입력/출력 스트림 초기화
+//    public GameClient(String serverAddress, int port, GamePanel gamePanel) {
+//        this.gamePanel = gamePanel; // GamePanel 객체를 받아옴
+//        try {
+//            // 서버에 연결
+//            socket = new Socket(serverAddress, port);
+//            out = new ObjectOutputStream(socket.getOutputStream());
+//            in = new ObjectInputStream(socket.getInputStream());
+//
+//            // 서버로부터 고유 ID를 수신
+//            ChatMsg initialMsg = (ChatMsg) in.readObject(); // 서버에서 ChatMsg 객체 수신
+//            if (initialMsg.getMode() == ChatMsg.MODE_LOGIN) {
+//                clientId = initialMsg.getUserID();
+//                System.out.println("Assigned Client ID: " + clientId);
+//            }
+//
+//            // 서버로부터 메시지를 처리하는 스레드를 시작
+//            new Thread(new IncomingMessagesHandler()).start();
+//        } catch (IOException | ClassNotFoundException e) {
+//            e.printStackTrace(); // 연결 실패 시 예외 처리
+//        }
+//    }
+// GameClient.java
+public GameClient(String serverAddress, int port, GamePanel gamePanel) {
+    this.gamePanel = gamePanel; // GamePanel 객체를 받아옴
 
-            // 서버로부터 고유 ID를 수신
-            ChatMsg initialMsg = (ChatMsg) in.readObject(); // 서버에서 ChatMsg 객체 수신
-            if (initialMsg.getMode() == ChatMsg.MODE_LOGIN) {
-                clientId = initialMsg.getUserID();
-                System.out.println("Assigned Client ID: " + clientId);
+    try {
+        // 서버에 연결
+        socket = new Socket(serverAddress, port);
+        System.out.println("Connected to server at " + serverAddress + ":" + port);
+
+        // 입력/출력 스트림 초기화
+        out = new ObjectOutputStream(socket.getOutputStream());
+        in = new ObjectInputStream(socket.getInputStream());
+
+        // 서버로부터 고유 ID 수신
+        ChatMsg initialMsg = (ChatMsg) in.readObject(); // 서버에서 ChatMsg 객체 수신
+        if (initialMsg.getMode() == ChatMsg.MODE_LOGIN) {
+            clientId = initialMsg.getUserID();
+            System.out.println("Assigned Client ID: " + clientId);
+        } else {
+            System.err.println("Unexpected initial message mode: " + initialMsg.getMode());
+        }
+
+        // 서버로부터 메시지를 처리하는 스레드 시작
+        new Thread(new IncomingMessagesHandler()).start();
+
+        // 게임 패널에 초기 포커스 설정
+        gamePanel.setFocusable(true);
+        gamePanel.requestFocusInWindow();
+
+        // 채팅 메시지 전송 리스너 설정
+        setupChatListeners();
+    } catch (IOException | ClassNotFoundException e) {
+        System.err.println("Failed to connect to server or initialize streams.");
+        e.printStackTrace();
+    }
+}
+
+    // 채팅 관련 이벤트 리스너 설정
+    private void setupChatListeners() {
+        // 텍스트 메시지 전송 리스너
+        gamePanel.getSendButton().addActionListener(e -> {
+            String text = gamePanel.getChatInput(); // 입력 필드에서 텍스트 가져오기
+            if (!text.isEmpty()) {
+                ChatMsg chatMsg = new ChatMsg(clientId, ChatMsg.MODE_TX_STRING, text);
+                sendMessage(chatMsg); // 서버로 메시지 전송
+                gamePanel.appendChatMessage("Me: " + text); // 로컬에서도 채팅 추가
             }
+            gamePanel.requestFocusInWindow(); // 채팅 후 GamePanel에 포커스 다시 설정
+        });
 
-            // 서버로부터 메시지를 처리하는 스레드를 시작
-            new Thread(new IncomingMessagesHandler()).start();
-        } catch (IOException | ClassNotFoundException e) {
-            e.printStackTrace(); // 연결 실패 시 예외 처리
+        // 이미지 전송 버튼 리스너 (추가 가능)
+        JButton sendImageButton = gamePanel.getSendImageButton(); // 이미지 전송 버튼 참조
+        if (sendImageButton != null) { // 이미지 전송 기능이 있는 경우
+            sendImageButton.addActionListener(e -> {
+                JFileChooser fileChooser = new JFileChooser();
+                if (fileChooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
+                    File file = fileChooser.getSelectedFile();
+                    try (FileInputStream fis = new FileInputStream(file)) {
+                        byte[] imageData = fis.readAllBytes();
+                        ChatMsg chatMsg = new ChatMsg(clientId, ChatMsg.MODE_TX_IMAGE, "[Image]", imageData);
+                        sendMessage(chatMsg);
+                        gamePanel.appendChatMessage("Me: [Image Sent]");
+                    } catch (IOException ex) {
+                        System.err.println("Failed to send image.");
+                        ex.printStackTrace();
+                    }
+                }
+            });
         }
     }
+
 
     // 서버로 메시지를 전송 (ChatMsg 객체 사용)
     public void sendMessage(ChatMsg msg) {
@@ -544,7 +615,7 @@ public class GameClient {
         SwingUtilities.invokeLater(() -> {
             if (!msg.getUserID().equals(clientId)) { // 상대 클라이언트의 메시지만 처리
                 switch (msg.getMode()) {
-                    case ChatMsg.MODE_TX_STRING: // 텍스트 또는 좌표 메시지 처리
+                    case ChatMsg.MODE_TX_COORDINATE: // 좌표 메시지 처리
                         if (msg.getMessage().contains(",")) {
                             String[] coords = msg.getMessage().split(",");
                             if (coords.length == 2) {
@@ -578,6 +649,27 @@ public class GameClient {
                         }
                         break;
 
+                    case ChatMsg.MODE_TX_STRING: // 텍스트 채팅 메시지 처리
+                        // 채팅 메시지를 UI에 추가
+                        gamePanel.appendChatMessage(msg.getUserID() + ": " + msg.getMessage());
+                        break;
+
+                    case ChatMsg.MODE_TX_IMAGE: // 이미지 채팅 메시지 처리
+                        // 이미지 데이터를 저장하거나 UI에 추가
+                        try {
+                            String fileName = "received_image_" + System.currentTimeMillis() + ".png";
+                            File imageFile = new File(fileName);
+                            try (FileOutputStream fos = new FileOutputStream(imageFile)) {
+                                fos.write(msg.getImage());
+                            }
+                            System.out.println("Image received and saved as " + fileName);
+                            gamePanel.appendChatMessage(msg.getUserID() + ": [Image received: " + fileName + "]");
+                        } catch (IOException e) {
+                            System.err.println("Failed to save received image.");
+                            e.printStackTrace();
+                        }
+                        break;
+
                     default:
                         System.out.println("Unhandled Mode: " + msg.getMode());
                         break;
@@ -588,7 +680,8 @@ public class GameClient {
 
 
 
-//    public static void main(String[] args) {
+
+    //    public static void main(String[] args) {
 //        GamePanel gamePanel = new GamePanel();
 //        GameClient client = new GameClient("localhost", 12345, gamePanel);
 //
@@ -645,7 +738,7 @@ public static void main(String[] args) {
                 int y = 190; // Y값은 고정 또는 필요에 따라 변경
 
                 // 좌표 데이터를 포함한 ChatMsg 객체 생성
-                msg = new ChatMsg(client.clientId, ChatMsg.MODE_TX_STRING, darkdogX + "," + y);
+                msg = new ChatMsg(client.clientId, ChatMsg.MODE_TX_COORDINATE, darkdogX + "," + y);
                 client.sendMessage(msg);
             } else if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
                 // 팔라독을 오른쪽으로 이동
@@ -657,7 +750,7 @@ public static void main(String[] args) {
                 int y = 190; // Y값은 고정 또는 필요에 따라 변경
 
                 // 좌표 데이터를 포함한 ChatMsg 객체 생성
-                msg = new ChatMsg(client.clientId, ChatMsg.MODE_TX_STRING, darkdogX + "," + y);
+                msg = new ChatMsg(client.clientId, ChatMsg.MODE_TX_COORDINATE, darkdogX + "," + y);
                 client.sendMessage(msg);
             } else if (e.getKeyChar() == '1') { // 1키 입력 시 좀비 유닛 소환 요청
                 if (!isCooldown) { // 쿨다운이 아닐 때만 실행

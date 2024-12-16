@@ -10,10 +10,7 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 
-import javax.swing.ImageIcon;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
+import javax.swing.*;
 
 import DarkDog.DarkDog;
 import DarkDog.Zombie;
@@ -21,7 +18,6 @@ import PalaDog.Bear;
 import PalaDog.Mouse;
 import PalaDog.PalaDog;
 import PalaDog.PalaDogPunch;
-import javax.swing.Timer;
 import DarkDog.DarkDogPunch;
 
 public class GamePanel extends JFrame {
@@ -64,15 +60,67 @@ public class GamePanel extends JFrame {
 	public Image backimg = backicon.getImage();
 	public int back2X = backimg.getWidth(null);
 
+	//채팅을 위한 필드들
+	private JTextArea chatArea; // 채팅 로그 표시
+	private JTextField chatInput; // 사용자 입력 필드
+	private JButton sendButton; // 메시지 전송 버튼
+	private JButton sendImageButton; // 메시지 전송 버튼
+
 	public GamePanel() {
 
 		init();
+
+
+
+		// 채팅을 위한 세팅
+		setLayout(null); // 사용자 지정 레이아웃
+		// 채팅 영역 구성
+		chatArea = new JTextArea();
+		chatArea.setEditable(false);
+		chatArea.setLineWrap(true);
+		chatArea.setWrapStyleWord(true);
+		JScrollPane chatScrollPane = new JScrollPane(chatArea);
+		chatScrollPane.setBounds(730, 378, 400, 130); // 오른쪽 아래 위치 조정
+		add(chatScrollPane);
+		// 채팅 입력 필드
+		chatInput = new JTextField();
+		chatInput.setBounds(730, 510, 220, 30);
+		add(chatInput);
+        // 버튼
+		sendButton = new JButton("전송");
+		sendButton.setBounds(960, 510, 70, 30);
+		add(sendButton);
+        // 이미지전송 버튼
+		sendImageButton = new JButton("이미지 전송");
+		sendImageButton.setBounds(1040, 510, 70, 30);
+		add(sendImageButton);
+
+
+
+
 		setting();
 		batch();
 		listener();
 
 		setVisible(true);
 
+	}
+	// 채팅 메시지 추가 메서드
+	public void appendChatMessage(String message) {
+		chatArea.append(message + "\n");
+	}
+
+	public String getChatInput() {
+		String input = chatInput.getText();
+		chatInput.setText(""); // 입력 필드 초기화
+		return input;
+	}
+
+	public JButton getSendButton() {
+		return sendButton;
+	}
+	public JButton getSendImageButton() {
+		return sendImageButton;
 	}
 
 	public void init() {
@@ -139,12 +187,12 @@ public class GamePanel extends JFrame {
 		// bottom_imgLabel.setBounds(0, 372, 743, 165);
 		bottom_imgLabel.setBounds(0, 372, 1500, 165);
 
-		goldLabel.setBounds(812, 480, 57, 30);
+		goldLabel.setBounds(10, 10, 150, 30);
 		getContentPane().add(goldLabel);
 		goldLabel.setForeground(Color.orange);
 		goldLabel.setFont(new Font("", Font.PLAIN, 18));
 
-		mpLabel.setBounds(995, 480, 57, 30);
+		mpLabel.setBounds(10, 30, 150, 30);
 		mpLabel.setForeground(Color.blue);
 		mpLabel.setFont(new Font("", Font.PLAIN, 18));
 
@@ -305,6 +353,8 @@ public class GamePanel extends JFrame {
 	}
 
 
+
+
 	class 죽는스레드 extends Thread {
 		@Override
 		public void run() {
@@ -386,7 +436,7 @@ public class GamePanel extends JFrame {
 						sohwanhp++;
 
 //                  System.out.println(hp);
-						goldLabel.setText(sohwanhp + "/" + "40");
+						goldLabel.setText("gold point : "+sohwanhp + "/" + "40");
 
 						Thread.sleep(500);
 					} catch (InterruptedException e) {
@@ -503,7 +553,7 @@ public class GamePanel extends JFrame {
 				while (skillmp < 40) {
 					try {
 						skillmp++;
-						mpLabel.setText(skillmp + "/" + "40");
+						mpLabel.setText("mana point : " + skillmp + "/" + "40");
 						Thread.sleep(300);
 					} catch (InterruptedException e) {
 
