@@ -18,6 +18,8 @@ public class ChatMsg implements Serializable {
     public static final int MODE_SPAWN_UNIT = 32; // 유닛 소환 모드
     public static final int MODE_SPAWN_SKILL = 48; // 스킬 소환 모드
 
+    public static final int MODE_GAME_START = 100; // 게임시작 모드
+
     private String userID;   // 사용자 ID
     private int mode;        // 메시지 모드
     private String message;  // 메시지 내용

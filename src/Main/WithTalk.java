@@ -59,39 +59,6 @@ public class WithTalk extends JFrame{
         this.add(belowPanel, BorderLayout.SOUTH);
     }
 
-    //DisplayPanel 생성
-//    private JPanel createDisplayPanel() {
-//        JPanel panel = new JPanel(new BorderLayout());
-//        document = new DefaultStyledDocument(); //텍스트 문서 생성
-//        t_display = new JTextPane(document);   //텍스트 문서를 연결할 JTextPane 생성
-//        t_display.setEditable(false);         //텍스트 영역을 읽기 전용으로 설정
-//        JScrollPane scrollPane = new JScrollPane(t_display);
-//        panel.add(scrollPane, BorderLayout.CENTER); //스크롤 가능한 패널로 JTextArea 감싸기!
-//        return panel;
-//    }
-
-    //InputPanel생성
-//    private JPanel createInputPanel(){
-//        JPanel panel = new JPanel(new BorderLayout());
-//        t_input = new JTextField(30); //입력창 생성
-//
-//        b_send = new JButton("보내기"); //보내기 버튼 생성
-//        b_send.setEnabled(false); //초기에는 비활성화 상태
-//        b_send.addActionListener(e -> sendMessage()); //버튼 클릭 시 메시지 전송
-//
-//        b_select = new JButton("선택하기"); //파일 선택 버튼 생성
-//        b_select.addActionListener(e -> selectFile()); //버튼 클릭 시 파일 선택
-//
-//        JPanel buttonPanel = new JPanel(new GridLayout(1, 2));
-//        buttonPanel.add(b_send);
-//        buttonPanel.add(b_select);
-//
-//        panel.add(t_input, BorderLayout.CENTER); //텍스트 필드 중앙 배치
-//        panel.add(buttonPanel, BorderLayout.EAST); //버튼 패널 오른쪽 배치
-//
-//        return panel;
-//    }
-
     //InfoPanel 생성
     private JPanel createInfoPanel(){
         JPanel panel = new JPanel(new FlowLayout(FlowLayout.LEFT));
@@ -226,27 +193,27 @@ public class WithTalk extends JFrame{
         int result = chooser.showOpenDialog(this);
         if (result == JFileChooser.APPROVE_OPTION) {
             File file = chooser.getSelectedFile(); //선택한 파일 file변수로 가져오기
-            sendFile(file); //파일 전송
+//            sendFile(file); //파일 전송
         }
     }
 
 
 
-    private void sendFile(File file) {
-
-        try (FileInputStream fis = new FileInputStream(file)) {
-
-            byte[] imageBytes = fis.readAllBytes(); //파일 내용을 바이트 '배열'로 읽음
-            ChatMsg fileMsg = new ChatMsg(uid, ChatMsg.MODE_TX_IMAGE, file.getName(), imageBytes); //ChatMsg 객체로 파일 메시지를 생성
-
-            out.writeObject(fileMsg); //서버로 ChatMsg 객체인 파일 메시지 writeObject 해버림. ObjectOutputStream 라 writeObject() 사용.
-            out.flush();			  //flush() 해버리기
-
-            printDisplay("파일 전송 완료: " + file.getName());
-        } catch (IOException e) {
-            printDisplay("파일 전송 실패: " + e.getMessage());
-        }
-    }
+//    private void sendFile(File file) {
+//
+//        try (FileInputStream fis = new FileInputStream(file)) {
+//
+//            byte[] imageBytes = fis.readAllBytes(); //파일 내용을 바이트 '배열'로 읽음
+//            ChatMsg fileMsg = new ChatMsg(uid, ChatMsg.MODE_TX_IMAGE, file.getName(), imageBytes); //ChatMsg 객체로 파일 메시지를 생성
+//
+//            out.writeObject(fileMsg); //서버로 ChatMsg 객체인 파일 메시지 writeObject 해버림. ObjectOutputStream 라 writeObject() 사용.
+//            out.flush();			  //flush() 해버리기
+//
+//            printDisplay("파일 전송 완료: " + file.getName());
+//        } catch (IOException e) {
+//            printDisplay("파일 전송 실패: " + e.getMessage());
+//        }
+//    }
 
     private void receiveMessage() throws IOException, ClassNotFoundException {
         Object obj = in.readObject(); //서버로부터 객체 수신
