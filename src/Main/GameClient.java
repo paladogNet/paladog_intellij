@@ -69,6 +69,8 @@ public class GameClient extends JFrame{
             // 새로운 GamePanel 실행
             this.dispose(); // 로그인 창 닫기
             gamePanel = new GamePanel();
+            setupChatListeners();
+
             JFrame gameFrame = new JFrame("Game Panel");
             gameFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             gameFrame.add(gamePanel); // JPanel 추가
@@ -169,7 +171,7 @@ public class GameClient extends JFrame{
                 }
             });
             System.out.println("GameClientHandler직전");
-            new GameClientHandler(socket, gamePanel, clientId).start();
+            new GameClientHandler(socket, gamePanel, clientId,in,out).start();
             System.out.println("GameClientHandler직후");
             
         } catch (Exception e) {
@@ -216,12 +218,15 @@ public class GameClient extends JFrame{
     // 서버로 메시지를 전송 (ChatMsg 객체 사용)
     public void sendMessage(ChatMsg msg) {
         try {
-            out.writeObject(msg);
-            out.flush();
+            synchronized (out) { // 동기화 보장
+                out.writeObject(msg);
+                out.flush();
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
+
 
     // 서버로부터 메시지를 처리하는 내부 클래스
     private class IncomingMessagesHandler implements Runnable {
@@ -246,16 +251,12 @@ public class GameClient extends JFrame{
         private ObjectOutputStream out;
         private String clientId;
 
-        public GameClientHandler(Socket socket, GamePanel gamePanel, String clientId) {
+        public GameClientHandler(Socket socket, GamePanel gamePanel, String clientId,ObjectInputStream in, ObjectOutputStream out ) {
             this.socket = socket;
             this.gamePanel = gamePanel;
             this.clientId = clientId;
-            try {
-                out = new ObjectOutputStream(socket.getOutputStream());
-                in = new ObjectInputStream(socket.getInputStream());
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            this.in = in;
+            this.out = out;
         }
 
         @Override
@@ -272,15 +273,67 @@ public class GameClient extends JFrame{
 
         private void processMessage(ChatMsg msg) {
             SwingUtilities.invokeLater(() -> {
-                switch (msg.getMode()) {
-                    case ChatMsg.MODE_TX_STRING: // 채팅 메시지 처리
-                        gamePanel.appendChatMessage(msg.getUserID() + ": " + msg.getMessage());
-                        break;
-                    case ChatMsg.MODE_TX_IMAGE: // 이미지 메시지 처리
-                        gamePanel.appendChatMessage(msg.getUserID() + ": [Image Received]");
-                        break;
-                    default:
-                        System.out.println("Unhandled message mode: " + msg.getMode());
+                if (!msg.getUserID().equals(clientId)) { // 상대 클라이언트의 메시지만 처리
+                    switch (msg.getMode()) {
+                        case ChatMsg.MODE_TX_COORDINATE: // 좌표 메시지 처리
+                            if (msg.getMessage().contains(",")) {
+                                String[] coords = msg.getMessage().split(",");
+                                if (coords.length == 2) {
+                                    try {
+                                        int x = Integer.parseInt(coords[0].trim());
+                                        int y = Integer.parseInt(coords[1].trim());
+                                        System.out.println("Updating DarkDog Position to: " + x + ", " + y);
+                                        gamePanel.updateDarkDogPosition(x, y);
+                                        gamePanel.getDarkdog().x = x;
+                                        gamePanel.getDarkdog().y = y;
+                                    } catch (NumberFormatException e) {
+                                        e.printStackTrace();
+                                    }
+                                }
+                            } else {
+                                System.out.println(msg.getUserID() + " says: " + msg.getMessage());
+                            }
+                            break;
+
+                        case ChatMsg.MODE_SPAWN_UNIT: // 유닛 소환 처리
+                            if (msg.getMessage().equals("MOUSE")) {
+                                System.out.println("Spawning Zombie for DarkDog.");
+                                gamePanel.spawnZombieForDarkDog();
+                            }
+                            break;
+
+                        case ChatMsg.MODE_SPAWN_SKILL: // 스킬 소환 처리
+                            if (msg.getMessage().equals("PUNCH")) {
+                                System.out.println("Spawning DarkDog Punch.");
+                                gamePanel.spawnDarkDogPunch();
+                            }
+                            break;
+
+                        case ChatMsg.MODE_TX_STRING: // 텍스트 채팅 메시지 처리
+                            // 채팅 메시지를 UI에 추가
+                            gamePanel.appendChatMessage(msg.getUserID() + ": " + msg.getMessage());
+                            break;
+
+                        case ChatMsg.MODE_TX_IMAGE: // 이미지 채팅 메시지 처리
+                            // 이미지 데이터를 저장하거나 UI에 추가
+                            try {
+                                String fileName = "received_image_" + System.currentTimeMillis() + ".png";
+                                File imageFile = new File(fileName);
+                                try (FileOutputStream fos = new FileOutputStream(imageFile)) {
+                                    fos.write(msg.getImage());
+                                }
+                                System.out.println("Image received and saved as " + fileName);
+                                gamePanel.appendChatMessage(msg.getUserID() + ": [Image received: " + fileName + "]");
+                            } catch (IOException e) {
+                                System.err.println("Failed to save received image.");
+                                e.printStackTrace();
+                            }
+                            break;
+
+                        default:
+                            System.out.println("Unhandled Mode: " + msg.getMode());
+                            break;
+                    }
                 }
             });
         }

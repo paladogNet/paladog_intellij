@@ -74,50 +74,57 @@ public class GameServer extends JFrame {
         @Override
         public void run() {
             try {
+                // 항상 ObjectOutputStream을 먼저 생성
                 out = new ObjectOutputStream(socket.getOutputStream());
-                in = new ObjectInputStream(socket.getInputStream());
+                out.flush(); // 헤더를 보낸 뒤 바로 플러시
 
-                // 클라이언트에 고유 ID 전송
+                in = new ObjectInputStream(socket.getInputStream());
+                System.out.println("클라이언트 핸들러 시작: " + clientId);
+
                 ChatMsg loginMsg = new ChatMsg(clientId, ChatMsg.MODE_LOGIN, "Welcome!");
                 out.writeObject(loginMsg);
                 out.flush();
 
-
+                // 메시지 처리 루프
                 ChatMsg message;
                 while ((message = (ChatMsg) in.readObject()) != null) {
                     printDisplay(clientId + "로부터 메시지 수신: " + message);
-
-                    // 모든 클라이언트에게 메시지 브로드캐스트
                     broadcastMessage(message);
                 }
             } catch (IOException | ClassNotFoundException e) {
                 e.printStackTrace();
             } finally {
-                // 클라이언트 연결 종료 처리
-                try {
-                    socket.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                synchronized (clientHandlers) {
-                    clientHandlers.remove(this); // 핸들러 리스트에서 제거
-                }
+                closeResources();
             }
         }
+
+        private void closeResources() {
+            try {
+                if (in != null) in.close();
+                if (out != null) out.close();
+                if (socket != null) socket.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
 
         // 메시지를 모든 클라이언트에게 브로드캐스트
         private void broadcastMessage(ChatMsg message) {
             synchronized (clientHandlers) {
                 for (ClientHandler handler : clientHandlers) {
                     try {
-                        handler.out.writeObject(message);
-                        handler.out.flush();
+                        synchronized (handler.out) { // 스트림 동기화
+                            handler.out.writeObject(message);
+                            handler.out.flush();
+                        }
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
                 }
             }
         }
+
     }
 
     private void startServer() {
