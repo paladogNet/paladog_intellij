@@ -69,21 +69,33 @@ public class GameServer extends JFrame {
         public ClientHandler(Socket socket) {
             this.socket = socket;
             this.clientId = "CLIENT_" + (++clientCounter); // 고유 ID 생성
+            try {
+                out = new ObjectOutputStream(socket.getOutputStream());
+                out.flush();
+                in = new ObjectInputStream(socket.getInputStream());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+        private void sendMessage(ChatMsg message) {
+            try {
+                synchronized (out) {
+                    out.writeObject(message);
+                    out.flush();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
 
         @Override
         public void run() {
             try {
-                // 항상 ObjectOutputStream을 먼저 생성
-                out = new ObjectOutputStream(socket.getOutputStream());
-                out.flush(); // 헤더를 보낸 뒤 바로 플러시
-
-                in = new ObjectInputStream(socket.getInputStream());
                 System.out.println("클라이언트 핸들러 시작: " + clientId);
 
                 ChatMsg loginMsg = new ChatMsg(clientId, ChatMsg.MODE_LOGIN, "Welcome!");
-                out.writeObject(loginMsg);
-                out.flush();
+                sendMessage(loginMsg);
 
                 // 메시지 처리 루프
                 ChatMsg message;
@@ -127,6 +139,18 @@ public class GameServer extends JFrame {
 
     }
 
+    private void startGameIfReady() {
+        synchronized (clientHandlers) {
+            if (clientHandlers.size() == 2) {
+                // 클라이언트 2명 연결됨 -> 시작 신호 전송
+                ChatMsg startMsg = new ChatMsg("SERVER", ChatMsg.MODE_GAME_START, null);
+                for (ClientHandler handler : clientHandlers) {
+                    handler.sendMessage(startMsg);
+                }
+            }
+        }
+    }
+
     private void startServer() {
         printDisplay("서버 실행 중...");
         isRunning = true;
@@ -146,14 +170,16 @@ public class GameServer extends JFrame {
                         clientHandlers.add(clientHandler); // 핸들러 리스트에 추가
                     }
                     clientHandler.start(); // 스레드 시작
+
+                    startGameIfReady();
                 }
             } catch (IOException e) {
                 if (isRunning) {
                     e.printStackTrace();
                 }
-            } finally {
+            } /*finally {
                 stopServer(); // 서버 소켓이 닫힌 경우 서버 종료 처리
-            }
+            }*/
         }).start();
     }
 

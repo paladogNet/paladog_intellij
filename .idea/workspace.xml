@@ -11,6 +11,12 @@
   <component name="ChangeListManager">
     <list default="true" id="b31e0590-2f0d-4958-b218-26fccf8df671" name="변경" comment="Feat : out 계속 생성해서 쓰니까 문제였음! 있던 거 쓰도록 바꾸고 채팅만 안돼서 채팅도 되게함">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/Main/GameClient$GameClientHandler.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/Main/GameClient$GameClientHandler.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/Main/GameClient$IncomingMessagesHandler.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/Main/GameClient$IncomingMessagesHandler.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/Main/GameClient.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/Main/GameClient.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/Main/GameServer$ClientHandler.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/Main/GameServer$ClientHandler.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/Main/GameServer.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/Main/GameServer.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Main/GameClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main/GameClient.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Main/GameServer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main/GameServer.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -69,7 +75,6 @@
     "애플리케이션.GameClient.executor": "Run",
     "애플리케이션.GameServer.executor": "Run",
     "애플리케이션.PalaDogApp.executor": "Run",
-    "애플리케이션.WithChatServer.executor": "Run",
     "애플리케이션.WithTalk.executor": "Run"
   }
 }]]></component>
@@ -78,7 +83,7 @@
       <recent name="C:\Users\김정훈\Desktop\paladog\images" />
     </key>
   </component>
-  <component name="RunManager" selected="애플리케이션.GameServer">
+  <component name="RunManager" selected="애플리케이션.GameClient">
     <configuration name="GameClient" type="Application" factoryName="Application" singleton="false" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="Main.GameClient" />
       <module name="palaDog" />
@@ -118,19 +123,6 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="WithChatServer" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="Main.WithChatServer" />
-      <module name="palaDog" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="Main.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
     <configuration name="WithTalk" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="Main.WithTalk" />
       <module name="palaDog" />
@@ -145,7 +137,6 @@
       </method>
     </configuration>
     <list>
-      <item itemvalue="애플리케이션.WithChatServer" />
       <item itemvalue="애플리케이션.WithTalk" />
       <item itemvalue="애플리케이션.GameClient" />
       <item itemvalue="애플리케이션.GameServer" />
@@ -153,9 +144,8 @@
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="애플리케이션.GameServer" />
-        <item itemvalue="애플리케이션.WithChatServer" />
         <item itemvalue="애플리케이션.GameClient" />
+        <item itemvalue="애플리케이션.GameServer" />
         <item itemvalue="애플리케이션.WithTalk" />
       </list>
     </recent_temporary>
@@ -224,15 +214,7 @@
       <option name="project" value="LOCAL" />
       <updated>1732466473293</updated>
     </task>
-    <task id="LOCAL-00006" summary="Feat : out 계속 생성해서 쓰니까 문제였음! 있던 거 쓰도록 바꾸고 채팅만 안돼서 채팅도 되게함">
-      <option name="closed" value="true" />
-      <created>1734383492742</created>
-      <option name="number" value="00006" />
-      <option name="presentableId" value="LOCAL-00006" />
-      <option name="project" value="LOCAL" />
-      <updated>1734383492742</updated>
-    </task>
-    <option name="localTasksCounter" value="7" />
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -254,7 +236,6 @@
     <MESSAGE value="Feat : 각 클라이언트 팔라독 움직이면 상대 화면에 다크독 움직이도록 함. 근데 샤샤샥 있음" />
     <MESSAGE value="Feat : 좀비 안나오게 함, 팔라독 위치 반영하여 상대편에 내 위치 다크독으로 표시하기 성공" />
     <MESSAGE value="Feat : 일단해" />
-    <MESSAGE value="Feat : out 계속 생성해서 쓰니까 문제였음! 있던 거 쓰도록 바꾸고 채팅만 안돼서 채팅도 되게함" />
-    <option name="LAST_COMMIT_MESSAGE" value="Feat : out 계속 생성해서 쓰니까 문제였음! 있던 거 쓰도록 바꾸고 채팅만 안돼서 채팅도 되게함" />
+    <option name="LAST_COMMIT_MESSAGE" value="Feat : 일단해" />
   </component>
 </project>
