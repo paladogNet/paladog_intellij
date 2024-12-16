@@ -259,19 +259,19 @@ public class GamePanel extends JPanel  {
 					}
 				}
 
-				if (e.getKeyChar() == '3') {
-					new Thread(() -> {
-						if (sohwanhp > 30) {
-							sohwanhp -= 30;
-							bear = new Bear();
-							bearlist.add(bear);
-							bearhplabel = new BearHpLabel();
-							bearhplist.add(bearhplabel);
-							panel.add(bear);
-							panel.add(bearhplabel);
-						}
-					}).start();
-				}
+//				if (e.getKeyChar() == '3') {
+//					new Thread(() -> {
+//						if (sohwanhp > 30) {
+//							sohwanhp -= 30;
+//							bear = new Bear();
+//							bearlist.add(bear);
+//							bearhplabel = new BearHpLabel();
+//							bearhplist.add(bearhplabel);
+//							panel.add(bear);
+//							panel.add(bearhplabel);
+//						}
+//					}).start();
+//				}
 
 				if (e.getKeyCode() == KeyEvent.VK_LEFT) {
 					paladog.moveLeft();

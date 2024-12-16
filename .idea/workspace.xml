@@ -10,73 +10,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b31e0590-2f0d-4958-b218-26fccf8df671" name="변경" comment="Feat : 각 클라이언트 팔라독 움직이면 상대 화면에 다크독 움직이도록 함. 근데 샤샤샥 있음">
-      <change beforePath="$PROJECT_DIR$/.idea/artifacts/palaDog_jar2.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/DarkDog/DarkDog$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/DarkDog/DarkDog$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/DarkDog/DarkDog$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/DarkDog/DarkDog$2.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/DarkDog/DarkDog$3.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/DarkDog/DarkDog$3.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/DarkDog/DarkDog.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/DarkDog/DarkDog.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/DarkDog/DarkDogPunch$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/DarkDog/DarkDogPunch$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/DarkDog/DarkDogPunch.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/DarkDog/DarkDogPunch.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/DarkDog/Zombie$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/DarkDog/Zombie$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/DarkDog/Zombie$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/DarkDog/Zombie$2.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/DarkDog/Zombie$3.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/DarkDog/Zombie$3.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/DarkDog/Zombie.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/DarkDog/Zombie.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/META-INF/MANIFEST.MF" beforeDir="false" afterPath="$PROJECT_DIR$/bin/META-INF/MANIFEST.MF" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/Main/ChatMsg.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/Main/ChatMsg.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/Main/EndImg$EndPanel.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/Main/EndImg$EndPanel.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/Main/EndImg.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/Main/EndImg.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/Main/GameClient$1$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/Main/GameClient$1$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/Main/GameClient$1$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/Main/GameClient$1$2.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/Main/GameClient$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/Main/GameClient$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/Main/GameClient$GameClientHandler.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/Main/GameClient$GameClientHandler.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/Main/GameClient$IncomingMessagesHandler.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/Main/GameClient$IncomingMessagesHandler.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/Main/GameClient.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/Main/GameClient.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/Main/GameOver$GameOverPanel.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/Main/GameOver$GameOverPanel.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/Main/GameOver.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/Main/GameOver.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/Main/GamePanel$1$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/Main/GamePanel$1$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/Main/GamePanel$1$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/Main/GamePanel$1$2.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/Main/GamePanel$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/Main/GamePanel$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/Main/GamePanel$BearHpLabel.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/Main/GamePanel$BearHpLabel.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/Main/GamePanel$DarkDogHpLabel.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/Main/GamePanel$DarkDogHpLabel.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/Main/GamePanel$GoldLabel.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/Main/GamePanel$GoldLabel.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/Main/GamePanel$HpLabelMoving.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/Main/GamePanel$HpLabelMoving.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/Main/GamePanel$MouseHpLabel.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/Main/GamePanel$MouseHpLabel.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/Main/GamePanel$MyPanel.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/Main/GamePanel$MyPanel.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/Main/GamePanel$PalaDogHpLabel.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/Main/GamePanel$PalaDogHpLabel.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/Main/GamePanel$SkillLabel.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/Main/GamePanel$SkillLabel.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/Main/GamePanel$ZombieHpLabel.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/Main/GamePanel$ZombieHpLabel.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/Main/GamePanel$ZombieSoHwan.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/Main/GamePanel$ZombieSoHwan.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/Main/GamePanel$죽는스레드.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/Main/GamePanel$죽는스레드.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/Main/GamePanel.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/Main/GamePanel.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/Main/GameServer$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/Main/GameServer$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/Main/GameServer$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/Main/GameServer$2.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/bin/Main/GameServer$ClientHandler.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/Main/GameServer$ClientHandler.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/Main/GameServer.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/Main/GameServer.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/Main/WithChatServer$ClientHandler.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/Main/WithChatServer$ClientHandler.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/Main/WithChatServer.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/Main/WithChatServer.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/Main/WithTalk.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/Main/WithTalk.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/Main/ZombieSoHwan.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/Main/ZombieSoHwan.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/PalaDog/Bear$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/PalaDog/Bear$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/PalaDog/Bear$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/PalaDog/Bear$2.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/PalaDog/Bear$3.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/PalaDog/Bear$3.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/PalaDog/Bear.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/PalaDog/Bear.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/PalaDog/Mouse$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/PalaDog/Mouse$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/PalaDog/Mouse$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/PalaDog/Mouse$2.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/PalaDog/Mouse.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/PalaDog/Mouse.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/PalaDog/PalaDog$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/PalaDog/PalaDog$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/PalaDog/PalaDog$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/PalaDog/PalaDog$2.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/PalaDog/PalaDog$3.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/PalaDog/PalaDog$3.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/PalaDog/PalaDog.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/PalaDog/PalaDog.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/PalaDog/PalaDogPunch$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/PalaDog/PalaDogPunch$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/PalaDog/PalaDogPunch.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/PalaDog/PalaDogPunch.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/images/META-INF/MANIFEST.MF" beforeDir="false" afterPath="$PROJECT_DIR$/images/META-INF/MANIFEST.MF" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/artifacts/palaDog_jar/palaDog.jar" beforeDir="false" afterPath="$PROJECT_DIR$/out/artifacts/palaDog_jar/palaDog.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Main/ChatMsg.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main/ChatMsg.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Main/GameClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main/GameClient.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Main/GameServer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main/GameServer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Main/WithTalk.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main/WithTalk.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

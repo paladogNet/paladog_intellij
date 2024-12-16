@@ -76,7 +76,7 @@ public class GameClient extends JFrame{
         }
     }
 
-    private void startGamePanel() {
+    private GamePanel startGamePanel() {
         gamePanel = new GamePanel();
         setupChatListeners();
 
@@ -179,6 +179,7 @@ public class GameClient extends JFrame{
                 }
             }
         });
+        return gamePanel;
     }
 
 
@@ -273,7 +274,7 @@ public class GameClient extends JFrame{
                             gameStarted = true;
                             SwingUtilities.invokeLater(() -> {
                                 GameClient.this.dispose();
-                                startGamePanel();
+                                this.gamePanel = startGamePanel();
                             });
                         }
                     } else {
