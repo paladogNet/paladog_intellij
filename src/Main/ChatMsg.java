@@ -11,6 +11,8 @@ public class ChatMsg implements Serializable {
     public static final int MODE_LOGOUT = 2;   // 로그아웃 모드
     public static final int MODE_TX_STRING = 16; // 텍스트 전송 모드
     public static final int MODE_TX_IMAGE = 64;  // 이미지 전송 모드
+    public static final int MODE_SPAWN_UNIT = 32; // 유닛 소환 모드
+    public static final int MODE_SPAWN_SKILL = 48; // 스킬 소환 모드
 
     private String userID;   // 사용자 ID
     private int mode;        // 메시지 모드
