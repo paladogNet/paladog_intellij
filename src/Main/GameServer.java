@@ -63,8 +63,8 @@ public class GameServer extends JFrame {
         private static int clientCounter = 0; // 클라이언트 고유 ID 생성용 카운터
         private final String clientId; // 클라이언트 고유 ID
         private Socket socket;
-        private BufferedReader in;
-        private PrintWriter out;
+        private ObjectInputStream in;
+        private ObjectOutputStream out;
 
         public ClientHandler(Socket socket) {
             this.socket = socket;
@@ -74,20 +74,23 @@ public class GameServer extends JFrame {
         @Override
         public void run() {
             try {
-                in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-                out = new PrintWriter(socket.getOutputStream(), true);
+                out = new ObjectOutputStream(socket.getOutputStream());
+                in = new ObjectInputStream(socket.getInputStream());
 
                 // 클라이언트에 고유 ID 전송
-                out.println("YOUR_ID:" + clientId);
+                ChatMsg loginMsg = new ChatMsg(clientId, ChatMsg.MODE_LOGIN, "Welcome!");
+                out.writeObject(loginMsg);
+                out.flush();
 
-                String message;
-                while ((message = in.readLine()) != null) {
+
+                ChatMsg message;
+                while ((message = (ChatMsg) in.readObject()) != null) {
                     printDisplay(clientId + "로부터 메시지 수신: " + message);
 
-                    // 모든 클라이언트에게 메시지 브로드캐스트 (ID 포함)
-                    broadcastMessage(clientId, message);
+                    // 모든 클라이언트에게 메시지 브로드캐스트
+                    broadcastMessage(message);
                 }
-            } catch (IOException e) {
+            } catch (IOException | ClassNotFoundException e) {
                 e.printStackTrace();
             } finally {
                 // 클라이언트 연결 종료 처리
@@ -103,12 +106,14 @@ public class GameServer extends JFrame {
         }
 
         // 메시지를 모든 클라이언트에게 브로드캐스트
-        private void broadcastMessage(String senderId, String message) {
+        private void broadcastMessage(ChatMsg message) {
             synchronized (clientHandlers) {
                 for (ClientHandler handler : clientHandlers) {
-                    if (handler != this) { // 송신자를 제외한 모든 클라이언트에게 메시지 전송
-                        //handler.out.println(senderId + ":" + message);
-                        handler.out.println(message);
+                    try {
+                        handler.out.writeObject(message);
+                        handler.out.flush();
+                    } catch (IOException e) {
+                        e.printStackTrace();
                     }
                 }
             }
