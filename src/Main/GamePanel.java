@@ -1,9 +1,6 @@
 package Main;
 
-import java.awt.Color;
-import java.awt.Font;
-import java.awt.Graphics;
-import java.awt.Image;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
@@ -20,7 +17,7 @@ import PalaDog.PalaDog;
 import PalaDog.PalaDogPunch;
 import DarkDog.DarkDogPunch;
 
-public class GamePanel extends JFrame {
+public class GamePanel extends JPanel  {
 	private MyPanel m1, m2;
 	private Mouse mouse;
 	private Bear bear;
@@ -174,21 +171,16 @@ public class GamePanel extends JFrame {
 	}
 
 	public void setting() {
-		setSize(1130, 574);
-		// setSize(760, 574);
-		setLocationRelativeTo(null); // 프레임을 중앙배치
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		getContentPane().setLayout(null);
-		getContentPane().add(panel);
-		// panel.setBounds(0, 0, 743, 375);
-		panel.setBounds(0, 0, 1500, 375);
+		setPreferredSize(new Dimension(1130, 574)); // JPanel 크기 설정
+		setLayout(null); // JPanel의 레이아웃을 null로 설정 (절대 위치)
+
+		panel.setBounds(0, 0, 1500, 375); // panel의 위치와 크기 설정
 		panel.setLayout(null);
+
 		bottom_imgLabel.setIcon(img);
-		// bottom_imgLabel.setBounds(0, 372, 743, 165);
 		bottom_imgLabel.setBounds(0, 372, 1500, 165);
 
 		goldLabel.setBounds(10, 10, 150, 30);
-		getContentPane().add(goldLabel);
 		goldLabel.setForeground(Color.orange);
 		goldLabel.setFont(new Font("", Font.PLAIN, 18));
 
@@ -200,18 +192,26 @@ public class GamePanel extends JFrame {
 		hpLabel.setForeground(Color.red);
 		hpLabel.setFont(new Font("", Font.PLAIN, 30));
 		hpLabel.setVisible(false);
+
+		// 컴포넌트를 JPanel에 추가
+		add(panel);
+		add(bottom_imgLabel);
+		add(goldLabel);
+		add(mpLabel);
+		add(hpLabel);
 	}
 
+
 	public void batch() {
-		getContentPane().add(hpLabel);
-		getContentPane().add(goldLabel);
-		getContentPane().add(mpLabel);
-		getContentPane().add(panel);
+		add(hpLabel);
+		add(goldLabel);
+		add(mpLabel);
+		add(panel);
 		panel.add(paladog);
 		panel.add(paladoghplabel);
 		panel.add(darkdog);
 		panel.add(darkdoghplabel);
-		getContentPane().add(bottom_imgLabel);
+		add(bottom_imgLabel);
 
 	}
 
