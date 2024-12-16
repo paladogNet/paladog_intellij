@@ -1,30 +1,52 @@
 package Main;
 
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.*;
 import java.net.*;
 import java.util.*;
+import java.util.List;
 
-public class GameServer {
+public class GameServer extends JFrame {
     private static final int PORT = 12345;
     private static final List<ClientHandler> clientHandlers = new ArrayList<>(); // 모든 클라이언트 핸들러 저장
 
-    public static void main(String[] args) {
-        System.out.println("서버 실행 중...");
-        try (ServerSocket serverSocket = new ServerSocket(PORT)) {
-            while (true) {
-                Socket clientSocket = serverSocket.accept();
-                System.out.println("클라이언트 연결됨: " + clientSocket.getInetAddress());
+    public GameServer() {
+        super("Game Server");
 
-                // 새 클라이언트 핸들러 실행
-                ClientHandler clientHandler = new ClientHandler(clientSocket);
-                synchronized (clientHandlers) {
-                    clientHandlers.add(clientHandler); // 핸들러 리스트에 추가
-                }
-                clientHandler.start(); // 스레드 시작
+        buildGUI();
+
+        this.setBounds(600, 100, 400, 300);
+        this.setDefaultCloseOperation(EXIT_ON_CLOSE);
+        this.setVisible(true);
+    }
+
+    private void buildGUI() {
+        JPanel buttonPanel = new JPanel(new GridLayout(1,0));
+
+        JButton startButton = new JButton("서버 실행");
+        JButton stopButton = new JButton("서버 중지");
+
+        startButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                startServer();
             }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        });
+
+        stopButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                stopServer();
+            }
+        });
+
+        buttonPanel.add(startButton);
+        buttonPanel.add(stopButton);
+
+        this.add(buttonPanel, BorderLayout.CENTER);
     }
 
     // 클라이언트와 통신을 처리하는 핸들러
@@ -82,5 +104,33 @@ public class GameServer {
                 }
             }
         }
+    }
+
+    private void startServer() {
+        System.out.println("서버 실행 중...");
+        try (ServerSocket serverSocket = new ServerSocket(PORT)) {
+            while (true) {
+                Socket clientSocket = serverSocket.accept();
+                System.out.println("클라이언트 연결됨: " + clientSocket.getInetAddress());
+
+                // 새 클라이언트 핸들러 실행
+                ClientHandler clientHandler = new ClientHandler(clientSocket);
+                synchronized (clientHandlers) {
+                    clientHandlers.add(clientHandler); // 핸들러 리스트에 추가
+                }
+                clientHandler.start(); // 스레드 시작
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void stopServer() {
+
+    }
+
+
+    public static void main(String[] args) {
+        GameServer gameServer = new GameServer();
     }
 }
