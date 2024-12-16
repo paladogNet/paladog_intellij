@@ -290,11 +290,189 @@
 //    }
 //}
 
+//package Main;
+//
+//import java.io.*;
+//import java.net.*;
+//import java.awt.event.*;
+//import javax.swing.*;
+//import javax.swing.Timer;
+//
+//public class GameClient {
+//    private Socket socket; // 서버와의 연결을 위한 소켓
+//    private BufferedReader in; // 서버로부터 메시지를 읽기 위한 입력 스트림
+//    private PrintWriter out; // 서버로 메시지를 보내기 위한 출력 스트림
+//    private GamePanel gamePanel; // 게임 화면을 관리하는 GamePanel 객체
+//    private String clientId; // 클라이언트의 고유 ID
+//
+//    // 생성자: 서버에 연결하고 입력/출력 스트림 초기화
+//    public GameClient(String serverAddress, int port, GamePanel gamePanel) {
+//        this.gamePanel = gamePanel; // GamePanel 객체를 받아옴
+//        try {
+//            // 서버에 연결
+//            socket = new Socket(serverAddress, port);
+//            in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+//            out = new PrintWriter(socket.getOutputStream(), true);
+//
+//            // 서버로부터 고유 ID를 수신
+//            clientId = in.readLine().split(":")[1]; // 서버에서 "YOUR_ID:CLIENT_X" 형식으로 전달
+//            System.out.println("Assigned Client ID: " + clientId);
+//
+//            // 서버로부터 메시지를 처리하는 스레드를 시작
+//            new Thread(new IncomingMessagesHandler()).start();
+//        } catch (IOException e) {
+//            e.printStackTrace(); // 연결 실패 시 예외 처리
+//        }
+//    }
+//
+//    // 서버로 메시지를 전송 (ID 포함)
+//    public void sendMessage(String action) {
+//        out.println(clientId + ":" + action); // 메시지에 ID 포함
+//    }
+//
+//    // 서버로부터 메시지를 처리하는 내부 클래스
+//    private class IncomingMessagesHandler implements Runnable {
+//        @Override
+//        public void run() {
+//            try {
+//                String message;
+//                // 서버로부터 메시지를 읽어들임
+//                while ((message = in.readLine()) != null) {
+//                    // 읽은 메시지를 처리
+//                    processServerMessage(message);
+//                    System.out.println("Message received: " + message); // 디버그용 메시지 출력
+//                }
+//            } catch (IOException e) {
+//                e.printStackTrace(); // 수신 중 오류 발생 시 예외 처리
+//            }
+//        }
+//    }
+//
+//    // 읽은 메시지를 처리하는 메소드
+//    private void processServerMessage(String message) {
+//        // 메시지 형식: "CLIENT_ID:ACTION:DATA"
+//        String[] parts = message.split(":");
+//        if (parts.length < 3) return; // 형식이 잘못된 메시지는 무시
+//
+//        String senderId = parts[0]; // 메시지를 보낸 클라이언트 ID
+//        String action = parts[1]; // 메시지의 동작
+//        String data = parts[2]; // 추가 데이터
+//
+//        SwingUtilities.invokeLater(() -> {
+//            if (!senderId.equals(clientId)) { // 상대 클라이언트로부터 받은 메시지
+//                switch (action) {
+//                    case "UPDATE_POSITION":
+//                        // "x,y" 형식의 좌표 데이터 처리
+//                        String[] coords = data.split(",");
+//                        if (coords.length == 2) {
+//                            try {
+//                                int x = Integer.parseInt(coords[0].trim());
+//                                int y = Integer.parseInt(coords[1].trim());
+//                                gamePanel.updateDarkDogPosition(x, y); // 다크독 위치 업데이트
+//                                gamePanel.getDarkdog().x = x;
+//                                gamePanel.getDarkdog().y = y;
+//                            } catch (NumberFormatException e) {
+//                                e.printStackTrace(); // 좌표 파싱 실패 시 예외 처리
+//                            }
+//                        }
+//                        break;
+//                    case "SPAWN_UNIT":
+//                        if (data.equals("MOUSE")) {
+//                            gamePanel.spawnZombieForDarkDog();
+//                        }
+//                        break;
+//                    case "SPAWN_SKILL":
+//                        if (data.equals("PUNCH")) {
+//                            gamePanel.spawnDarkDogPunch();
+//                        }
+//                        break;
+//                    default:
+//                        break;
+//                }
+//            }
+//        });
+//    }
+//
+//    public static void main(String[] args) {
+//        GamePanel gamePanel = new GamePanel();
+//        GameClient client = new GameClient("localhost", 12345, gamePanel);
+//        gamePanel.addKeyListener(new KeyAdapter() {
+//            private boolean isCooldown = false; // 쿨다운 플래그
+//
+//            @Override
+//            public void keyPressed(KeyEvent e) {
+//                if (e.getKeyCode() == KeyEvent.VK_LEFT) {
+//                    gamePanel.getPaladog().moveLeft();
+//
+//                    // 팔라독의 위치를 서버로 전송
+//                    int palaX = gamePanel.getPaladogX();
+//                    int darkdogX = 940 - palaX; // 상대 클라이언트의 다크독 위치 계산
+//                    client.sendMessage("UPDATE_POSITION:" + darkdogX + ",190");
+//                } else if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
+//                    gamePanel.getPaladog().moveRight();
+//
+//                    // 팔라독의 위치를 서버로 전송
+//                    int palaX = gamePanel.getPaladogX();
+//                    int darkdogX = 940 - palaX; // 상대 클라이언트의 다크독 위치 계산
+//                    client.sendMessage("UPDATE_POSITION:" + darkdogX + ",190");
+//                } else if (e.getKeyChar() == '1') { // 1키 입력 시 좀비 유닛 소환 요청
+//                    if (!isCooldown) { // 쿨다운이 아닐 때만 실행
+//                        if (gamePanel.sohwanhp >= 10) {
+//                            client.sendMessage("SPAWN_UNIT:MOUSE");
+//
+//                            // 쿨다운 시작
+//                            isCooldown = true;
+//
+//                            // Timer를 사용한 쿨다운 설정
+//                            Timer cooldownTimer = new Timer(1000, new ActionListener() {
+//                                @Override
+//                                public void actionPerformed(ActionEvent e) {
+//                                    isCooldown = false; // 쿨다운 해제
+//                                }
+//                            });
+//
+//                            cooldownTimer.setRepeats(false); // 한 번만 실행
+//                            cooldownTimer.start(); // Timer 시작
+//                        } else {
+//                            System.out.println("돈이 부족합니다");
+//                        }
+//                    } else {
+//                        System.out.println("잠시 기다려 주세요 (쿨다운 중)");
+//                    }
+//
+//                } else if (e.getKeyChar() == 'j' || e.getKeyChar() == 'J') {
+//                    if (!isCooldown) { // 쿨다운이 아닐 때만 실행
+//                        if (gamePanel.skillmp >= 10) {
+//                            client.sendMessage("SPAWN_SKILL:PUNCH");
+//
+//                            // 쿨다운 시작
+//                            isCooldown = true;
+//
+//                            // Timer를 사용한 쿨다운 설정
+//                            Timer cooldownTimer = new Timer(500, new ActionListener() {
+//                                @Override
+//                                public void actionPerformed(ActionEvent e) {
+//                                    isCooldown = false; // 쿨다운 해제
+//                                }
+//                            });
+//
+//                            cooldownTimer.setRepeats(false); // 한 번만 실행
+//                            cooldownTimer.start(); // Timer 시작
+//                        } else {
+//                            System.out.println("MP가 부족합니다");
+//                        }
+//                    } else {
+//                        System.out.println("잠시 기다려 주세요 (쿨다운 중)");
+//                    }
+//                }
+//            }
+//        });
+//    }
+//}
 
 
 
-
-
+// GameClient.java
 package Main;
 
 import java.io.*;
@@ -305,8 +483,8 @@ import javax.swing.Timer;
 
 public class GameClient {
     private Socket socket; // 서버와의 연결을 위한 소켓
-    private BufferedReader in; // 서버로부터 메시지를 읽기 위한 입력 스트림
-    private PrintWriter out; // 서버로 메시지를 보내기 위한 출력 스트림
+    private ObjectInputStream in; // 서버로부터 객체 메시지를 읽기 위한 입력 스트림
+    private ObjectOutputStream out; // 서버로 객체 메시지를 보내기 위한 출력 스트림
     private GamePanel gamePanel; // 게임 화면을 관리하는 GamePanel 객체
     private String clientId; // 클라이언트의 고유 ID
 
@@ -316,23 +494,31 @@ public class GameClient {
         try {
             // 서버에 연결
             socket = new Socket(serverAddress, port);
-            in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-            out = new PrintWriter(socket.getOutputStream(), true);
+            out = new ObjectOutputStream(socket.getOutputStream());
+            in = new ObjectInputStream(socket.getInputStream());
 
             // 서버로부터 고유 ID를 수신
-            clientId = in.readLine().split(":")[1]; // 서버에서 "YOUR_ID:CLIENT_X" 형식으로 전달
-            System.out.println("Assigned Client ID: " + clientId);
+            ChatMsg initialMsg = (ChatMsg) in.readObject(); // 서버에서 ChatMsg 객체 수신
+            if (initialMsg.getMode() == ChatMsg.MODE_LOGIN) {
+                clientId = initialMsg.getUserID();
+                System.out.println("Assigned Client ID: " + clientId);
+            }
 
             // 서버로부터 메시지를 처리하는 스레드를 시작
             new Thread(new IncomingMessagesHandler()).start();
-        } catch (IOException e) {
+        } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace(); // 연결 실패 시 예외 처리
         }
     }
 
-    // 서버로 메시지를 전송 (ID 포함)
-    public void sendMessage(String action) {
-        out.println(clientId + ":" + action); // 메시지에 ID 포함
+    // 서버로 메시지를 전송 (ChatMsg 객체 사용)
+    public void sendMessage(ChatMsg msg) {
+        try {
+            out.writeObject(msg);
+            out.flush();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     // 서버로부터 메시지를 처리하는 내부 클래스
@@ -340,140 +526,88 @@ public class GameClient {
         @Override
         public void run() {
             try {
-                String message;
-                // 서버로부터 메시지를 읽어들임
-                while ((message = in.readLine()) != null) {
-                    // 읽은 메시지를 처리
-                    processServerMessage(message);
-                    System.out.println("Message received: " + message); // 디버그용 메시지 출력
+                while (true) {
+                    // 서버로부터 ChatMsg 객체를 읽어들임
+                    ChatMsg msg = (ChatMsg) in.readObject();
+                    processServerMessage(msg);
                 }
-            } catch (IOException e) {
+            } catch (IOException | ClassNotFoundException e) {
                 e.printStackTrace(); // 수신 중 오류 발생 시 예외 처리
             }
         }
     }
-
-    // 읽은 메시지를 처리하는 메소드
-    private void processServerMessage(String message) {
-        // 메시지 형식: "CLIENT_ID:ACTION:DATA"
-        String[] parts = message.split(":");
-        if (parts.length < 3) return; // 형식이 잘못된 메시지는 무시
-
-        String senderId = parts[0]; // 메시지를 보낸 클라이언트 ID
-        String action = parts[1]; // 메시지의 동작
-        String data = parts[2]; // 추가 데이터
+    // 서버로부터 받은 메시지를 처리하는 클래스
+    private void processServerMessage(ChatMsg msg) {
+        // 디버깅용 로그 추가
+        System.out.println("Received Message - UserID: " + msg.getUserID() + ", Mode: " + msg.getMode() + ", Message: " + msg.getMessage());
 
         SwingUtilities.invokeLater(() -> {
-            if (!senderId.equals(clientId)) { // 상대 클라이언트로부터 받은 메시지
-                switch (action) {
-                    case "UPDATE_POSITION":
-                        // "x,y" 형식의 좌표 데이터 처리
-                        String[] coords = data.split(",");
-                        if (coords.length == 2) {
-                            try {
-                                int x = Integer.parseInt(coords[0].trim());
-                                int y = Integer.parseInt(coords[1].trim());
-                                gamePanel.updateDarkDogPosition(x, y); // 다크독 위치 업데이트
-                                gamePanel.getDarkdog().x = x;
-                                gamePanel.getDarkdog().y = y;
-                            } catch (NumberFormatException e) {
-                                e.printStackTrace(); // 좌표 파싱 실패 시 예외 처리
+            if (!msg.getUserID().equals(clientId)) {
+                switch (msg.getMode()) {
+                    case ChatMsg.MODE_TX_STRING:
+                        if (msg.getMessage().contains(",")) {
+                            String[] coords = msg.getMessage().split(",");
+                            if (coords.length == 2) {
+                                try {
+                                    int x = Integer.parseInt(coords[0].trim());
+                                    int y = Integer.parseInt(coords[1].trim());
+                                    System.out.println("Updating DarkDog Position to: " + x + ", " + y); // 좌표 출력
+                                    gamePanel.updateDarkDogPosition(x, y);
+                                    gamePanel.getDarkdog().x = x;
+                                    gamePanel.getDarkdog().y = y;
+                                } catch (NumberFormatException e) {
+                                    e.printStackTrace();
+                                }
                             }
-                        }
-                        break;
-                    case "SPAWN_UNIT":
-                        if (data.equals("MOUSE")) {
-                            gamePanel.spawnZombieForDarkDog();
-                        }
-                        break;
-                    case "SPAWN_SKILL":
-                        if (data.equals("PUNCH")) {
-                            gamePanel.spawnDarkDogPunch();
+                        } else {
+                            System.out.println(msg.getUserID() + " says: " + msg.getMessage());
                         }
                         break;
                     default:
+                        System.out.println("Unhandled Mode: " + msg.getMode());
                         break;
                 }
             }
         });
     }
+
 
     public static void main(String[] args) {
         GamePanel gamePanel = new GamePanel();
         GameClient client = new GameClient("localhost", 12345, gamePanel);
-        gamePanel.addKeyListener(new KeyAdapter() {
-            private boolean isCooldown = false; // 쿨다운 플래그
 
+        gamePanel.addKeyListener(new KeyAdapter() {
             @Override
             public void keyPressed(KeyEvent e) {
+                ChatMsg msg;
                 if (e.getKeyCode() == KeyEvent.VK_LEFT) {
+                    // 팔라독을 왼쪽으로 이동
                     gamePanel.getPaladog().moveLeft();
 
-                    // 팔라독의 위치를 서버로 전송
+                    // 팔라독의 현재 좌표를 가져옴
                     int palaX = gamePanel.getPaladogX();
                     int darkdogX = 940 - palaX; // 상대 클라이언트의 다크독 위치 계산
-                    client.sendMessage("UPDATE_POSITION:" + darkdogX + ",190");
+                    int y = 190; // Y값은 고정 또는 필요에 따라 변경
+
+                    // 좌표 데이터를 포함한 ChatMsg 객체 생성
+                    msg = new ChatMsg(client.clientId, ChatMsg.MODE_TX_STRING, darkdogX + "," + y);
+                    client.sendMessage(msg);
                 } else if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
+                    // 팔라독을 오른쪽으로 이동
                     gamePanel.getPaladog().moveRight();
 
-                    // 팔라독의 위치를 서버로 전송
+                    // 팔라독의 현재 좌표를 가져옴
                     int palaX = gamePanel.getPaladogX();
                     int darkdogX = 940 - palaX; // 상대 클라이언트의 다크독 위치 계산
-                    client.sendMessage("UPDATE_POSITION:" + darkdogX + ",190");
-                } else if (e.getKeyChar() == '1') { // 1키 입력 시 좀비 유닛 소환 요청
-                    if (!isCooldown) { // 쿨다운이 아닐 때만 실행
-                        if (gamePanel.sohwanhp >= 10) {
-                            client.sendMessage("SPAWN_UNIT:MOUSE");
+                    int y = 190; // Y값은 고정 또는 필요에 따라 변경
 
-                            // 쿨다운 시작
-                            isCooldown = true;
-
-                            // Timer를 사용한 쿨다운 설정
-                            Timer cooldownTimer = new Timer(1000, new ActionListener() {
-                                @Override
-                                public void actionPerformed(ActionEvent e) {
-                                    isCooldown = false; // 쿨다운 해제
-                                }
-                            });
-
-                            cooldownTimer.setRepeats(false); // 한 번만 실행
-                            cooldownTimer.start(); // Timer 시작
-                        } else {
-                            System.out.println("돈이 부족합니다");
-                        }
-                    } else {
-                        System.out.println("잠시 기다려 주세요 (쿨다운 중)");
-                    }
-
-                } else if (e.getKeyChar() == 'j' || e.getKeyChar() == 'J') {
-                    if (!isCooldown) { // 쿨다운이 아닐 때만 실행
-                        if (gamePanel.skillmp >= 10) {
-                            client.sendMessage("SPAWN_SKILL:PUNCH");
-
-                            // 쿨다운 시작
-                            isCooldown = true;
-
-                            // Timer를 사용한 쿨다운 설정
-                            Timer cooldownTimer = new Timer(500, new ActionListener() {
-                                @Override
-                                public void actionPerformed(ActionEvent e) {
-                                    isCooldown = false; // 쿨다운 해제
-                                }
-                            });
-
-                            cooldownTimer.setRepeats(false); // 한 번만 실행
-                            cooldownTimer.start(); // Timer 시작
-                        } else {
-                            System.out.println("MP가 부족합니다");
-                        }
-                    } else {
-                        System.out.println("잠시 기다려 주세요 (쿨다운 중)");
-                    }
+                    // 좌표 데이터를 포함한 ChatMsg 객체 생성
+                    msg = new ChatMsg(client.clientId, ChatMsg.MODE_TX_STRING, darkdogX + "," + y);
+                    client.sendMessage(msg);
                 }
             }
         });
+
     }
 }
-
-
 
