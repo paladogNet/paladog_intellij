@@ -1,0 +1,115 @@
+Index: .idea/workspace.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project version=\"4\">\r\n  <component name=\"AutoImportSettings\">\r\n    <option name=\"autoReloadType\" value=\"SELECTIVE\" />\r\n  </component>\r\n  <component name=\"ChangeListManager\">\r\n    <list default=\"true\" id=\"b31e0590-2f0d-4958-b218-26fccf8df671\" name=\"변경\" comment=\"Feat : 좀비 안나오게 함, 팔라독 위치 반영하여 상대편에 내 위치 다크독으로 표시하기 성공\">\r\n      <change afterPath=\"$PROJECT_DIR$/bin/DarkdogPunch.png\" afterDir=\"false\" />\r\n      <change afterPath=\"$PROJECT_DIR$/images/DarkdogPunch.png\" afterDir=\"false\" />\r\n      <change afterPath=\"$PROJECT_DIR$/src/DarkDog/DarkDogPunch.java\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/.idea/workspace.xml\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/.idea/workspace.xml\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/src/DarkDog/DarkDog.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/DarkDog/DarkDog.java\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/src/Main/GameClient.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/Main/GameClient.java\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/src/Main/GamePanel.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/Main/GamePanel.java\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/src/PalaDog/Mouse.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/PalaDog/Mouse.java\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/src/PalaDog/PalaDog.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/PalaDog/PalaDog.java\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/src/PalaDog/PalaDogPunch.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/PalaDog/PalaDogPunch.java\" afterDir=\"false\" />\r\n    </list>\r\n    <option name=\"SHOW_DIALOG\" value=\"false\" />\r\n    <option name=\"HIGHLIGHT_CONFLICTS\" value=\"true\" />\r\n    <option name=\"HIGHLIGHT_NON_ACTIVE_CHANGELIST\" value=\"false\" />\r\n    <option name=\"LAST_RESOLUTION\" value=\"IGNORE\" />\r\n  </component>\r\n  <component name=\"FileTemplateManagerImpl\">\r\n    <option name=\"RECENT_TEMPLATES\">\r\n      <list>\r\n        <option value=\"Class\" />\r\n      </list>\r\n    </option>\r\n  </component>\r\n  <component name=\"Git.Settings\">\r\n    <option name=\"RECENT_GIT_ROOT_PATH\" value=\"$PROJECT_DIR$\" />\r\n  </component>\r\n  <component name=\"GitHubPullRequestSearchHistory\">{\r\n  &quot;lastFilter&quot;: {\r\n    &quot;state&quot;: &quot;OPEN&quot;,\r\n    &quot;assignee&quot;: &quot;hhd1337&quot;\r\n  }\r\n}</component>\r\n  <component name=\"GithubPullRequestsUISettings\">{\r\n  &quot;selectedUrlAndAccountId&quot;: {\r\n    &quot;url&quot;: &quot;https://github.com/paladogNet/paladog_intellij.git&quot;,\r\n    &quot;accountId&quot;: &quot;47f5d65d-be29-4c9c-84b2-8f9b138946ca&quot;\r\n  }\r\n}</component>\r\n  <component name=\"ProjectColorInfo\">{\r\n  &quot;associatedIndex&quot;: 5\r\n}</component>\r\n  <component name=\"ProjectId\" id=\"2pFNScNjyg0VcpiB95FLVaaQZq2\" />\r\n  <component name=\"ProjectViewState\">\r\n    <option name=\"hideEmptyMiddlePackages\" value=\"true\" />\r\n    <option name=\"showLibraryContents\" value=\"true\" />\r\n  </component>\r\n  <component name=\"PropertiesComponent\"><![CDATA[{\r\n  \"keyToString\": {\r\n    \"Application.GameClient.executor\": \"Run\",\r\n    \"Application.GameServer.executor\": \"Run\",\r\n    \"RunOnceActivity.ShowReadmeOnStart\": \"true\",\r\n    \"git-widget-placeholder\": \"junghun2\",\r\n    \"kotlin-language-version-configured\": \"true\",\r\n    \"last_opened_file_path\": \"C:/Users/admin/Desktop/precapston\",\r\n    \"node.js.detected.package.eslint\": \"true\",\r\n    \"node.js.detected.package.tslint\": \"true\",\r\n    \"node.js.selected.package.eslint\": \"(autodetect)\",\r\n    \"node.js.selected.package.tslint\": \"(autodetect)\",\r\n    \"nodejs_package_manager_path\": \"npm\",\r\n    \"project.structure.last.edited\": \"프로젝트\",\r\n    \"project.structure.proportion\": \"0.0\",\r\n    \"project.structure.side.proportion\": \"0.0\",\r\n    \"vue.rearranger.settings.migration\": \"true\",\r\n    \"애플리케이션.GameClient.executor\": \"Run\",\r\n    \"애플리케이션.GameServer.executor\": \"Run\",\r\n    \"애플리케이션.PalaDogApp.executor\": \"Run\"\r\n  }\r\n}]]></component>\r\n  <component name=\"RecentsManager\">\r\n    <key name=\"MoveFile.RECENT_KEYS\">\r\n      <recent name=\"C:\\Users\\김정훈\\Desktop\\paladog\\images\" />\r\n    </key>\r\n  </component>\r\n  <component name=\"RunManager\" selected=\"Application.GameClient\">\r\n    <configuration name=\"GameClient\" type=\"Application\" factoryName=\"Application\" singleton=\"false\" temporary=\"true\" nameIsGenerated=\"true\">\r\n      <option name=\"MAIN_CLASS_NAME\" value=\"Main.GameClient\" />\r\n      <module name=\"palaDog\" />\r\n      <extension name=\"coverage\">\r\n        <pattern>\r\n          <option name=\"PATTERN\" value=\"Main.*\" />\r\n          <option name=\"ENABLED\" value=\"true\" />\r\n        </pattern>\r\n      </extension>\r\n      <method v=\"2\">\r\n        <option name=\"Make\" enabled=\"true\" />\r\n      </method>\r\n    </configuration>\r\n    <configuration name=\"GameServer\" type=\"Application\" factoryName=\"Application\" temporary=\"true\" nameIsGenerated=\"true\">\r\n      <option name=\"MAIN_CLASS_NAME\" value=\"Main.GameServer\" />\r\n      <module name=\"palaDog\" />\r\n      <extension name=\"coverage\">\r\n        <pattern>\r\n          <option name=\"PATTERN\" value=\"Main.*\" />\r\n          <option name=\"ENABLED\" value=\"true\" />\r\n        </pattern>\r\n      </extension>\r\n      <method v=\"2\">\r\n        <option name=\"Make\" enabled=\"true\" />\r\n      </method>\r\n    </configuration>\r\n    <configuration name=\"PalaDogApp\" type=\"Application\" factoryName=\"Application\" temporary=\"true\" nameIsGenerated=\"true\">\r\n      <option name=\"MAIN_CLASS_NAME\" value=\"Main.PalaDogApp\" />\r\n      <module name=\"palaDog\" />\r\n      <extension name=\"coverage\">\r\n        <pattern>\r\n          <option name=\"PATTERN\" value=\"Main.*\" />\r\n          <option name=\"ENABLED\" value=\"true\" />\r\n        </pattern>\r\n      </extension>\r\n      <method v=\"2\">\r\n        <option name=\"Make\" enabled=\"true\" />\r\n      </method>\r\n    </configuration>\r\n    <list>\r\n      <item itemvalue=\"Application.GameClient\" />\r\n      <item itemvalue=\"Application.GameServer\" />\r\n      <item itemvalue=\"Application.PalaDogApp\" />\r\n    </list>\r\n    <recent_temporary>\r\n      <list>\r\n        <item itemvalue=\"Application.GameClient\" />\r\n        <item itemvalue=\"Application.GameServer\" />\r\n      </list>\r\n    </recent_temporary>\r\n  </component>\r\n  <component name=\"SharedIndexes\">\r\n    <attachedChunks>\r\n      <set>\r\n        <option value=\"bundled-jdk-9823dce3aa75-28b599e66164-intellij.indexing.shared.core-IU-242.23726.103\" />\r\n        <option value=\"bundled-js-predefined-d6986cc7102b-5c90d61e3bab-JavaScript-IU-242.23726.103\" />\r\n      </set>\r\n    </attachedChunks>\r\n  </component>\r\n  <component name=\"SpellCheckerSettings\" RuntimeDictionaries=\"0\" Folders=\"0\" CustomDictionaries=\"0\" DefaultDictionary=\"애플리케이션 수준\" UseSingleDictionary=\"true\" transferred=\"true\" />\r\n  <component name=\"TaskManager\">\r\n    <task active=\"true\" id=\"Default\" summary=\"디폴트 작업\">\r\n      <changelist id=\"b31e0590-2f0d-4958-b218-26fccf8df671\" name=\"변경\" comment=\"\" />\r\n      <created>1732357867427</created>\r\n      <option name=\"number\" value=\"Default\" />\r\n      <option name=\"presentableId\" value=\"Default\" />\r\n      <updated>1732357867427</updated>\r\n      <workItem from=\"1732357868448\" duration=\"31567000\" />\r\n    </task>\r\n    <task id=\"LOCAL-00001\" summary=\"Feat : 두 클라이언트 간 메시지 통신구현완료. 각 클라이언트 화면 렌더링로직 수정필요.\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1732361320914</created>\r\n      <option name=\"number\" value=\"00001\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00001\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1732361320914</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00002\" summary=\"Feat : 두 클라이언트 간 메시지 통신구현완료. 각 클라이언트 화면 렌더링로직 수정필요.\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1732361970284</created>\r\n      <option name=\"number\" value=\"00002\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00002\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1732361970284</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00003\" summary=\"Feat : 각 클라이언트 팔라독 움직이면 상대 화면에 다크독 움직이도록 함. 근데 샤샤샥 있음\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1732371643622</created>\r\n      <option name=\"number\" value=\"00003\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00003\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1732371643622</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00004\" summary=\"Feat : 좀비 안나오게 함, 팔라독 위치 반영하여 상대편에 내 위치 다크독으로 표시하기 성공\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1732379656916</created>\r\n      <option name=\"number\" value=\"00004\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00004\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1732379656916</updated>\r\n    </task>\r\n    <option name=\"localTasksCounter\" value=\"5\" />\r\n    <servers />\r\n  </component>\r\n  <component name=\"TypeScriptGeneratedFilesManager\">\r\n    <option name=\"version\" value=\"3\" />\r\n  </component>\r\n  <component name=\"VcsManagerConfiguration\">\r\n    <MESSAGE value=\"Feat : 두 클라이언트 간 메시지 통신구현완료. 각 클라이언트 화면 렌더링로직 수정필요.\" />\r\n    <MESSAGE value=\"Feat : 각 클라이언트 팔라독 움직이면 상대 화면에 다크독 움직이도록 함. 근데 샤샤샥 있음\" />\r\n    <MESSAGE value=\"Feat : 좀비 안나오게 함, 팔라독 위치 반영하여 상대편에 내 위치 다크독으로 표시하기 성공\" />\r\n    <option name=\"LAST_COMMIT_MESSAGE\" value=\"Feat : 좀비 안나오게 함, 팔라독 위치 반영하여 상대편에 내 위치 다크독으로 표시하기 성공\" />\r\n  </component>\r\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/workspace.xml b/.idea/workspace.xml
+--- a/.idea/workspace.xml	(revision dbe964eb035e9a7ca025bf1852fe0c00fd280a83)
++++ b/.idea/workspace.xml	(date 1732469108217)
+@@ -5,16 +5,7 @@
+   </component>
+   <component name="ChangeListManager">
+     <list default="true" id="b31e0590-2f0d-4958-b218-26fccf8df671" name="변경" comment="Feat : 좀비 안나오게 함, 팔라독 위치 반영하여 상대편에 내 위치 다크독으로 표시하기 성공">
+-      <change afterPath="$PROJECT_DIR$/bin/DarkdogPunch.png" afterDir="false" />
+-      <change afterPath="$PROJECT_DIR$/images/DarkdogPunch.png" afterDir="false" />
+-      <change afterPath="$PROJECT_DIR$/src/DarkDog/DarkDogPunch.java" afterDir="false" />
+       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/src/DarkDog/DarkDog.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/DarkDog/DarkDog.java" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/src/Main/GameClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main/GameClient.java" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/src/Main/GamePanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main/GamePanel.java" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/src/PalaDog/Mouse.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/PalaDog/Mouse.java" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/src/PalaDog/PalaDog.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/PalaDog/PalaDog.java" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/src/PalaDog/PalaDogPunch.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/PalaDog/PalaDogPunch.java" afterDir="false" />
+     </list>
+     <option name="SHOW_DIALOG" value="false" />
+     <option name="HIGHLIGHT_CONFLICTS" value="true" />
+@@ -29,6 +20,11 @@
+     </option>
+   </component>
+   <component name="Git.Settings">
++    <option name="RECENT_BRANCH_BY_REPOSITORY">
++      <map>
++        <entry key="$PROJECT_DIR$" value="junghun" />
++      </map>
++    </option>
+     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+   </component>
+   <component name="GitHubPullRequestSearchHistory">{
+@@ -51,34 +47,27 @@
+     <option name="hideEmptyMiddlePackages" value="true" />
+     <option name="showLibraryContents" value="true" />
+   </component>
+-  <component name="PropertiesComponent"><![CDATA[{
+-  "keyToString": {
+-    "Application.GameClient.executor": "Run",
+-    "Application.GameServer.executor": "Run",
+-    "RunOnceActivity.ShowReadmeOnStart": "true",
+-    "git-widget-placeholder": "junghun2",
+-    "kotlin-language-version-configured": "true",
+-    "last_opened_file_path": "C:/Users/admin/Desktop/precapston",
+-    "node.js.detected.package.eslint": "true",
+-    "node.js.detected.package.tslint": "true",
+-    "node.js.selected.package.eslint": "(autodetect)",
+-    "node.js.selected.package.tslint": "(autodetect)",
+-    "nodejs_package_manager_path": "npm",
+-    "project.structure.last.edited": "프로젝트",
+-    "project.structure.proportion": "0.0",
+-    "project.structure.side.proportion": "0.0",
+-    "vue.rearranger.settings.migration": "true",
+-    "애플리케이션.GameClient.executor": "Run",
+-    "애플리케이션.GameServer.executor": "Run",
+-    "애플리케이션.PalaDogApp.executor": "Run"
++  <component name="PropertiesComponent">{
++  &quot;keyToString&quot;: {
++    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
++    &quot;git-widget-placeholder&quot;: &quot;junghun2&quot;,
++    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
++    &quot;last_opened_file_path&quot;: &quot;C:/Users/admin/Desktop/precapston&quot;,
++    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
++    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
++    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
++    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
++    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
++    &quot;project.structure.last.edited&quot;: &quot;프로젝트&quot;,
++    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
++    &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;,
++    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;,
++    &quot;애플리케이션.GameClient.executor&quot;: &quot;Run&quot;,
++    &quot;애플리케이션.GameServer.executor&quot;: &quot;Run&quot;,
++    &quot;애플리케이션.PalaDogApp.executor&quot;: &quot;Run&quot;
+   }
+-}]]></component>
+-  <component name="RecentsManager">
+-    <key name="MoveFile.RECENT_KEYS">
+-      <recent name="C:\Users\김정훈\Desktop\paladog\images" />
+-    </key>
+-  </component>
+-  <component name="RunManager" selected="Application.GameClient">
++}</component>
++  <component name="RunManager" selected="애플리케이션.GameClient">
+     <configuration name="GameClient" type="Application" factoryName="Application" singleton="false" temporary="true" nameIsGenerated="true">
+       <option name="MAIN_CLASS_NAME" value="Main.GameClient" />
+       <module name="palaDog" />
+@@ -119,14 +108,15 @@
+       </method>
+     </configuration>
+     <list>
+-      <item itemvalue="Application.GameClient" />
+-      <item itemvalue="Application.GameServer" />
+-      <item itemvalue="Application.PalaDogApp" />
++      <item itemvalue="애플리케이션.GameClient" />
++      <item itemvalue="애플리케이션.GameServer" />
++      <item itemvalue="애플리케이션.PalaDogApp" />
+     </list>
+     <recent_temporary>
+       <list>
+-        <item itemvalue="Application.GameClient" />
+-        <item itemvalue="Application.GameServer" />
++        <item itemvalue="애플리케이션.GameClient" />
++        <item itemvalue="애플리케이션.GameServer" />
++        <item itemvalue="애플리케이션.PalaDogApp" />
+       </list>
+     </recent_temporary>
+   </component>
