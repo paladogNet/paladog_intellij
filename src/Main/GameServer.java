@@ -12,6 +12,9 @@ import java.util.List;
 public class GameServer extends JFrame {
     private static final int PORT = 12345;
     private static final List<ClientHandler> clientHandlers = new ArrayList<>(); // 모든 클라이언트 핸들러 저장
+    private ServerSocket serverSocket;
+    private volatile boolean isRunning = false;
+    private static JTextArea t_display;
 
     public GameServer() {
         super("Game Server");
@@ -24,10 +27,14 @@ public class GameServer extends JFrame {
     }
 
     private void buildGUI() {
+        JPanel logPanel = new JPanel(new BorderLayout());
         JPanel buttonPanel = new JPanel(new GridLayout(1,0));
 
         JButton startButton = new JButton("서버 실행");
         JButton stopButton = new JButton("서버 중지");
+
+        t_display = new JTextArea();
+        t_display.setEditable(false);
 
         startButton.addActionListener(new ActionListener() {
             @Override
@@ -43,10 +50,12 @@ public class GameServer extends JFrame {
             }
         });
 
+        logPanel.add(new JScrollPane(t_display), BorderLayout.CENTER);
         buttonPanel.add(startButton);
         buttonPanel.add(stopButton);
 
-        this.add(buttonPanel, BorderLayout.CENTER);
+        this.add(logPanel, BorderLayout.CENTER);
+        this.add(buttonPanel, BorderLayout.SOUTH);
     }
 
     // 클라이언트와 통신을 처리하는 핸들러
@@ -73,7 +82,7 @@ public class GameServer extends JFrame {
 
                 String message;
                 while ((message = in.readLine()) != null) {
-                    System.out.println(clientId + "로부터 메시지 수신: " + message);
+                    printDisplay(clientId + "로부터 메시지 수신: " + message);
 
                     // 모든 클라이언트에게 메시지 브로드캐스트 (ID 포함)
                     broadcastMessage(clientId, message);
@@ -107,26 +116,64 @@ public class GameServer extends JFrame {
     }
 
     private void startServer() {
-        System.out.println("서버 실행 중...");
-        try (ServerSocket serverSocket = new ServerSocket(PORT)) {
-            while (true) {
-                Socket clientSocket = serverSocket.accept();
-                System.out.println("클라이언트 연결됨: " + clientSocket.getInetAddress());
+        printDisplay("서버 실행 중...");
+        isRunning = true;
 
-                // 새 클라이언트 핸들러 실행
-                ClientHandler clientHandler = new ClientHandler(clientSocket);
-                synchronized (clientHandlers) {
-                    clientHandlers.add(clientHandler); // 핸들러 리스트에 추가
+        new Thread(() -> {
+            try {
+                serverSocket = new ServerSocket(PORT);
+                while (isRunning) {
+                    Socket clientSocket = serverSocket.accept();
+                    printDisplay("클라이언트 연결됨: " + clientSocket.getInetAddress());
+
+                    // 새 클라이언트 핸들러 실행
+                    ClientHandler clientHandler = new ClientHandler(clientSocket);
+                    synchronized (clientHandlers) {
+                        clientHandlers.add(clientHandler); // 핸들러 리스트에 추가
+                    }
+                    clientHandler.start(); // 스레드 시작
                 }
-                clientHandler.start(); // 스레드 시작
+            } catch (IOException e) {
+                if (isRunning) {
+                    e.printStackTrace();
+                }
+            } finally {
+                stopServer(); // 서버 소켓이 닫힌 경우 서버 종료 처리
             }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        }).start();
     }
 
     private void stopServer() {
+        System.out.println("서버 중지 중...");
+        isRunning = false;
 
+        // 클라이언트 핸들러 종료
+        synchronized (clientHandlers) {
+            for (ClientHandler handler : clientHandlers) {
+                try {
+                    handler.socket.close(); // 클라이언트 소켓 닫기
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+            clientHandlers.clear(); // 핸들러 리스트 비우기
+        }
+
+        // 서버 소켓 닫기
+        if (serverSocket != null && !serverSocket.isClosed()) {
+            try {
+                serverSocket.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+        printDisplay("서버가 중지되었습니다.");
+    }
+
+    private static void printDisplay(String msg) {
+        t_display.append(msg + "\n");
+        t_display.setCaretPosition(t_display.getDocument().getLength());
     }
 
 

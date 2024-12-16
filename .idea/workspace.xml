@@ -11,6 +11,8 @@
   <component name="ChangeListManager">
     <list default="true" id="b31e0590-2f0d-4958-b218-26fccf8df671" name="변경" comment="Feat : 각 클라이언트 팔라독 움직이면 상대 화면에 다크독 움직이도록 함. 근데 샤샤샥 있음">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/Main/GameServer$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/Main/GameServer$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/Main/GameServer$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/Main/GameServer$2.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/bin/Main/GameServer$ClientHandler.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/Main/GameServer$ClientHandler.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/bin/Main/GameServer.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/Main/GameServer.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Main/GameServer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main/GameServer.java" afterDir="false" />
@@ -78,7 +80,7 @@
       <recent name="C:\Users\김정훈\Desktop\paladog\images" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.GameServer">
+  <component name="RunManager" selected="Application.GameClient">
     <configuration name="GameClient" type="Application" factoryName="Application" singleton="false" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="Main.GameClient" />
       <module name="palaDog" />
@@ -125,8 +127,8 @@
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.GameServer" />
         <item itemvalue="Application.GameClient" />
+        <item itemvalue="Application.GameServer" />
       </list>
     </recent_temporary>
   </component>
@@ -152,7 +154,7 @@
       <workItem from="1732545229112" duration="2065000" />
       <workItem from="1734243155089" duration="201000" />
       <workItem from="1734329891964" duration="2628000" />
-      <workItem from="1734332605294" duration="1886000" />
+      <workItem from="1734332605294" duration="4053000" />
     </task>
     <task id="LOCAL-00001" summary="Feat : 두 클라이언트 간 메시지 통신구현완료. 각 클라이언트 화면 렌더링로직 수정필요.">
       <option name="closed" value="true" />
