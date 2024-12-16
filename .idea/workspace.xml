@@ -9,129 +9,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b31e0590-2f0d-4958-b218-26fccf8df671" name="변경" comment="Feat : 일단해">
-      <change afterPath="$PROJECT_DIR$/.idea/artifacts/palaDog_jar.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/bin/DarkDog/DarkDog$1.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/bin/DarkDog/DarkDog$2.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/bin/DarkDog/DarkDog$3.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/bin/DarkDog/DarkDog.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/bin/DarkDog/DarkDogPunch$1.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/bin/DarkDog/DarkDogPunch.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/bin/DarkDog/Zombie$1.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/bin/DarkDog/Zombie$2.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/bin/DarkDog/Zombie$3.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/bin/DarkDog/Zombie.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/bin/Dog.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/bin/LeftImage.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/bin/META-INF/MANIFEST.MF" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/bin/Main/EndImg$EndPanel.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/bin/Main/EndImg.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/bin/Main/GameClient$1$1.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/bin/Main/GameClient$1$2.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/bin/Main/GameClient$1.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/bin/Main/GameClient$IncomingMessagesHandler.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/bin/Main/GameClient.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/bin/Main/GameOver$GameOverPanel.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/bin/Main/GameOver.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/bin/Main/GamePanel$1$1.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/bin/Main/GamePanel$1$2.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/bin/Main/GamePanel$1.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/bin/Main/GamePanel$BearHpLabel.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/bin/Main/GamePanel$DarkDogHpLabel.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/bin/Main/GamePanel$GoldLabel.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/bin/Main/GamePanel$HpLabelMoving.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/bin/Main/GamePanel$MouseHpLabel.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/bin/Main/GamePanel$MyPanel.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/bin/Main/GamePanel$PalaDogHpLabel.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/bin/Main/GamePanel$SkillLabel.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/bin/Main/GamePanel$ZombieHpLabel.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/bin/Main/GamePanel$ZombieSoHwan.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/bin/Main/GamePanel$죽는스레드.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/bin/Main/GamePanel.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/bin/Main/GameServer$ClientHandler.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/bin/Main/GameServer.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/bin/Main/IntroImg$1.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/bin/Main/IntroImg$IntroPanel.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/bin/Main/IntroImg.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/bin/Main/PalaDogApp.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/bin/Main/ZombieSoHwan.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/bin/PalaDog/Bear$1.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/bin/PalaDog/Bear$2.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/bin/PalaDog/Bear$3.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/bin/PalaDog/Bear.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/bin/PalaDog/Mouse$1.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/bin/PalaDog/Mouse$2.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/bin/PalaDog/Mouse.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/bin/PalaDog/PalaDog$1.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/bin/PalaDog/PalaDog$2.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/bin/PalaDog/PalaDog$3.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/bin/PalaDog/PalaDog.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/bin/PalaDog/PalaDogPunch$1.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/bin/PalaDog/PalaDogPunch.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/bin/PalaDog/PalaDogUnit.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/bin/PaladogLeft.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/bin/PaladogLeftMove.gif" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/bin/PaladogPunch.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/bin/PaladogRight.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/bin/PaladogRightMove.gif" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/bin/aaaa.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/bin/back1.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/bin/background_img.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/bin/background_img2.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/bin/background_img3.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/bin/bear.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/bin/bear_attack.gif" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/bin/bear_dead.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/bin/bear_icon.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/bin/bear_walk.gif" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/bin/block.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/bin/darkdog.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/bin/darkdog1.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/bin/darkdog2.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/bin/field1.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/bin/gameclear.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/bin/gameover.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/bin/image0.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/bin/intro.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/bin/intro.mp4" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/bin/leftbutton.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/bin/leftbutton_pressed.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/bin/lombok.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/bin/ma.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/bin/main_img.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/bin/main_img2.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/bin/main_img3.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/bin/mainbottom.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/bin/mainbottom2.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/bin/mainbottom3.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/bin/mainbottom4.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/bin/mouse.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/bin/mouse1.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/bin/mouse2.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/bin/mouse3.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/bin/mouse_attackimg.gif" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/bin/mouse_dead.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/bin/mouse_icon.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/bin/mouse_stopicon.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/bin/mouse_walk.gif" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/bin/paladog1.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/bin/paladog2.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/bin/paladog_skill.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/bin/paladog_skill_icon.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/bin/paladog_walk.gif" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/bin/paladog_walk2.gif" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/bin/rightbutton.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/bin/rightbutton_pressed.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/bin/zombie1.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/bin/zombie2.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/bin/zombie3.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/bin/zombie4.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/bin/zombie_attack01.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/bin/zombie_attack02.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/bin/zombie_walk.gif" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/images/META-INF/MANIFEST.MF" afterDir="false" />
+    <list default="true" id="b31e0590-2f0d-4958-b218-26fccf8df671" name="변경" comment="Feat : 각 클라이언트 팔라독 움직이면 상대 화면에 다크독 움직이도록 함. 근데 샤샤샥 있음">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/.gitignore" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -251,8 +130,8 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-jdk-9823dce3aa75-fdfe4dae3a2d-intellij.indexing.shared.core-IU-243.21565.193" />
-        <option value="bundled-js-predefined-d6986cc7102b-e768b9ed790e-JavaScript-IU-243.21565.193" />
+        <option value="bundled-jdk-9823dce3aa75-fdfe4dae3a2d-intellij.indexing.shared.core-IU-243.22562.145" />
+        <option value="bundled-js-predefined-d6986cc7102b-deb605915726-JavaScript-IU-243.22562.145" />
       </set>
     </attachedChunks>
   </component>
@@ -269,6 +148,7 @@
       <workItem from="1732543338725" duration="1777000" />
       <workItem from="1732545229112" duration="2065000" />
       <workItem from="1734243155089" duration="201000" />
+      <workItem from="1734329891964" duration="1407000" />
     </task>
     <task id="LOCAL-00001" summary="Feat : 두 클라이언트 간 메시지 통신구현완료. 각 클라이언트 화면 렌더링로직 수정필요.">
       <option name="closed" value="true" />
