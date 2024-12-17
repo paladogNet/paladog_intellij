@@ -238,10 +238,50 @@ public class GameServer extends JFrame{
                     }
                     break;
 
+//                case ChatMsg.MODE_ROOM_LIST:
+//                    broadcastRoomList();
+//                    break;
                 case ChatMsg.MODE_ROOM_LIST:
+                    broadcastRoomListToClient(this);
+                    break;
+
+
+//                case ChatMsg.MODE_LOGOUT:
+//                    if (currentRoom != null) {
+//                        currentRoom.removePlayer(this); // 방에서 사용자 제거
+//                        currentRoom = null; // 현재 방 초기화
+//                        broadcastRoomList(); // 다른 클라이언트에게 방 목록 업데이트
+//                    }
+//                    sendMessage(new ChatMsg("SERVER", ChatMsg.MODE_ROOM_LIST, "방 목록", new ArrayList<>(rooms.keySet())));
+//                    System.out.println(userID + " 님이 방을 나갔습니다.");
+//                    break;
+//                case ChatMsg.MODE_LOGOUT:
+//                    if (currentRoom != null) {
+//                        currentRoom.removePlayer(this);
+//                        currentRoom = null;
+//                    }
+//                    broadcastRoomList();
+//                    sendMessage(new ChatMsg("SERVER", ChatMsg.MODE_ROOM_LIST, "방 목록", new ArrayList<>(rooms.keySet())));
+//                    break;
+                case ChatMsg.MODE_LOGOUT:
+                    if (currentRoom != null) {
+                        currentRoom.removePlayer(this);
+                        //currentRoom = null;
+                    }
                     broadcastRoomList();
                     break;
+
+
+
+
+
             }
+        }
+
+        // 클라이언트에게만 방 목록 전송
+        private void broadcastRoomListToClient(ClientHandler client) throws IOException {
+            List<String> roomNames = new ArrayList<>(rooms.keySet());
+            client.sendMessage(new ChatMsg("SERVER", ChatMsg.MODE_ROOM_LIST, "방 목록", roomNames));
         }
 
         private void joinRoom(Room room) throws IOException {
@@ -287,6 +327,9 @@ public class GameServer extends JFrame{
             this.roomName = clientHandler.userID + "_Room";
             players.put(clientHandler, false);
         }
+        public boolean isEmpty() {
+            return players.isEmpty();
+        }
 
         public String getRoomName() { return roomName; }
 
@@ -327,6 +370,10 @@ public class GameServer extends JFrame{
                 }
             }
         }
+        public synchronized void removePlayer(ClientHandler handler) {
+            players.remove(handler); // 사용자 제거
+            broadcastPlayerList(); // 남은 사용자에게 목록 브로드캐스트
+        }
 
 
         public synchronized boolean isGameReady() {
@@ -349,6 +396,15 @@ public class GameServer extends JFrame{
                 player.sendMessage(startMsg);
                 System.out.println(player.userID + " 에게 게임 시작 메시지 전송");
             }
+        }
+
+        public List<String> getPlayers() {
+            List<String> playerList = new ArrayList<>();
+            for (ClientHandler handler : players.keySet()) {
+                String status = players.get(handler) ? "(준비 완료)" : "(대기 중)";
+                playerList.add(handler.userID + " " + status);
+            }
+            return playerList;
         }
 
     }
