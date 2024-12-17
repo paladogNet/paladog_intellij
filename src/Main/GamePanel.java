@@ -8,6 +8,8 @@ import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 
 import javax.swing.*;
+import javax.swing.text.BadLocationException;
+import javax.swing.text.DefaultStyledDocument;
 
 import DarkDog.DarkDog;
 import DarkDog.Zombie;
@@ -58,10 +60,11 @@ public class GamePanel extends JPanel  {
 	public int back2X = backimg.getWidth(null);
 
 	//채팅을 위한 필드들
-	private JTextArea chatArea; // 채팅 로그 표시
+	private JTextPane chatArea; // 채팅 로그 표시
 	private JTextField chatInput; // 사용자 입력 필드
 	private JButton sendButton; // 메시지 전송 버튼
 	private JButton sendImageButton; // 메시지 전송 버튼
+	private DefaultStyledDocument document;
 
 	public GamePanel() {
 
@@ -72,10 +75,11 @@ public class GamePanel extends JPanel  {
 		// 채팅을 위한 세팅
 		setLayout(null); // 사용자 지정 레이아웃
 		// 채팅 영역 구성
-		chatArea = new JTextArea();
+		document = new DefaultStyledDocument();
+		chatArea = new JTextPane(document);
 		chatArea.setEditable(false);
-		chatArea.setLineWrap(true);
-		chatArea.setWrapStyleWord(true);
+//		chatArea.setLineWrap(true);
+//		chatArea.setWrapStyleWord(true);
 		JScrollPane chatScrollPane = new JScrollPane(chatArea);
 		chatScrollPane.setBounds(730, 378, 400, 130); // 오른쪽 아래 위치 조정
 		add(chatScrollPane);
@@ -103,14 +107,46 @@ public class GamePanel extends JPanel  {
 
 	}
 	// 채팅 메시지 추가 메서드
-	public void appendChatMessage(String message) {
-		chatArea.append(message + "\n");
+//	public void appendChatMessage(String message) {
+//		chatArea.append(message + "\n");
+//	}
+	//printDisplay로 대체
+
+	public void printDisplay(String msg) {
+		int len = chatArea.getDocument().getLength();
+
+		try {
+			document.insertString(len, msg + "\n", null);
+		} catch (BadLocationException e){
+			e.printStackTrace();
+		}
+
+		chatArea.setCaretPosition(len);
 	}
 
-	public String getChatInput() {
+	public void printDisplay(ImageIcon icon) {
+		chatArea.setCaretPosition(chatArea.getDocument().getLength());
+
+		if(icon.getIconWidth() > 200){
+			Image img = icon.getImage();
+			Image changeImg = img.getScaledInstance(200, -1, Image.SCALE_SMOOTH);
+			icon = new ImageIcon(changeImg);
+		}
+
+		chatArea.insertIcon(icon);
+		printDisplay("");
+		chatInput.setText("");
+	}
+
+
+	public String getChat() {
 		String input = chatInput.getText();
 		chatInput.setText(""); // 입력 필드 초기화
 		return input;
+	}
+
+	public JTextField getChatInput() {
+		return chatInput;
 	}
 
 	public JButton getSendButton() {
@@ -154,7 +190,7 @@ public class GamePanel extends JPanel  {
 
 		HpLabelMoving hpLabelMoving = new HpLabelMoving();
 		hpLabelMoving.start();
-		
+
 		mouse.Mouse_attack(mouselist, zombielist, darkdog);
 		bear.Bear_attack(bearlist, zombielist, darkdog);
 		zombie.Zombie_attack(mouselist, zombielist, paladog);
@@ -167,7 +203,7 @@ public class GamePanel extends JPanel  {
 		죽는스레드 죽는스레드 = new 죽는스레드();
 		죽는스레드.start();
 
-		
+
 	}
 
 	public void setting() {
@@ -287,10 +323,15 @@ public class GamePanel extends JPanel  {
 									if (skillmp > 10) {
 										palaDogPunch = new PalaDogPunch();
 										paladogpunchlist.add(palaDogPunch);
-										panel.add(palaDogPunch);
-										palaDogPunch.moveRight();
+
 										palaDogPunch.Punchx = paladog.x + 50;
 										palaDogPunch.Punchy = paladog.y + 50;
+
+										palaDogPunch.setBounds(palaDogPunch.Punchx, palaDogPunch.Punchy, palaDogPunch.getWidth(), palaDogPunch.getHeight());
+										panel.add(palaDogPunch);
+										panel.repaint();
+
+										palaDogPunch.moveRight();
 										skillmp -= 10;
 									}
 								}
@@ -388,30 +429,39 @@ public class GamePanel extends JPanel  {
 							panel.repaint();
 						}
 					}
-					
+
 					for (int i = 0; i < paladogpunchlist.size(); i++) {
 						if(paladogpunchlist.get(i).getX() >1000) {
 							panel.remove(paladogpunchlist.get(i));
 							paladogpunchlist.remove(i);
 							panel.repaint();
-							
+
 						}
 					}
-					
+
+					for (int i = 0; i < darkdogpunchlist.size(); i++) {
+						if(darkdogpunchlist.get(i).getX() < 0) {
+							panel.remove(paladogpunchlist.get(i));
+							darkdogpunchlist.remove(i);
+							panel.repaint();
+
+						}
+					}
+
 					if(paladog.hp <=0) {
 						isEnding=false;
 						new GameOver();
 						setVisible(false);
-						
-						
+
+
 					}
-					
+
 					if(darkdog.hp <=0) {
 						isEnding=false;
 						new EndImg();
 						setVisible(false);
-					
-						
+
+
 					}
 				}
 			} catch (Exception e) {
@@ -513,7 +563,7 @@ public class GamePanel extends JPanel  {
 					}
 
 				}
-//   
+//
 				for (int i = 0; i < bearlist.size(); i++) {
 					try {
 						Thread.sleep(1);
@@ -741,10 +791,13 @@ public class GamePanel extends JPanel  {
 					darkDogPunch = new DarkDogPunch();
 					darkdogpunchlist.add(darkDogPunch);
 
-					panel.setLayout(null);
 					darkDogPunch.Punchx = darkdog.x - 50;
 					darkDogPunch.Punchy = darkdog.y + 50;
+
+					darkDogPunch.setBounds(darkDogPunch.Punchx, darkDogPunch.Punchy, darkDogPunch.getWidth(), darkDogPunch.getHeight());
 					panel.add(darkDogPunch);
+					panel.repaint();
+
 					darkDogPunch.moveLeft();
 
 				}

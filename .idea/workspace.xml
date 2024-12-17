@@ -9,18 +9,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b31e0590-2f0d-4958-b218-26fccf8df671" name="변경" comment="Feat : 대기 방 구현 v4 : 내가 만든 방에서 상대방이 들어오면 내 대기방에도 상대방 사용자가 리스트로 업데이트 되도록함, 클라이언트가 방 만들기를 누르면 대기방은 잘 만들어지는데 해당 방으로 자동으로 들어가지지 않고 홈화면에 남아있는 문제 해결">
+    <list default="true" id="b31e0590-2f0d-4958-b218-26fccf8df671" name="변경" comment="Feat : 각 클라이언트 팔라독 움직이면 상대 화면에 다크독 움직이도록 함. 근데 샤샤샥 있음">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/DarkDog/DarkDog$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/DarkDog/DarkDog$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/DarkDog/DarkDog$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/DarkDog/DarkDog$2.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/DarkDog/DarkDog$3.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/DarkDog/DarkDog$3.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/DarkDog/DarkDog.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/DarkDog/DarkDog.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/Main/GameClient$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/Main/GameClient$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/Main/GameClient$GameClientHandler.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/Main/GameClient$GameClientHandler.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/Main/GameClient.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/Main/GameClient.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/Main/GamePanel$1$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/Main/GamePanel$1$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/Main/GamePanel$1$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/Main/GamePanel$1$2.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/Main/GamePanel$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/Main/GamePanel$1.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/bin/Main/GamePanel$BearHpLabel.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/Main/GamePanel$BearHpLabel.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/bin/Main/GamePanel$DarkDogHpLabel.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/Main/GamePanel$DarkDogHpLabel.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/bin/Main/GamePanel$GoldLabel.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/Main/GamePanel$GoldLabel.class" afterDir="false" />
@@ -33,8 +23,8 @@
       <change beforePath="$PROJECT_DIR$/bin/Main/GamePanel$ZombieSoHwan.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/Main/GamePanel$ZombieSoHwan.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/bin/Main/GamePanel$죽는스레드.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/Main/GamePanel$죽는스레드.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/bin/Main/GamePanel.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/Main/GamePanel.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Main/GameClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main/GameClient.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Main/GameServer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main/GameServer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/DarkDog/DarkDog.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/DarkDog/DarkDog.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Main/GamePanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main/GamePanel.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -49,11 +39,6 @@
     </option>
   </component>
   <component name="Git.Settings">
-    <option name="RECENT_BRANCH_BY_REPOSITORY">
-      <map>
-        <entry key="$PROJECT_DIR$" value="haedam3_for_merge_dev" />
-      </map>
-    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="GitHubPullRequestSearchHistory">{
@@ -76,36 +61,36 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Application.GameClient.executor": "Run",
-    "Application.GameServer.executor": "Run",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "haedam3__backup",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/김정훈/Desktop/paladog",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "project.structure.last.edited": "Artifacts",
-    "project.structure.proportion": "0.15",
-    "project.structure.side.proportion": "0.2",
-    "vue.rearranger.settings.migration": "true",
-    "애플리케이션.GameClient.executor": "Run",
-    "애플리케이션.GameServer.executor": "Run",
-    "애플리케이션.PalaDogApp.executor": "Run",
-    "애플리케이션.WithTalk.executor": "Run"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Application.GameClient.executor&quot;: &quot;Run&quot;,
+    &quot;Application.GameServer.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;test&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/김정훈/Desktop/paladog&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Artifacts&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;,
+    &quot;애플리케이션.GameClient.executor&quot;: &quot;Run&quot;,
+    &quot;애플리케이션.GameServer.executor&quot;: &quot;Run&quot;,
+    &quot;애플리케이션.PalaDogApp.executor&quot;: &quot;Run&quot;,
+    &quot;애플리케이션.WithTalk.executor&quot;: &quot;Run&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\김정훈\Desktop\paladog\images" />
     </key>
   </component>
-  <component name="RunManager" selected="애플리케이션.GameClient">
+  <component name="RunManager" selected="Application.GameClient">
     <configuration name="GameClient" type="Application" factoryName="Application" singleton="false" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="Main.GameClient" />
       <module name="palaDog" />
@@ -159,18 +144,15 @@
       </method>
     </configuration>
     <list>
-      <item itemvalue="애플리케이션.GameClient" />
-      <item itemvalue="애플리케이션.GameServer" />
-      <item itemvalue="애플리케이션.PalaDogApp" />
-      <item itemvalue="애플리케이션.WithTalk" />
+      <item itemvalue="Application.GameClient" />
+      <item itemvalue="Application.GameServer" />
+      <item itemvalue="Application.PalaDogApp" />
+      <item itemvalue="Application.WithTalk" />
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="애플리케이션.GameClient" />
-        <item itemvalue="애플리케이션.GameServer" />
-        <item itemvalue="애플리케이션.WithTalk" />
-        <item itemvalue="애플리케이션.PalaDogApp" />
-        <item itemvalue="애플리케이션.GameClient" />
+        <item itemvalue="Application.GameClient" />
+        <item itemvalue="Application.GameServer" />
       </list>
     </recent_temporary>
   </component>
@@ -197,6 +179,7 @@
       <workItem from="1734243155089" duration="201000" />
       <workItem from="1734329891964" duration="2628000" />
       <workItem from="1734332605294" duration="4053000" />
+      <workItem from="1734407904270" duration="12981000" />
     </task>
     <task id="LOCAL-00001" summary="Feat : 두 클라이언트 간 메시지 통신구현완료. 각 클라이언트 화면 렌더링로직 수정필요.">
       <option name="closed" value="true" />
@@ -238,39 +221,7 @@
       <option name="project" value="LOCAL" />
       <updated>1732466473293</updated>
     </task>
-    <task id="LOCAL-00006" summary="Feat : 대기 방 구현완료. 1. 클라이언트가 로그인화면에서 로그인을 하면 방 리스트가 보이는 화면인 홈화면이 나온다. 홈화면에는 방 만들기 버튼이 있어야 한다.&#10;                  &#10;                  2. 클라이언트가 방 만들기 버튼을 누르면 방목록이 하나 생성된다. 그리고 클라이언트는 해당 방에 자동으로 입장된다.&#10;                  &#10;                  3. 해당 방을 대기방이라고 하면 대기방에는 사용자 이름, 각 사용자의 준비여부, 준비버튼이 있어야 한다. &#10;                  &#10;                  4. 대기방에서 두명의 사용자가 &quot;준비&quot; 버튼을 누르면 그때서야 각 클라이언트에 gamePanel 이 나와야 한다.&#10;                  &#10;                  5. 하나의 방에는 두 사람만 접속가능함. 즉 홈 화면에서 인원이 모두 찬 방을 다른 클라이언트가 들어오려 하면 못들어오게 막아야함.">
-      <option name="closed" value="true" />
-      <created>1734412816826</created>
-      <option name="number" value="00006" />
-      <option name="presentableId" value="LOCAL-00006" />
-      <option name="project" value="LOCAL" />
-      <updated>1734412816826</updated>
-    </task>
-    <task id="LOCAL-00007" summary="Feat : 대기 방 구현 v2 : 현재 대기방에 접속중인 사용자 이름만 뜨게함.">
-      <option name="closed" value="true" />
-      <created>1734415250494</created>
-      <option name="number" value="00007" />
-      <option name="presentableId" value="LOCAL-00007" />
-      <option name="project" value="LOCAL" />
-      <updated>1734415250494</updated>
-    </task>
-    <task id="LOCAL-00008" summary="Feat : 대기 방 구현 v3 : 한글 인코딩 문제 처리 완료">
-      <option name="closed" value="true" />
-      <created>1734417384888</created>
-      <option name="number" value="00008" />
-      <option name="presentableId" value="LOCAL-00008" />
-      <option name="project" value="LOCAL" />
-      <updated>1734417384888</updated>
-    </task>
-    <task id="LOCAL-00009" summary="Feat : 대기 방 구현 v4 : 내가 만든 방에서 상대방이 들어오면 내 대기방에도 상대방 사용자가 리스트로 업데이트 되도록함, 클라이언트가 방 만들기를 누르면 대기방은 잘 만들어지는데 해당 방으로 자동으로 들어가지지 않고 홈화면에 남아있는 문제 해결">
-      <option name="closed" value="true" />
-      <created>1734418481438</created>
-      <option name="number" value="00009" />
-      <option name="presentableId" value="LOCAL-00009" />
-      <option name="project" value="LOCAL" />
-      <updated>1734418481438</updated>
-    </task>
-    <option name="localTasksCounter" value="10" />
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -292,10 +243,6 @@
     <MESSAGE value="Feat : 각 클라이언트 팔라독 움직이면 상대 화면에 다크독 움직이도록 함. 근데 샤샤샥 있음" />
     <MESSAGE value="Feat : 좀비 안나오게 함, 팔라독 위치 반영하여 상대편에 내 위치 다크독으로 표시하기 성공" />
     <MESSAGE value="Feat : 일단해" />
-    <MESSAGE value="Feat : 대기 방 구현완료. 1. 클라이언트가 로그인화면에서 로그인을 하면 방 리스트가 보이는 화면인 홈화면이 나온다. 홈화면에는 방 만들기 버튼이 있어야 한다.&#10;                  &#10;                  2. 클라이언트가 방 만들기 버튼을 누르면 방목록이 하나 생성된다. 그리고 클라이언트는 해당 방에 자동으로 입장된다.&#10;                  &#10;                  3. 해당 방을 대기방이라고 하면 대기방에는 사용자 이름, 각 사용자의 준비여부, 준비버튼이 있어야 한다. &#10;                  &#10;                  4. 대기방에서 두명의 사용자가 &quot;준비&quot; 버튼을 누르면 그때서야 각 클라이언트에 gamePanel 이 나와야 한다.&#10;                  &#10;                  5. 하나의 방에는 두 사람만 접속가능함. 즉 홈 화면에서 인원이 모두 찬 방을 다른 클라이언트가 들어오려 하면 못들어오게 막아야함." />
-    <MESSAGE value="Feat : 대기 방 구현 v2 : 현재 대기방에 접속중인 사용자 이름만 뜨게함." />
-    <MESSAGE value="Feat : 대기 방 구현 v3 : 한글 인코딩 문제 처리 완료" />
-    <MESSAGE value="Feat : 대기 방 구현 v4 : 내가 만든 방에서 상대방이 들어오면 내 대기방에도 상대방 사용자가 리스트로 업데이트 되도록함, 클라이언트가 방 만들기를 누르면 대기방은 잘 만들어지는데 해당 방으로 자동으로 들어가지지 않고 홈화면에 남아있는 문제 해결" />
-    <option name="LAST_COMMIT_MESSAGE" value="Feat : 대기 방 구현 v4 : 내가 만든 방에서 상대방이 들어오면 내 대기방에도 상대방 사용자가 리스트로 업데이트 되도록함, 클라이언트가 방 만들기를 누르면 대기방은 잘 만들어지는데 해당 방으로 자동으로 들어가지지 않고 홈화면에 남아있는 문제 해결" />
+    <option name="LAST_COMMIT_MESSAGE" value="Feat : 일단해" />
   </component>
 </project>

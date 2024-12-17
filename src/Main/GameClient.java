@@ -11,6 +11,7 @@ import java.util.*;
 import java.util.List;
 import javax.swing.*;
 import javax.swing.Timer;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 public class GameClient extends JFrame {
     private Socket socket;
@@ -181,28 +182,105 @@ public class GameClient extends JFrame {
     // 채팅 관련 이벤트 리스너 설정
     private void setupChatListeners() {
         // 텍스트 메시지 전송 리스너
+
+        JTextField chatInput = gamePanel.getChatInput();
+
+        chatInput.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String text = gamePanel.getChat();
+                // 입력 필드에서 텍스트 가져오기
+                if (!text.isEmpty()) {
+                    ChatMsg chatMsg = new ChatMsg(clientId, ChatMsg.MODE_TX_STRING, text);
+                    sendMessage(chatMsg); // 서버로 메시지 전송
+                    gamePanel.printDisplay("Me: " + text); // 로컬에서도 채팅 추가
+                }
+                gamePanel.requestFocusInWindow(); // 채팅 후 GamePanel에 포커스 다시 설정
+            }
+        });
+
         gamePanel.getSendButton().addActionListener(e -> {
-            String text = gamePanel.getChatInput(); // 입력 필드에서 텍스트 가져오기
+            String text = gamePanel.getChat();
+             // 입력 필드에서 텍스트 가져오기
             if (!text.isEmpty()) {
                 ChatMsg chatMsg = new ChatMsg(clientId, ChatMsg.MODE_TX_STRING, text);
                 sendMessage(chatMsg); // 서버로 메시지 전송
-                gamePanel.appendChatMessage("Me: " + text); // 로컬에서도 채팅 추가
+                gamePanel.printDisplay("Me: " + text); // 로컬에서도 채팅 추가
             }
             gamePanel.requestFocusInWindow(); // 채팅 후 GamePanel에 포커스 다시 설정
         });
 
+        // 이미지 전송 버튼 리스너 (추가 가능)
+        JButton sendImageButton = gamePanel.getSendImageButton(); // 이미지 전송 버튼 참조
+        sendImageButton.addActionListener(new ActionListener() {
+
+            JFileChooser chooser = new JFileChooser();
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                FileNameExtensionFilter filter = new FileNameExtensionFilter("JPG & GIF & PNG Images", "jpg", "gif", "png");
+
+                chooser.setFileFilter(filter);
+
+                int ret = chooser.showOpenDialog(gamePanel);
+                if (ret != JFileChooser.APPROVE_OPTION) {
+                    JOptionPane.showMessageDialog(gamePanel, "파일을 선택하지 않았습니다.", "경고", JOptionPane.WARNING_MESSAGE);
+                    return;
+                }
+
+                chatInput.setText(chooser.getSelectedFile().getAbsolutePath());
+                sendImage();
+            }
+        });
+
     }
 
-    private void sendMessage(ChatMsg msg) {
+    private void sendImage() {
+        JTextField chatInput = gamePanel.getChatInput();
+        String filename = chatInput.getText().trim();
+        if (filename.isEmpty()) return;
+
+        File file = new File(filename);
+        if(!file.exists()) {
+            System.out.println(">>파일이 존재하지 않습니다: " + filename);
+            return;
+        }
+
+        ImageIcon icon = new ImageIcon(filename);
+        sendMessage(new ChatMsg(clientId, ChatMsg.MODE_TX_IMAGE, file.getName(), icon));
+        chatInput.setText("");
+        gamePanel.printDisplay(icon);
+    }
+
+    // 서버로 메시지를 전송 (ChatMsg 객체 사용)
+    public void sendMessage(ChatMsg msg) {
         try {
-            out.writeObject(msg);
-            out.flush();
+            synchronized (out) { // 동기화 보장
+                out.writeObject(msg);
+                out.flush();
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
     class GameClientHandler extends Thread {
+        private Socket socket;
+        private GamePanel gamePanel;
+        private ObjectInputStream in;
+        private ObjectOutputStream out;
+        private String clientId;
+        private boolean gameStarted = false;
+
+        public GameClientHandler(Socket socket, GamePanel gamePanel, String clientId, ObjectInputStream in, ObjectOutputStream out) {
+            this.socket = socket;
+            this.gamePanel = gamePanel;
+            this.clientId = clientId;
+            this.in = in;
+            this.out = out;
+        }
+
+        @Override
         public void run() {
             try {
                 while (true) {
@@ -268,23 +346,13 @@ public class GameClient extends JFrame {
 
                     case ChatMsg.MODE_TX_STRING: // 텍스트 채팅 메시지 처리
                         // 채팅 메시지를 UI에 추가
-                        gamePanel.appendChatMessage(msg.getUserID() + ": " + msg.getMessage());
+                        gamePanel.printDisplay(msg.getUserID() + ": " + msg.getMessage());
                         break;
 
                     case ChatMsg.MODE_TX_IMAGE: // 이미지 채팅 메시지 처리
-                        // 이미지 데이터를 저장하거나 UI에 추가
-                        try {
-                            String fileName = "received_image_" + System.currentTimeMillis() + ".png";
-                            File imageFile = new File(fileName);
-                            try (FileOutputStream fos = new FileOutputStream(imageFile)) {
-                                fos.write(msg.getImage());
-                            }
-                            System.out.println("Image received and saved as " + fileName);
-                            gamePanel.appendChatMessage(msg.getUserID() + ": [Image received: " + fileName + "]");
-                        } catch (IOException e) {
-                            System.err.println("Failed to save received image.");
-                            e.printStackTrace();
-                        }
+                        gamePanel.printDisplay(msg.getUserID() + ": " + msg.getMessage());
+                        gamePanel.printDisplay(msg.getImage());
+
                         break;
 
 
@@ -310,7 +378,6 @@ public class GameClient extends JFrame {
                         }
                     }
                     break;
-
 
 
                 case ChatMsg.MODE_GAME_START:
@@ -386,7 +453,7 @@ public class GameClient extends JFrame {
         revalidate();
         repaint();
 
-        new GameClientHandler().start();
+        new GameClientHandler(socket,gamePanel, clientId, in, out).start();
     }
 
     private void setupRoomScreen(String roomName, List<String> players) {
