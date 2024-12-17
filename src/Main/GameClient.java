@@ -439,9 +439,13 @@ public class GameClient extends JFrame {
         homePanel.add(scrollPane, BorderLayout.CENTER);
         homePanel.add(b_createRoom, BorderLayout.SOUTH);
 
+//        b_createRoom.addActionListener(e -> {
+//            sendMessage(new ChatMsg(clientId, ChatMsg.MODE_ROOM_CREATE, null));
+//        });
         b_createRoom.addActionListener(e -> {
-            sendMessage(new ChatMsg(clientId, ChatMsg.MODE_ROOM_CREATE, null));
+            sendMessage(new ChatMsg(clientId, ChatMsg.MODE_ROOM_CREATE, "create_room", null));
         });
+
 
         roomList.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -484,58 +488,100 @@ public class GameClient extends JFrame {
 //        revalidate();
 //        repaint();
 //    }
-// 대기방 화면
-private void setupRoomScreen(List<String> players) {
-    getContentPane().removeAll();
-    roomPanel = new JPanel(new BorderLayout());
+//// 대기방 화면
+//private void setupRoomScreen(List<String> players) {
+//    getContentPane().removeAll();
+//    roomPanel = new JPanel(new BorderLayout());
+//
+//    // 사용자 목록과 준비 상태를 보여주는 JTextArea
+//    JTextArea playerArea = new JTextArea();
+//    playerArea.setEditable(false);
+//    JScrollPane scrollPane = new JScrollPane(playerArea);
+//
+//    // 버튼 패널: 준비 버튼과 홈으로 나가기 버튼
+//    JPanel buttonPanel = new JPanel(new GridLayout(1, 2, 10, 10));
+//    JButton b_ready = new JButton("준비");
+//    JButton b_exit = new JButton("홈으로 나가기");
+//
+//    buttonPanel.add(b_ready);
+//    buttonPanel.add(b_exit);
+//
+//    // 사용자 목록 갱신
+//    updatePlayerArea(playerArea, players);
+//
+//    // 준비 버튼 클릭 이벤트
+//    b_ready.addActionListener(e -> {
+//        sendMessage(new ChatMsg(clientId, ChatMsg.MODE_READY, "Ready"));
+//    });
+//
+//    // 홈으로 나가기 버튼 클릭 이벤트
+//    b_exit.addActionListener(e -> {
+//        sendMessage(new ChatMsg(clientId, ChatMsg.MODE_LOGOUT, "Leave Room"));
+//        setupHomeScreen(); // 홈 화면으로 돌아가기
+//    });
+//
+//    // 화면 구성
+//    roomPanel.add(new JLabel("대기방", SwingConstants.CENTER), BorderLayout.NORTH);
+//    roomPanel.add(scrollPane, BorderLayout.CENTER);
+//    roomPanel.add(buttonPanel, BorderLayout.SOUTH);
+//
+//    add(roomPanel);
+//    setSize(400, 400);
+//    revalidate();
+//    repaint();
+//}
 
-    // 사용자 목록과 준비 상태를 보여주는 JTextArea
-    JTextArea playerArea = new JTextArea();
-    playerArea.setEditable(false);
-    JScrollPane scrollPane = new JScrollPane(playerArea);
+    // 대기방 화면
+    private void setupRoomScreen(String roomName, List<String> players) {
+        getContentPane().removeAll();
+        roomPanel = new JPanel(new BorderLayout());
 
-    // 버튼 패널: 준비 버튼과 홈으로 나가기 버튼
-    JPanel buttonPanel = new JPanel(new GridLayout(1, 2, 10, 10));
-    JButton b_ready = new JButton("준비");
-    JButton b_exit = new JButton("홈으로 나가기");
+        // 사용자 목록과 준비 상태를 보여주는 JTextArea
+        JTextArea playerArea = new JTextArea();
+        playerArea.setEditable(false);
+        JScrollPane scrollPane = new JScrollPane(playerArea);
 
-    buttonPanel.add(b_ready);
-    buttonPanel.add(b_exit);
+        // 버튼 패널: 준비 버튼과 홈으로 나가기 버튼
+        JPanel buttonPanel = new JPanel(new GridLayout(1, 2, 10, 10));
+        JButton b_ready = new JButton("준비");
+        JButton b_exit = new JButton("홈으로 나가기");
 
-    // 사용자 목록 갱신
-    updatePlayerArea(playerArea, players);
+        buttonPanel.add(b_ready);
+        buttonPanel.add(b_exit);
 
-    // 준비 버튼 클릭 이벤트
-    b_ready.addActionListener(e -> {
-        sendMessage(new ChatMsg(clientId, ChatMsg.MODE_READY, "Ready"));
-    });
+        // 사용자 목록 갱신
+        updatePlayerArea(playerArea, players);
 
-    // 홈으로 나가기 버튼 클릭 이벤트
-    b_exit.addActionListener(e -> {
-        sendMessage(new ChatMsg(clientId, ChatMsg.MODE_LOGOUT, "Leave Room"));
-        setupHomeScreen(); // 홈 화면으로 돌아가기
-    });
+        // 준비 버튼 클릭 이벤트
+        b_ready.addActionListener(e -> {
+            sendMessage(new ChatMsg(clientId, ChatMsg.MODE_READY, "Ready"));
+        });
 
-    // 화면 구성
-    roomPanel.add(new JLabel("대기방", SwingConstants.CENTER), BorderLayout.NORTH);
-    roomPanel.add(scrollPane, BorderLayout.CENTER);
-    roomPanel.add(buttonPanel, BorderLayout.SOUTH);
+        // 홈으로 나가기 버튼 클릭 이벤트
+        b_exit.addActionListener(e -> {
+            sendMessage(new ChatMsg(clientId, ChatMsg.MODE_LOGOUT, "Leave Room"));
+            setupHomeScreen(); // 홈 화면으로 돌아가기
+        });
 
-    add(roomPanel);
-    setSize(400, 400);
-    revalidate();
-    repaint();
-}
+//        // 화면 구성: 방 이름을 상단에 추가
+//        JLabel roomLabel = new JLabel("대기방: " + roomName, SwingConstants.CENTER);
+//        roomLabel.setFont(new Font("Arial", Font.BOLD, 16));
 
-    // 사용자 목록 업데이트
-//    private void updatePlayerArea(JTextArea playerArea, List<String> players) {
-//        StringBuilder sb = new StringBuilder();
-//        sb.append("참여자 목록:\n");
-//        for (String player : players) {
-//            sb.append(player).append("\n");
-//        }
-//        playerArea.setText(sb.toString());
-//    }
+        // 화면 구성: 방 이름을 상단에 추가
+        JLabel roomLabel = new JLabel("대기방: " + roomName, SwingConstants.CENTER);
+        roomLabel.setFont(new Font("맑은 고딕", Font.BOLD, 16)); // 한글 폰트 설정
+        roomLabel.setForeground(Color.BLACK); // 글자 색상 설정
+
+        roomPanel.add(roomLabel, BorderLayout.NORTH);
+        roomPanel.add(scrollPane, BorderLayout.CENTER);
+        roomPanel.add(buttonPanel, BorderLayout.SOUTH);
+
+        add(roomPanel);
+        setSize(400, 400);
+        revalidate();
+        repaint();
+    }
+
     private void updatePlayerArea(JTextArea playerArea, List<String> players) {
         if (players == null) {
             players = new ArrayList<>(); // 빈 리스트로 초기화
@@ -637,16 +683,39 @@ private void setupRoomScreen(List<String> players) {
 //                            List<String> players = (List<String>) msg.getData(); // 사용자 목록 수신
 //                            setupRoomScreen(players); // 대기방 화면으로 전환
 //                            break;
+//                        case ChatMsg.MODE_ROOM_JOIN:
+//                            if (msg.getData() instanceof List) {
+//                                List<String> players = (List<String>) msg.getData(); // 사용자 목록 수신
+//                                if (players != null) {
+//                                    setupRoomScreen(players); // 대기방 화면으로 전환
+//                                } else {
+//                                    System.out.println("대기방의 사용자 목록이 비어 있습니다.");
+//                                }
+//                            }
+//                            break;
+//                        case ChatMsg.MODE_ROOM_JOIN:
+//                            if (msg.getData() instanceof List) {
+//                                List<String> players = (List<String>) msg.getData(); // 사용자 목록 수신
+//                                String roomName = msg.getMessage(); // 방 이름 수신
+//                                if (players != null && roomName != null) {
+//                                    setupRoomScreen(roomName, players); // 대기방 화면으로 전환
+//                                } else {
+//                                    System.out.println("대기방의 데이터가 비어 있습니다.");
+//                                }
+//                            }
+//                            break;
+
                         case ChatMsg.MODE_ROOM_JOIN:
                             if (msg.getData() instanceof List) {
                                 List<String> players = (List<String>) msg.getData(); // 사용자 목록 수신
-                                if (players != null) {
-                                    setupRoomScreen(players); // 대기방 화면으로 전환
-                                } else {
-                                    System.out.println("대기방의 사용자 목록이 비어 있습니다.");
+                                String roomName = msg.getMessage(); // 방 이름 수신
+                                if (players != null && roomName != null) {
+                                    System.out.println("방에 자동 입장: " + roomName);
+                                    setupRoomScreen(roomName, players); // 대기방 화면으로 전환
                                 }
                             }
                             break;
+
 
 
                         case ChatMsg.MODE_GAME_START:

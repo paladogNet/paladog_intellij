@@ -9,14 +9,14 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b31e0590-2f0d-4958-b218-26fccf8df671" name="변경" comment="Feat : 대기 방 구현완료. 1. 클라이언트가 로그인화면에서 로그인을 하면 방 리스트가 보이는 화면인 홈화면이 나온다. 홈화면에는 방 만들기 버튼이 있어야 한다.&#10;                  &#10;                  2. 클라이언트가 방 만들기 버튼을 누르면 방목록이 하나 생성된다. 그리고 클라이언트는 해당 방에 자동으로 입장된다.&#10;                  &#10;                  3. 해당 방을 대기방이라고 하면 대기방에는 사용자 이름, 각 사용자의 준비여부, 준비버튼이 있어야 한다. &#10;                  &#10;                  4. 대기방에서 두명의 사용자가 &quot;준비&quot; 버튼을 누르면 그때서야 각 클라이언트에 gamePanel 이 나와야 한다.&#10;                  &#10;                  5. 하나의 방에는 두 사람만 접속가능함. 즉 홈 화면에서 인원이 모두 찬 방을 다른 클라이언트가 들어오려 하면 못들어오게 막아야함.">
+    <list default="true" id="b31e0590-2f0d-4958-b218-26fccf8df671" name="변경" comment="Feat : 대기 방 구현 v2 : 현재 대기방에 접속중인 사용자 이름만 뜨게함.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/Main/ChatMsg.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/Main/ChatMsg.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/Main/GameClient$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/Main/GameClient$1.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/bin/Main/GameClient$GameClientHandler.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/Main/GameClient$GameClientHandler.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/bin/Main/GameClient.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/Main/GameClient.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/Main/GameServer$1.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/Main/GameServer$2.class" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/bin/Main/GameServer$ClientHandler.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/Main/GameServer$ClientHandler.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/Main/GameServer.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/Main/GameServer.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Main/ChatMsg.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main/ChatMsg.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Main/GameClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main/GameClient.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Main/GameServer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main/GameServer.java" afterDir="false" />
     </list>
@@ -222,7 +222,15 @@
       <option name="project" value="LOCAL" />
       <updated>1734412816826</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="Feat : 대기 방 구현 v2 : 현재 대기방에 접속중인 사용자 이름만 뜨게함.">
+      <option name="closed" value="true" />
+      <created>1734415250494</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1734415250494</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -245,6 +253,7 @@
     <MESSAGE value="Feat : 좀비 안나오게 함, 팔라독 위치 반영하여 상대편에 내 위치 다크독으로 표시하기 성공" />
     <MESSAGE value="Feat : 일단해" />
     <MESSAGE value="Feat : 대기 방 구현완료. 1. 클라이언트가 로그인화면에서 로그인을 하면 방 리스트가 보이는 화면인 홈화면이 나온다. 홈화면에는 방 만들기 버튼이 있어야 한다.&#10;                  &#10;                  2. 클라이언트가 방 만들기 버튼을 누르면 방목록이 하나 생성된다. 그리고 클라이언트는 해당 방에 자동으로 입장된다.&#10;                  &#10;                  3. 해당 방을 대기방이라고 하면 대기방에는 사용자 이름, 각 사용자의 준비여부, 준비버튼이 있어야 한다. &#10;                  &#10;                  4. 대기방에서 두명의 사용자가 &quot;준비&quot; 버튼을 누르면 그때서야 각 클라이언트에 gamePanel 이 나와야 한다.&#10;                  &#10;                  5. 하나의 방에는 두 사람만 접속가능함. 즉 홈 화면에서 인원이 모두 찬 방을 다른 클라이언트가 들어오려 하면 못들어오게 막아야함." />
-    <option name="LAST_COMMIT_MESSAGE" value="Feat : 대기 방 구현완료. 1. 클라이언트가 로그인화면에서 로그인을 하면 방 리스트가 보이는 화면인 홈화면이 나온다. 홈화면에는 방 만들기 버튼이 있어야 한다.&#10;                  &#10;                  2. 클라이언트가 방 만들기 버튼을 누르면 방목록이 하나 생성된다. 그리고 클라이언트는 해당 방에 자동으로 입장된다.&#10;                  &#10;                  3. 해당 방을 대기방이라고 하면 대기방에는 사용자 이름, 각 사용자의 준비여부, 준비버튼이 있어야 한다. &#10;                  &#10;                  4. 대기방에서 두명의 사용자가 &quot;준비&quot; 버튼을 누르면 그때서야 각 클라이언트에 gamePanel 이 나와야 한다.&#10;                  &#10;                  5. 하나의 방에는 두 사람만 접속가능함. 즉 홈 화면에서 인원이 모두 찬 방을 다른 클라이언트가 들어오려 하면 못들어오게 막아야함." />
+    <MESSAGE value="Feat : 대기 방 구현 v2 : 현재 대기방에 접속중인 사용자 이름만 뜨게함." />
+    <option name="LAST_COMMIT_MESSAGE" value="Feat : 대기 방 구현 v2 : 현재 대기방에 접속중인 사용자 이름만 뜨게함." />
   </component>
 </project>

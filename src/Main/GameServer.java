@@ -184,23 +184,51 @@ public class GameServer extends JFrame{
                     break;
 
 
+//                case ChatMsg.MODE_ROOM_CREATE:
+//                    Room room = new Room(this); // this는 현재 ClientHandler 객체
+//                    rooms.put(room.getRoomName(), room); // 방 목록에 추가
+//                    joinRoom(room);
+//                    broadcastRoomList();
+//                    break;
                 case ChatMsg.MODE_ROOM_CREATE:
-                    Room room = new Room(this); // this는 현재 ClientHandler 객체
+                    // 방 생성
+                    Room room = new Room(this); // 현재 ClientHandler 객체(this)를 방에 추가
                     rooms.put(room.getRoomName(), room); // 방 목록에 추가
+                    printDisplay("방 생성됨: " + room.getRoomName());
+
+                    // 클라이언트를 자동으로 방에 입장시키기
                     joinRoom(room);
+
+                    // 방 입장 메시지 전송
+                    sendMessage(new ChatMsg("SERVER", ChatMsg.MODE_ROOM_JOIN, room.getRoomName(), room.getPlayerList()));
+
+                    // 모든 클라이언트에게 방 목록 갱신
                     broadcastRoomList();
                     break;
 
+
+//                case ChatMsg.MODE_ROOM_JOIN:
+//                    Room roomToJoin = rooms.get(msg.getMessage());
+//                    if (roomToJoin != null && roomToJoin.addPlayer(this)) {
+//                        joinRoom(roomToJoin);
+//                        sendMessage(new ChatMsg("SERVER", ChatMsg.MODE_ROOM_JOIN, "방에 입장했습니다.", roomToJoin.getPlayerList()));
+//                        broadcastRoomList();
+//                    } else {
+//                        sendMessage(new ChatMsg("SERVER", ChatMsg.MODE_ROOM_FULL, "방이 꽉 찼습니다."));
+//                    }
+//                    break;
                 case ChatMsg.MODE_ROOM_JOIN:
                     Room roomToJoin = rooms.get(msg.getMessage());
                     if (roomToJoin != null && roomToJoin.addPlayer(this)) {
                         joinRoom(roomToJoin);
-                        sendMessage(new ChatMsg("SERVER", ChatMsg.MODE_ROOM_JOIN, "방에 입장했습니다.", roomToJoin.getPlayerList()));
+                        // 방 이름과 사용자 목록을 함께 전송
+                        sendMessage(new ChatMsg("SERVER", ChatMsg.MODE_ROOM_JOIN, roomToJoin.getRoomName(), roomToJoin.getPlayerList()));
                         broadcastRoomList();
                     } else {
                         sendMessage(new ChatMsg("SERVER", ChatMsg.MODE_ROOM_FULL, "방이 꽉 찼습니다."));
                     }
                     break;
+
 
 
                 case ChatMsg.MODE_READY:

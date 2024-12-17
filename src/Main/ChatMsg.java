@@ -39,7 +39,7 @@ public class ChatMsg implements Serializable {
     public ChatMsg(String userID, int mode, String message) {
         this.userID = userID;
         this.mode = mode;
-        this.message = message;
+        this.message = (message != null) ? new String(message.getBytes(), java.nio.charset.StandardCharsets.UTF_8) : "";
         this.image = null; // 이미지 없음
     }
 
@@ -54,7 +54,7 @@ public class ChatMsg implements Serializable {
     public ChatMsg(String userID, int mode, String message, Object data) {
         this.userID = userID;
         this.mode = mode;
-        this.message = message;
+        this.message = (message != null) ? new String(message.getBytes(), java.nio.charset.StandardCharsets.UTF_8) : "";
         this.data = data;
     }
 
