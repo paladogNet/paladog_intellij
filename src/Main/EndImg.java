@@ -14,11 +14,11 @@ public class EndImg extends JFrame {
 
    public EndImg() {
 
-      setTitle("�ȶ󵶿���ȭ��");
+      setTitle("게임승리");
       setSize(1130, 574);
       setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
       setLayout(null);
-      setLocationRelativeTo(null); // �������� �߾ӹ�ġ
+      setLocationRelativeTo(null);
       setContentPane(endpanel);
       
 
