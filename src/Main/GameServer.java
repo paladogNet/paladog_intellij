@@ -290,17 +290,44 @@ public class GameServer extends JFrame{
 
         public String getRoomName() { return roomName; }
 
-        public synchronized boolean addPlayer(GameServer.ClientHandler handler) {
+//        public synchronized boolean addPlayer(GameServer.ClientHandler handler) {
+//            if (players.size() < 2) {
+//                players.put(handler, false);
+//                return true;
+//            }
+//            return false;
+//        }
+
+        public synchronized boolean addPlayer(ClientHandler handler) {
             if (players.size() < 2) {
                 players.put(handler, false);
+                broadcastPlayerList(); // 사용자 추가 시 사용자 목록 브로드캐스트
                 return true;
             }
             return false;
         }
 
+//        public synchronized void setReady(ClientHandler clientHandler) {
+//            players.put(clientHandler, true); // 준비 상태를 true로 설정
+//            broadcastPlayerList(); // 사용자 목록과 상태를 브로드캐스트
+//        }
+
         public synchronized void setReady(ClientHandler clientHandler) {
-            players.put(clientHandler, true);
+            players.put(clientHandler, true); // 준비 상태 설정
+            broadcastPlayerList(); // 준비 상태 변경 시 사용자 목록 브로드캐스트
         }
+
+        public synchronized void broadcastPlayerList() {
+            List<String> playerStatus = getPlayerList(); // 사용자 목록과 준비 상태 가져오기
+            for (ClientHandler player : players.keySet()) {
+                try {
+                    player.sendMessage(new ChatMsg("SERVER", ChatMsg.MODE_ROOM_JOIN, roomName, playerStatus));
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
 
         public synchronized boolean isGameReady() {
             return players.size() == 2 && players.values().stream().allMatch(ready -> ready);
