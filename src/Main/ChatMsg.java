@@ -21,16 +21,26 @@ public class ChatMsg implements Serializable {
 
     public static final int MODE_GAME_START = 100; // 게임시작 모드
 
+    // 방 관련 모드
+    public static final int MODE_ROOM_CREATE = 200;   // 방 생성
+    public static final int MODE_ROOM_JOIN = 201;     // 방 입장
+    public static final int MODE_ROOM_LIST = 202;     // 방 목록 요청
+    public static final int MODE_READY = 203;         // 준비 상태
+    public static final int MODE_ROOM_FULL = 204;     // 방이 꽉 찼음
+
+
     private String userID;   // 사용자 ID
     private int mode;        // 메시지 모드
     private String message;  // 메시지 내용
     private ImageIcon image;    // 이미지 데이터
 
+    private Object data;
+
     // 생성자: 텍스트 메시지용
     public ChatMsg(String userID, int mode, String message) {
         this.userID = userID;
         this.mode = mode;
-        this.message = message;
+        this.message = (message != null) ? new String(message.getBytes(), java.nio.charset.StandardCharsets.UTF_8) : "";
         this.image = null; // 이미지 없음
     }
 
@@ -40,6 +50,13 @@ public class ChatMsg implements Serializable {
         this.mode = mode;
         this.message = message;
         this.image = image;
+    }
+
+    public ChatMsg(String userID, int mode, String message, Object data) {
+        this.userID = userID;
+        this.mode = mode;
+        this.message = (message != null) ? new String(message.getBytes(), java.nio.charset.StandardCharsets.UTF_8) : "";
+        this.data = data;
     }
 
     // 사용자 ID 반환
@@ -61,6 +78,7 @@ public class ChatMsg implements Serializable {
     public ImageIcon getImage() {
         return image;
     }
+    public Object getData() { return data; }
 
     // 메시지 출력 형식 재정의
     @Override
