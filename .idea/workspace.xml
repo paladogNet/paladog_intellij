@@ -11,8 +11,21 @@
   <component name="ChangeListManager">
     <list default="true" id="b31e0590-2f0d-4958-b218-26fccf8df671" name="변경" comment="Feat : 각 클라이언트 팔라독 움직이면 상대 화면에 다크독 움직이도록 함. 근데 샤샤샥 있음">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/Main/ChatMsg.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/Main/ChatMsg.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/Main/EndImg$EndPanel.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/Main/EndImg$EndPanel.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/Main/EndImg.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/Main/EndImg.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/Main/GameClient$1$1.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/Main/GameClient$1$2.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/Main/GameClient$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/Main/GameClient$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/Main/GameClient$GameClientHandler.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/Main/GameClient$GameClientHandler.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/Main/GameClient.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/Main/GameClient.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/Main/GameServer$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/Main/GameServer$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/Main/GameServer$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/Main/GameServer$2.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/bin/Main/GameServer$ClientHandler.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/Main/GameServer$ClientHandler.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/Main/GameServer.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/Main/GameServer.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Main/ChatMsg.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main/ChatMsg.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Main/GameClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main/GameClient.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Main/GameServer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main/GameServer.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -55,7 +68,7 @@
     "Application.GameServer.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "test",
+    "git-widget-placeholder": "haedam3",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "C:/Users/김정훈/Desktop/paladog",
     "node.js.detected.package.eslint": "true",
@@ -78,7 +91,7 @@
       <recent name="C:\Users\김정훈\Desktop\paladog\images" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.GameClient">
+  <component name="RunManager" selected="애플리케이션.GameClient">
     <configuration name="GameClient" type="Application" factoryName="Application" singleton="false" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="Main.GameClient" />
       <module name="palaDog" />
@@ -132,15 +145,15 @@
       </method>
     </configuration>
     <list>
-      <item itemvalue="Application.GameClient" />
-      <item itemvalue="Application.GameServer" />
-      <item itemvalue="Application.PalaDogApp" />
-      <item itemvalue="Application.WithTalk" />
+      <item itemvalue="애플리케이션.GameClient" />
+      <item itemvalue="애플리케이션.GameServer" />
+      <item itemvalue="애플리케이션.PalaDogApp" />
+      <item itemvalue="애플리케이션.WithTalk" />
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.GameClient" />
-        <item itemvalue="Application.GameServer" />
+        <item itemvalue="애플리케이션.GameClient" />
+        <item itemvalue="애플리케이션.GameServer" />
       </list>
     </recent_temporary>
   </component>
