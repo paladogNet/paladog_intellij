@@ -265,19 +265,19 @@ public class GameClient extends JFrame {
     }
 
     class GameClientHandler extends Thread {
-        private Socket socket;
-        private GamePanel gamePanel;
-        private ObjectInputStream in;
-        private ObjectOutputStream out;
-        private String clientId;
-        private boolean gameStarted = false;
+//        private Socket socket;
+//        private GamePanel gamePanel;
+//        private ObjectInputStream in;
+//        private ObjectOutputStream out;
+//        private String clientId;
+//        private boolean gameStarted = false;
 
-        public GameClientHandler(Socket socket, GamePanel gamePanel, String clientId, ObjectInputStream in, ObjectOutputStream out) {
-            this.socket = socket;
-            this.gamePanel = gamePanel;
-            this.clientId = clientId;
-            this.in = in;
-            this.out = out;
+        public GameClientHandler(/*Socket socket, GamePanel gamePanel, String clientId, ObjectInputStream in, ObjectOutputStream out*/) {
+//            this.socket = socket;
+//            this.gamePanel = gamePanel;
+//            this.clientId = clientId;
+//            this.in = in;
+//            this.out = out;
         }
 
         @Override
@@ -453,7 +453,7 @@ public class GameClient extends JFrame {
         revalidate();
         repaint();
 
-        new GameClientHandler(socket,gamePanel, clientId, in, out).start();
+        new GameClientHandler(/*socket, gamePanel, clientId, in, out*/).start();
     }
 
     private void setupRoomScreen(String roomName, List<String> players) {
