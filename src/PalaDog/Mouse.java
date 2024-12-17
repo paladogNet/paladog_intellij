@@ -1,3 +1,6 @@
+// 해당 클래스는 모두 오픈소스를 참고하였습니다.
+// 제가 쥐를 소환하면 상대화면에서 좀비가 나오도록 하기위해 쥐의 스폰 위치만 수정하였습니다.
+
 package PalaDog;
 
 import java.awt.Color;
@@ -16,12 +19,6 @@ import lombok.Data;
 public  class Mouse extends JLabel {
 	public ImageIcon mouseIcon, mouse_attackicon, mouse_attackstopicon, ma;
 	public Mouse mouse = this;
-	public Zombie zombie;
-
-	public GamePanel gamepanel;
-	public ArrayList<Zombie> zombielist;
-	public ArrayList<Mouse> mouselist;
-	public DarkDog darkdog;
 	public int x = 0;
 	public int y = 240;
 	public int hp = 30;

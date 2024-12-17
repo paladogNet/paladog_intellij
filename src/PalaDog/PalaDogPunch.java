@@ -1,11 +1,9 @@
+//해당 클래스는 모두 오픈소스를 참고하였습니다.
 package PalaDog;
 
 import java.util.ArrayList;
-
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
-
-import DarkDog.Zombie;
 import Main.GamePanel;
 
 public class PalaDogPunch extends JLabel {

@@ -1,3 +1,5 @@
+// 해당 클래스는 모두 수업시간에 사용했던 ChatMsg 객체에 추가로 직접 작성하였습니다.
+
 package Main;
 
 import javax.swing.*;
@@ -11,7 +13,7 @@ public class ChatMsg implements Serializable {
     public static final int MODE_LOGIN = 1;    // 로그인 모드
     public static final int MODE_LOGOUT = 2;   // 로그아웃 모드
 
-    public static final int MODE_TX_COORDINATE = 4; // 좌표 전송 모드
+    public static final int MODE_TX_COORDINATE = 4; // 내 팔라독을 움직일 때 다크독을 움직이기 위한 좌표 전송 모드
 
     public static final int MODE_TX_STRING = 16; // 텍스트 전송 모드
     public static final int MODE_TX_IMAGE = 64;  // 이미지 전송 모드

@@ -1,3 +1,5 @@
+//해당 클래스는 모두 오픈소스를 참고하였습니다. 하지만 운영로직 상 사용하지 않습니다.
+
 package PalaDog;
 
 import java.util.ArrayList;

@@ -6,11 +6,9 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
-
 import javax.swing.*;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.DefaultStyledDocument;
-
 import DarkDog.DarkDog;
 import DarkDog.Zombie;
 import PalaDog.Bear;
@@ -20,7 +18,6 @@ import PalaDog.PalaDogPunch;
 import DarkDog.DarkDogPunch;
 
 public class GamePanel extends JPanel  {
-	private MyPanel m1, m2;
 	private Mouse mouse;
 	private Bear bear;
 	private Zombie zombie;
@@ -28,17 +25,12 @@ public class GamePanel extends JPanel  {
 	private PalaDogPunch palaDogPunch;
 	private DarkDogPunch darkDogPunch;
 	private DarkDog darkdog;
-	private boolean count = true;
 	public boolean isEnding = true;
-	public boolean is좀비소환 = true;
-	public boolean is라벨무빙 = false;
 	private ZombieHpLabel zombiehplabel;
 	private MouseHpLabel mousehplabel;
-	private BearHpLabel bearhplabel;
 	private PalaDogHpLabel paladoghplabel;
 	private DarkDogHpLabel darkdoghplabel;
 
-	public GamePanel gamepanel;
 	private ArrayList<Zombie> zombielist;
 	private ArrayList<Mouse> mouselist;
 	private ArrayList<Bear> bearlist;
@@ -50,14 +42,14 @@ public class GamePanel extends JPanel  {
 	public int sohwanhp = 0;
 	public int skillmp = 0;
 
+
+	//아래의 멤버변수들은 직접 추가한 변수들입니다.
 	ImageIcon img;
 	JPanel panel;
 	JLabel bottom_imgLabel, goldLabel, mpLabel, hpLabel;
 
-	public int back1X = 0;
 	public ImageIcon backicon = new ImageIcon("images/background_img.png");
 	public Image backimg = backicon.getImage();
-	public int back2X = backimg.getWidth(null);
 
 	//채팅을 위한 필드들
 	private JTextPane chatArea; // 채팅 로그 표시
@@ -66,11 +58,11 @@ public class GamePanel extends JPanel  {
 	private JButton sendImageButton; // 메시지 전송 버튼
 	private DefaultStyledDocument document;
 
+
+	// 생성자 안의 내용은 대부분 직접 추가했습니다.
 	public GamePanel() {
 
 		init();
-
-
 
 		// 채팅을 위한 세팅
 		setLayout(null); // 사용자 지정 레이아웃
@@ -78,8 +70,7 @@ public class GamePanel extends JPanel  {
 		document = new DefaultStyledDocument();
 		chatArea = new JTextPane(document);
 		chatArea.setEditable(false);
-//		chatArea.setLineWrap(true);
-//		chatArea.setWrapStyleWord(true);
+
 		JScrollPane chatScrollPane = new JScrollPane(chatArea);
 		chatScrollPane.setBounds(730, 378, 400, 130); // 오른쪽 아래 위치 조정
 		add(chatScrollPane);
@@ -96,9 +87,6 @@ public class GamePanel extends JPanel  {
 		sendImageButton.setBounds(1040, 510, 70, 30);
 		add(sendImageButton);
 
-
-
-
 		setting();
 		batch();
 		listener();
@@ -106,12 +94,12 @@ public class GamePanel extends JPanel  {
 		setVisible(true);
 
 	}
-	// 채팅 메시지 추가 메서드
-//	public void appendChatMessage(String message) {
-//		chatArea.append(message + "\n");
-//	}
-	//printDisplay로 대체
+	// 원래 채팅 메시지 추가 메서드였습니다. 이것을 printDisplay로 대체하였습니다.
+	//	public void appendChatMessage(String message) {
+	//		chatArea.append(message + "\n");
+	//	}
 
+	//직접 작성하였습니다. 채팅(문자열) 내용을 chatArea에 렌더링하기 위한 메소드입니다.
 	public void printDisplay(String msg) {
 		int len = chatArea.getDocument().getLength();
 
@@ -123,7 +111,7 @@ public class GamePanel extends JPanel  {
 
 		chatArea.setCaretPosition(len);
 	}
-
+	//직접 작성하였습니다. 채팅(문자열) 내용을 chatArea에 렌더링하기 위한 메소드입니다. 인자를 다르게 하여 오버로딩을 사용했습니다.
 	public void printDisplay(ImageIcon icon) {
 		chatArea.setCaretPosition(chatArea.getDocument().getLength());
 
@@ -138,17 +126,15 @@ public class GamePanel extends JPanel  {
 		chatInput.setText("");
 	}
 
-
+	//채팅 기능에 필요하여 직접 추가한 getter 메소드들입니다.
 	public String getChat() {
 		String input = chatInput.getText();
 		chatInput.setText(""); // 입력 필드 초기화
 		return input;
 	}
-
 	public JTextField getChatInput() {
 		return chatInput;
 	}
-
 	public JButton getSendButton() {
 		return sendButton;
 	}
@@ -174,8 +160,7 @@ public class GamePanel extends JPanel  {
 		bearhplist = new ArrayList<>();
 		paladogpunchlist = new ArrayList<>();
 		darkdogpunchlist = new ArrayList<>();
-		ZombieSoHwan zombiesohwan = new ZombieSoHwan();
-		//zombiesohwan.start();
+		new ZombieSoHwan();
 
 		GoldLabel goldLabel = new GoldLabel();
 		goldLabel.start();
@@ -194,9 +179,6 @@ public class GamePanel extends JPanel  {
 		mouse.Mouse_attack(mouselist, zombielist, darkdog);
 		bear.Bear_attack(bearlist, zombielist, darkdog);
 		zombie.Zombie_attack(mouselist, zombielist, paladog);
-		zombie.Zombie_attack2(bearlist, zombielist);
-//		palaDogPunchAttack(paladogpunchlist,zombielist);
-//		darkDogPunchAttack(darkdogpunchlist, mouselist);
 		paladog.punchAttack(paladogpunchlist, zombielist, darkdog,this);
 		darkdog.punchAttack(darkdogpunchlist, mouselist, paladog,this);
 
@@ -236,7 +218,6 @@ public class GamePanel extends JPanel  {
 		add(mpLabel);
 		add(hpLabel);
 	}
-
 
 	public void batch() {
 		add(hpLabel);
@@ -295,6 +276,7 @@ public class GamePanel extends JPanel  {
 					}
 				}
 
+				// 3번 곰은 게임 운영로직상 제외하였습니다.
 //				if (e.getKeyChar() == '3') {
 //					new Thread(() -> {
 //						if (sohwanhp > 30) {
@@ -315,6 +297,8 @@ public class GamePanel extends JPanel  {
 					paladog.moveRight();
 				}
 
+				//원래 오픈소스 코드에는 대문자 J가 이스터에그로 무한 스킬생성 버튼으로 되어있었습니다.
+				//하지만 대문자 J를 입력해도 한번의 스킬생성만 하도록 수정했습니다.
 				if (e.getKeyChar() == 'j' || e.getKeyChar() == 'J') {
 					if (!isPunchCooldown) {
 						if (skillmp > 10) {
@@ -372,6 +356,7 @@ public class GamePanel extends JPanel  {
 
 	}
 
+	// getter 메소드가 필요하여 직접 작성하였습니다.
 	public PalaDog getPaladog() {
 		return this.paladog ;
 	}
@@ -381,20 +366,17 @@ public class GamePanel extends JPanel  {
 		return this.paladog.x;
 	}
 
-	public JPanel getPanel() {
-		return panel;
-	}
-
-	public ArrayList<Zombie> getZombielist() {
-		return zombielist;
-	}
-
-	public Object getZombiehplabellist() {
-		return Zombiehplabellist;
-	}
-
-
-
+//	public JPanel getPanel() {
+//		return panel;
+//	}
+//
+//	public ArrayList<Zombie> getZombielist() {
+//		return zombielist;
+//	}
+//
+//	public Object getZombiehplabellist() {
+//		return Zombiehplabellist;
+//	}
 
 	class 죽는스레드 extends Thread {
 		@Override
@@ -484,8 +466,6 @@ public class GamePanel extends JPanel  {
 				while (sohwanhp < 40) {
 					try {
 						sohwanhp++;
-
-//                  System.out.println(hp);
 						goldLabel.setText("gold point : "+sohwanhp + "/" + "40");
 
 						Thread.sleep(500);
@@ -563,7 +543,6 @@ public class GamePanel extends JPanel  {
 					}
 
 				}
-//
 				for (int i = 0; i < bearlist.size(); i++) {
 					try {
 						Thread.sleep(1);
@@ -680,28 +659,6 @@ public class GamePanel extends JPanel  {
 
 		}
 	}
-	/////////////////////////////////////////////////////////////////////////////////////////////
-//	class ZombieSoHwan extends Thread {
-//		@Override
-//		public void run() {
-//			while (is좀비소환) {
-//				zombie = new Zombie();
-//				zombie.MoveLeft();
-//				zombielist.add(zombie);
-//				panel.add(zombie);
-//				zombiehplabel = new ZombieHpLabel();
-//				panel.add(zombiehplabel);
-//				Zombiehplabellist.add(zombiehplabel);
-//				System.out.println("좀비 소환" + zombielist.size());
-//				try {
-//					Thread.sleep(10000);
-//				} catch (InterruptedException e) {
-//					// TODO Auto-generated catch block
-//					e.printStackTrace();
-//				}
-//			}
-//		}
-//	}
 
 	public class ZombieSoHwan {
 
@@ -747,14 +704,7 @@ public class GamePanel extends JPanel  {
 			}).start();
 		}
 	}
-
-	/**
-	 * DarkDog의 위치를 업데이트하는 메서드.
-	 * 서버에서 받은 메시지를 바탕으로 x, y 좌표를 업데이트합니다.
-	 *
-	 * @param x DarkDog의 새로운 x 좌표
-	 * @param y DarkDog의 새로운 y 좌표
-	 */
+	//직접 작성하였습니다.
 	public void updateDarkDogPosition(int x, int y) {
 		darkdog.setLocation(x, y); // DarkDog의 위치 업데이트
 		repaint(); // UI 갱신
@@ -780,10 +730,11 @@ public class GamePanel extends JPanel  {
 			super.paintComponent(g);
 
 			g.drawImage(backimg, 0, 0, 1115, 375, this);
-			// g.drawImage(backimg, back2X, 0, this);
+
 		}
 	}
 
+	//직접 작성하였습니다.
 	public void spawnDarkDogPunch(){
 		new Thread(() -> {
 			synchronized (this) {
@@ -805,7 +756,7 @@ public class GamePanel extends JPanel  {
 		}).start();
 	}
 
-
+    //직접 작성하였습니다.
 	public void spawnZombieForDarkDog() {
 		Zombie zombie = new Zombie();
 		ZombieHpLabel zombieHpLabel = new ZombieHpLabel();
@@ -822,25 +773,6 @@ public class GamePanel extends JPanel  {
 		panel.add(zombiehplabel);
 		Zombiehplabellist.add(zombiehplabel);
 		System.out.println("좀비 소환" + zombielist.size());
-//		// 좀비 이동 로직
-//		new Thread(() -> {
-//			try {
-//				while (zombie.x > 0) { // 화면 왼쪽으로 이동
-//					zombie.MoveLeft();
-//					Thread.sleep(1000); // 이동 속도 조절
-//					zombie.setBounds(zombie.x, zombie.y, 90, 90);
-//					zombieHpLabel.setLocation(zombie.x, zombie.y - 20);
-//				}
-//
-//				// 화면 밖으로 나가면 좀비 제거
-//				panel.remove(zombie);
-//				panel.remove(zombieHpLabel);
-//				zombielist.remove(zombie);
-//				Zombiehplabellist.remove(zombieHpLabel);
-//			} catch (Exception e) {
-//				e.printStackTrace();
-//			}
-//		}).start();
 	}
 
 }

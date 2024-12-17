@@ -1,3 +1,8 @@
+// 해당 클래스는 모두 직접 작성하였는데, 키를 입력받는 부분에 '쿨다운' 개념을 웹서칭 하여 도입했습니다.
+// 쿨다운은 특정 키 입력(1,J 등)이 실행된 후 일정 시간 동안 다시 입력되지 않도록 막는 기능입니다.(isCooldown 플래그를 사용해 쿨다운 상태를 확인하고, 입력을 막습니다.)
+// Timer를 사용해 쿨다운 시간을 설정한 후, 시간이 지나면 isCooldown을 false로 변경해 입력을 다시 허용합니다.
+// 쿨다운을 적용한 이유는 빠르게 j를 두번 클릭하게 되면 gold point는 10 차감이 되는데 두번 펀치 스킬이 생성되는 문제가 있었기 때문입니다.
+
 package Main;
 
 import java.awt.*;
@@ -7,7 +12,6 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.io.*;
 import java.net.*;
-import java.util.*;
 import java.util.List;
 import javax.swing.*;
 import javax.swing.Timer;
@@ -87,8 +91,6 @@ public class GameClient extends JFrame {
         // GamePanel 포커스 설정
         gamePanel.setFocusable(true);
         gamePanel.requestFocusInWindow(); // 포커스를 요청
-//            add(gamePanel); // GamePanel을 JFrame에 추가
-//            setVisible(true); // 화면 갱신
 
         // KeyListener 등록
         gamePanel.addKeyListener(new KeyAdapter() {
@@ -98,16 +100,14 @@ public class GameClient extends JFrame {
             public void keyPressed(KeyEvent e) {
                 ChatMsg msg;
                 if (e.getKeyCode() == KeyEvent.VK_LEFT) {
-                    // 팔라독을 왼쪽으로 이동
-                    //gamePanel.getPaladog().moveLeft();
 
                     //1. 내 팔라독 좌표 업데이트 메시지 전송
                     msg = new ChatMsg(clientId, ChatMsg.MODE_PALADOG_MOVE_LEFT,"PALADOG_LEFT");
                     sendMessage(msg);
 
-
+                    //2. 상대 다크독 좌표 업데이트 메시지 전송
                     // 팔라독의 현재 좌표-1 을 가져옴
-                    int palaX = gamePanel.getPaladogX()-1;
+                    int palaX = gamePanel.getPaladogX() - 1;
                     int darkdogX = 940 - palaX; // 상대 클라이언트의 다크독 위치 계산
                     int y = 190; // Y값은 고정 또는 필요에 따라 변경
 
@@ -124,7 +124,7 @@ public class GameClient extends JFrame {
 
                     //2. 상대 다크독 좌표 업데이트 메시지 전송
                     // 팔라독의 현재 좌표+1을 가져옴
-                    int palaX = gamePanel.getPaladogX()+1;
+                    int palaX = gamePanel.getPaladogX() + 1;
                     int darkdogX = 940 - palaX; // 상대 클라이언트의 다크독 위치 계산
                     int y = 190; // Y값은 고정 또는 필요에 따라 변경
 
@@ -193,7 +193,6 @@ public class GameClient extends JFrame {
     // 채팅 관련 이벤트 리스너 설정
     private void setupChatListeners() {
         // 텍스트 메시지 전송 리스너
-
         JTextField chatInput = gamePanel.getChatInput();
 
         chatInput.addActionListener(new ActionListener() {
@@ -276,20 +275,6 @@ public class GameClient extends JFrame {
     }
 
     class GameClientHandler extends Thread {
-//        private Socket socket;
-//        private GamePanel gamePanel;
-//        private ObjectInputStream in;
-//        private ObjectOutputStream out;
-//        private String clientId;
-//        private boolean gameStarted = false;
-
-        public GameClientHandler(/*Socket socket, GamePanel gamePanel, String clientId, ObjectInputStream in, ObjectOutputStream out*/) {
-//            this.socket = socket;
-//            this.gamePanel = gamePanel;
-//            this.clientId = clientId;
-//            this.in = in;
-//            this.out = out;
-        }
 
         @Override
         public void run() {
@@ -457,13 +442,9 @@ public class GameClient extends JFrame {
         homePanel.add(scrollPane, BorderLayout.CENTER);
         homePanel.add(b_createRoom, BorderLayout.SOUTH);
 
-//        b_createRoom.addActionListener(e -> {
-//            sendMessage(new ChatMsg(clientId, ChatMsg.MODE_ROOM_CREATE, null));
-//        });
         b_createRoom.addActionListener(e -> {
             sendMessage(new ChatMsg(clientId, ChatMsg.MODE_ROOM_CREATE, "create_room", null));
         });
-
 
         roomList.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -479,7 +460,7 @@ public class GameClient extends JFrame {
         revalidate();
         repaint();
 
-        new GameClientHandler(/*socket, gamePanel, clientId, in, out*/).start();
+        new GameClientHandler().start();
     }
 
     private void setupRoomScreen(String roomName, List<String> players) {

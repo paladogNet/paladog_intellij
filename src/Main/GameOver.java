@@ -1,21 +1,15 @@
+//해당 클래스는 모두 오픈소스를 참고하였습니다.
+
 package Main;
 
 import java.awt.Graphics;
 import java.awt.Image;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 public class GameOver extends JFrame {
 
-   private GameOver gameover = this;
    GameOverPanel gameoverpanel = new GameOverPanel();
 
    public GameOver() {

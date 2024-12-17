@@ -1,3 +1,4 @@
+//이 DarkDog 클래스는 punchAttack() 메소드 제외하고 전체 오픈소스를 사용했습니다.
 package DarkDog;
 
 import javax.swing.ImageIcon;
@@ -22,7 +23,6 @@ public class DarkDog extends JLabel {
 	public boolean isMoving = true;
 
 	public DarkDog() {
-
 		darkIcon = new ImageIcon("images/darkdog.png");
 		dark_attackicon = new ImageIcon("images/mouse_attackimg.gif");
 		setIcon(darkIcon);
@@ -30,65 +30,8 @@ public class DarkDog extends JLabel {
 		setLocation(x, y);
 	
 	}
-	public void Right() {
-		setIcon(darkIcon);
-	}
 
-	public void Letf() {
-		setIcon(darkIcon);
-	}
-
-	public void moveRight() {
-		if (true) {
-			new Thread(new Runnable() {
-
-				@Override
-				public void run() {
-					setIcon(darkIcon);
-					isRight = true;
-					while (isRight) {
-						x++;
-						setLocation(x, y); // 내부에 repaint() 존재
-						try {
-
-							Thread.sleep(10);
-						} catch (InterruptedException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						}
-					}
-				}
-			}).start();
-		}
-	}
-
-	public void moveLeft() {
-		if (!isLeft) {
-			new Thread(new Runnable() {
-
-				@Override
-				public void run() {
-					setIcon(darkIcon);
-					isLeft = true;
-					while (true) {
-						x--;
-						setLocation(x, y); // 내부에 repaint() 존재
-						try {
-							if (x < 0) {
-								break;
-							}
-							Thread.sleep(10);
-
-						} catch (InterruptedException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						}
-					}
-				}
-			}).start();
-		}
-	}
-
+	// 팔라독의 punchAttack()을 참고하여 작성했습니다.
 	public static void punchAttack(ArrayList<DarkDogPunch> punchlist, ArrayList<Mouse> mouse, PalaDog paladog, GamePanel panel) {
 		new Thread(new Runnable() {
 			@Override
@@ -106,20 +49,14 @@ public class DarkDog extends JLabel {
 								try {
 									if (punchlist.get(i).getX() <= mouse.get(j).x + 100) {
 										System.out.println("펀치맞음");
-
 										mouse.get(j).hp = mouse.get(j).hp - punchlist.get(i).attack;
-
-//										panel.setLayout(null);
 										panel.remove(punchlist.get(i));
 										punchlist.remove(i);
 										panel.repaint();
-
-
 									}
 								} catch (Exception e) {
 									// TODO: handle exception
 								}
-
 							}
 							try {
 								if (punchlist.get(i).getX() <= paladog.x + 50) {
@@ -136,8 +73,6 @@ public class DarkDog extends JLabel {
 							}
 
 						}
-
-
 					}catch (Exception e) {
 						// TODO: handle exception
 					}
@@ -145,5 +80,4 @@ public class DarkDog extends JLabel {
 			}
 		}).start();
 	}
-
 }

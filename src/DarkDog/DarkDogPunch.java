@@ -1,12 +1,11 @@
-package DarkDog;
+//해당 클래스는 모두 오픈소스를 참고하였습니다.
 
-import Main.GamePanel;
+package DarkDog;
 
 import javax.swing.*;
 import java.util.ArrayList;
 
 public class DarkDogPunch extends JLabel {
-    public GamePanel gamepanel;
     public DarkDogPunch punch = this;
     public ImageIcon icPunch;
     public int Punchx;
@@ -32,9 +31,6 @@ public class DarkDogPunch extends JLabel {
 
                         Thread.sleep(20);
                         setLocation(Punchx, Punchy);
-                        for (int i = 0; i < PList.size(); i++) {
-//							System.out.println(""+PList.get(i).getX());
-                        }
 
                     } catch (InterruptedException e) {
                         // TODO Auto-generated catch block
@@ -45,8 +41,4 @@ public class DarkDogPunch extends JLabel {
             }
         }).start();
     }
-
-
-
-
 }

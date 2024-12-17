@@ -1,4 +1,7 @@
+//해당 클래스는 모두 오픈소스를 참고하였습니다.
+
 package PalaDog;
+
 
 import java.awt.Graphics;
 import java.awt.Image;
@@ -13,14 +16,11 @@ import DarkDog.DarkDog;
 
 public class PalaDog extends JLabel {
 
-	public PalaDog Paladog = this;
 	public int x = 0;
 	public int y = 160;
 	public int hp = 100;
 	public boolean isRight = false;
 	public boolean isLeft = false;
-	public boolean isPunch = true;
-	public GamePanel gamepanel;
 	public ImageIcon icPaladogR, icPaladogL, icPaladogRM, icPaladogLM;
 
 	public PalaDog() {
@@ -140,8 +140,6 @@ public class PalaDog extends JLabel {
 							}
 
 						}
-
-
 					}catch (Exception e) {
 						// TODO: handle exception
 					}
