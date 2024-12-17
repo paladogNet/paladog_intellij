@@ -21,6 +21,11 @@ public class ChatMsg implements Serializable {
 
     public static final int MODE_GAME_START = 100; // 게임시작 모드
 
+    public static final int MODE_INPUT = 150;
+
+    public static final int MODE_PALADOG_MOVE_LEFT = 160;
+    public static final int MODE_PALADOG_MOVE_RIGHT = 180;
+
     // 방 관련 모드
     public static final int MODE_ROOM_CREATE = 200;   // 방 생성
     public static final int MODE_ROOM_JOIN = 201;     // 방 입장

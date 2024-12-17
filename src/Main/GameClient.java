@@ -99,10 +99,15 @@ public class GameClient extends JFrame {
                 ChatMsg msg;
                 if (e.getKeyCode() == KeyEvent.VK_LEFT) {
                     // 팔라독을 왼쪽으로 이동
-                    gamePanel.getPaladog().moveLeft();
+                    //gamePanel.getPaladog().moveLeft();
 
-                    // 팔라독의 현재 좌표를 가져옴
-                    int palaX = gamePanel.getPaladogX();
+                    //1. 내 팔라독 좌표 업데이트 메시지 전송
+                    msg = new ChatMsg(clientId, ChatMsg.MODE_PALADOG_MOVE_LEFT,"PALADOG_LEFT");
+                    sendMessage(msg);
+
+
+                    // 팔라독의 현재 좌표-1 을 가져옴
+                    int palaX = gamePanel.getPaladogX()-1;
                     int darkdogX = 940 - palaX; // 상대 클라이언트의 다크독 위치 계산
                     int y = 190; // Y값은 고정 또는 필요에 따라 변경
 
@@ -111,10 +116,15 @@ public class GameClient extends JFrame {
                     sendMessage(msg);
                 } else if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
                     // 팔라독을 오른쪽으로 이동
-                    gamePanel.getPaladog().moveRight();
+                    //gamePanel.getPaladog().moveRight();
 
-                    // 팔라독의 현재 좌표를 가져옴
-                    int palaX = gamePanel.getPaladogX();
+                    //1. 내 팔라독 좌표 업데이트 메시지 전송
+                    msg = new ChatMsg(clientId, ChatMsg.MODE_PALADOG_MOVE_RIGHT,"PALADOG_RIGHT");
+                    sendMessage(msg);
+
+                    //2. 상대 다크독 좌표 업데이트 메시지 전송
+                    // 팔라독의 현재 좌표+1을 가져옴
+                    int palaX = gamePanel.getPaladogX()+1;
                     int darkdogX = 940 - palaX; // 상대 클라이언트의 다크독 위치 계산
                     int y = 190; // Y값은 고정 또는 필요에 따라 변경
 
@@ -122,6 +132,7 @@ public class GameClient extends JFrame {
                     msg = new ChatMsg(clientId, ChatMsg.MODE_TX_COORDINATE, darkdogX + "," + y);
                     sendMessage(msg);
                 } else if (e.getKeyChar() == '1') { // 1키 입력 시 좀비 유닛 소환 요청
+
                     if (!isCooldown) { // 쿨다운이 아닐 때만 실행
                         if (gamePanel.sohwanhp >= 10) {
                             // 좀비 유닛 소환 명령 객체 생성 및 전송
@@ -307,7 +318,21 @@ public class GameClient extends JFrame {
 
         private void processMessage(ChatMsg msg) {
             // 수신한 메시지 처리 로직
-            if (!msg.getUserID().equals(clientId)) {
+
+            //내 메시지 나만수신.
+            if(msg.getUserID().equals(clientId)){
+                switch (msg.getMode()) {
+                    case ChatMsg.MODE_PALADOG_MOVE_LEFT:
+                        // 팔라독을 왼쪽으로 이동
+                        gamePanel.getPaladog().moveLeft();
+                        break;
+                    case ChatMsg.MODE_PALADOG_MOVE_RIGHT:
+                        // 팔라독을 오른쪽으로 이동
+                        gamePanel.getPaladog().moveRight();
+                        break;
+                }
+            }
+            else if (!msg.getUserID().equals(clientId)) { //상대 메시지만 수신.
                 switch (msg.getMode()) {
 
                     case ChatMsg.MODE_TX_COORDINATE: // 좌표 메시지 처리
@@ -358,6 +383,7 @@ public class GameClient extends JFrame {
 
                 }
             }
+            //상대방이 보냈든, 내가 보냈든 상관없이 실행하는 메시지들.
             switch (msg.getMode()) {
 
                 case ChatMsg.MODE_ROOM_LIST:

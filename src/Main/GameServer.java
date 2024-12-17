@@ -136,6 +136,14 @@ public class GameServer extends JFrame{
                     }
                     broadcastRoomList();
                     break;
+
+                case ChatMsg.MODE_PALADOG_MOVE_LEFT:
+                    broadcastMessage(msg);
+                    break;
+
+                case ChatMsg.MODE_PALADOG_MOVE_RIGHT:
+                    broadcastMessage(msg);
+                    break;
             }
         }
 
