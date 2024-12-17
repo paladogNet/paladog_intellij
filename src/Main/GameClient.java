@@ -424,585 +424,6 @@ public class GameClient extends JFrame {
         });
     }
 
-    // 홈 화면 (방 목록과 방 만들기)
-    private void setupHomeScreen() {
-        getContentPane().removeAll();
-        homePanel = new JPanel(new BorderLayout());
-
-        roomListModel = new DefaultListModel<>();
-        roomList = new JList<>(roomListModel);
-        JScrollPane scrollPane = new JScrollPane(roomList);
-
-        b_createRoom = new JButton("방 만들기");
-
-        homePanel.add(new JLabel("방 목록", SwingConstants.CENTER), BorderLayout.NORTH);
-        homePanel.add(scrollPane, BorderLayout.CENTER);
-        homePanel.add(b_createRoom, BorderLayout.SOUTH);
-
-//        b_createRoom.addActionListener(e -> {
-//            sendMessage(new ChatMsg(clientId, ChatMsg.MODE_ROOM_CREATE, null));
-//        });
-        b_createRoom.addActionListener(e -> {
-            sendMessage(new ChatMsg(clientId, ChatMsg.MODE_ROOM_CREATE, "create_room", null));
-        });
-
-
-        roomList.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                if (evt.getClickCount() == 2) {
-                    String selectedRoom = roomList.getSelectedValue();
-                    sendMessage(new ChatMsg(clientId, ChatMsg.MODE_ROOM_JOIN, selectedRoom));
-                }
-            }
-        });
-
-        add(homePanel);
-        setSize(400, 400);
-        revalidate();
-        repaint();
-
-        new GameClientHandler().start();
-    }
-
-    // 대기방 화면
-//    private void setupRoomScreen(String roomName, List<String> players) {
-//        getContentPane().removeAll();
-//        roomPanel = new JPanel(new BorderLayout());
-//
-//        // 사용자 목록과 준비 상태를 보여주는 JTextArea
-//        JTextArea playerArea = new JTextArea();
-//        playerArea.setEditable(false);
-//        JScrollPane scrollPane = new JScrollPane(playerArea);
-//
-//        // 버튼 패널: 준비 버튼과 홈으로 나가기 버튼
-//        JPanel buttonPanel = new JPanel(new GridLayout(1, 2, 10, 10));
-//        JButton b_ready = new JButton("준비");
-//        JButton b_exit = new JButton("홈으로 나가기");
-//
-//        buttonPanel.add(b_ready);
-//        buttonPanel.add(b_exit);
-//
-//        // 사용자 목록 갱신
-//        updatePlayerArea(playerArea, players);
-//
-//        // 준비 버튼 클릭 이벤트
-//        b_ready.addActionListener(e -> {
-//            sendMessage(new ChatMsg(clientId, ChatMsg.MODE_READY, "Ready"));
-//        });
-//
-//        // 홈으로 나가기 버튼 클릭 이벤트
-//        b_exit.addActionListener(e -> {
-//            sendMessage(new ChatMsg(clientId, ChatMsg.MODE_LOGOUT, "Leave Room"));
-//            setupHomeScreen(); // 홈 화면으로 돌아가기
-//        });
-//
-////        // 화면 구성: 방 이름을 상단에 추가
-////        JLabel roomLabel = new JLabel("대기방: " + roomName, SwingConstants.CENTER);
-////        roomLabel.setFont(new Font("Arial", Font.BOLD, 16));
-//
-//        // 화면 구성: 방 이름을 상단에 추가
-//        JLabel roomLabel = new JLabel("대기방: " + roomName, SwingConstants.CENTER);
-//        roomLabel.setFont(new Font("맑은 고딕", Font.BOLD, 16)); // 한글 폰트 설정
-//        roomLabel.setForeground(Color.BLACK); // 글자 색상 설정
-//
-//        roomPanel.add(roomLabel, BorderLayout.NORTH);
-//        roomPanel.add(scrollPane, BorderLayout.CENTER);
-//        roomPanel.add(buttonPanel, BorderLayout.SOUTH);
-//
-//        add(roomPanel);
-//        setSize(400, 400);
-//        revalidate();
-//        repaint();
-//    }
-    private void setupRoomScreen(String roomName, List<String> players) {
-        getContentPane().removeAll();
-        roomPanel = new JPanel(new BorderLayout());
-
-        // 준비 상태를 나타내기 위해 사용자 목록 표시
-        DefaultListModel<String> playerListModel = new DefaultListModel<>();
-        JList<String> playerList = new JList<>(playerListModel);
-        JScrollPane scrollPane = new JScrollPane(playerList);
-
-        // 버튼 패널: 준비 버튼과 홈으로 나가기 버튼
-        JPanel buttonPanel = new JPanel(new GridLayout(1, 2, 10, 10));
-        JButton b_ready = new JButton("준비");
-        JButton b_exit = new JButton("홈으로 나가기");
-
-        buttonPanel.add(b_ready);
-        buttonPanel.add(b_exit);
-
-        // 사용자 목록과 준비 상태 업데이트
-        updatePlayerList(playerListModel, players);
-
-        // 준비 버튼 클릭 이벤트
-        b_ready.addActionListener(e -> {
-            sendMessage(new ChatMsg(clientId, ChatMsg.MODE_READY, "Ready"));
-            b_ready.setEnabled(false); // 준비 버튼 비활성화
-        });
-
-//        // 홈으로 나가기 버튼 클릭 이벤트
-//        b_exit.addActionListener(e -> {
-//            sendMessage(new ChatMsg(clientId, ChatMsg.MODE_LOGOUT, "Leave Room"));
-//            setupHomeScreen(); // 홈 화면으로 돌아가기
-//        });
-        b_exit.addActionListener(e -> {
-            sendMessage(new ChatMsg(clientId, ChatMsg.MODE_LOGOUT, "Leave Room"));
-            reconnectStreams(); // 스트림 재연결
-            setupHomeScreen();  // 홈 화면으로 돌아가기
-        });
-
-
-
-        // 화면 구성
-        JLabel roomLabel = new JLabel("대기방: " + roomName, SwingConstants.CENTER);
-        roomLabel.setFont(new Font("맑은 고딕", Font.BOLD, 16));
-
-        roomPanel.add(roomLabel, BorderLayout.NORTH);
-        roomPanel.add(scrollPane, BorderLayout.CENTER);
-        roomPanel.add(buttonPanel, BorderLayout.SOUTH);
-
-        add(roomPanel);
-        setSize(400, 400);
-        revalidate();
-        repaint();
-    }
-
-    private void reconnectStreams() {
-        try {
-            System.out.println("스트림 재연결 중...");
-            if (socket != null && !socket.isClosed()) {
-                in.close();
-                out.close();
-
-                // 스트림 재생성
-                out = new ObjectOutputStream(socket.getOutputStream());
-                out.flush();
-                in = new ObjectInputStream(socket.getInputStream());
-
-                // 재연결 후 서버에 상태 전송
-                sendMessage(new ChatMsg(clientId, ChatMsg.MODE_ROOM_LIST, null));
-                System.out.println("스트림 재연결 성공");
-            }
-        } catch (IOException ex) {
-            System.err.println("스트림 재연결 실패: " + ex.getMessage());
-        }
-    }
-
-//    private void updatePlayerArea(JTextArea playerArea, List<String> players) {
-//        if (players == null) {
-//            players = new ArrayList<>(); // 빈 리스트로 초기화
-//        }
-//        StringBuilder sb = new StringBuilder();
-//        sb.append("참여자 목록:\n");
-//        for (String player : players) {
-//            sb.append(player).append("\n");
-//        }
-//        playerArea.setText(sb.toString());
-//    }
-
-    private void updatePlayerList(DefaultListModel<String> playerListModel, List<String> players) {
-        playerListModel.clear();
-        for (String player : players) {
-            playerListModel.addElement(player); // 사용자 이름과 준비 상태 추가
-        }
-    }
-
-
-
-    private void sendMessage(ChatMsg msg) {
-        try {
-            out.writeObject(msg);
-            out.flush();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    class GameClientHandler extends Thread {
-        public void run() {
-            try {
-                while (true) {
-                    try {
-                        ChatMsg msg = (ChatMsg) in.readObject(); // 서버로부터 메시지 수신
-                        if (msg == null) break; // 메시지가 null이면 루프 종료
-                        processMessage(msg); // 메시지 처리
-                    } catch (SocketException se) {
-                        System.out.println("소켓 오류: 서버와의 연결이 끊겼습니다.");
-                        break; // 소켓 오류 시 루프 종료
-                    } catch (EOFException eof) {
-                        System.out.println("서버와의 연결이 종료되었습니다.");
-                        reconnectStreams(); // 스트림 재연결
-                    } catch (IOException | ClassNotFoundException e) {
-                        System.out.println("데이터 수신 오류: " + e.getMessage());
-                        reconnectStreams(); // 스트림 재연결
-                    }
-                }
-            } finally {
-                System.out.println("서버와의 연결이 종료되었습니다. 클라이언트를 종료합니다.");
-                closeResources();
-            }
-        }
-
-//        private void reconnectStreams() {
-//            try {
-//                System.out.println("스트림 재연결 중...");
-//                if (socket != null && !socket.isClosed()) {
-//                    in.close();
-//                    out.close();
-//
-//                    // 스트림 재생성
-//                    out = new ObjectOutputStream(socket.getOutputStream());
-//                    out.flush();
-//                    in = new ObjectInputStream(socket.getInputStream());
-//
-//                    // 재연결 후 서버에 상태 전송
-//                    sendMessage(new ChatMsg(clientId, ChatMsg.MODE_ROOM_LIST, null));
-//                    System.out.println("스트림 재연결 성공");
-//                }
-//            } catch (IOException ex) {
-//                System.err.println("스트림 재연결 실패: " + ex.getMessage());
-//            }
-//        }
-
-        private void processMessage(ChatMsg msg) {
-            // 수신한 메시지 처리 로직
-            if (!msg.getUserID().equals(clientId)) {
-                switch (msg.getMode()) {
-
-                    case ChatMsg.MODE_TX_COORDINATE: // 좌표 메시지 처리
-                        if (msg.getMessage().contains(",")) {
-                            String[] coords = msg.getMessage().split(",");
-                            if (coords.length == 2) {
-                                try {
-                                    int x = Integer.parseInt(coords[0].trim());
-                                    int y = Integer.parseInt(coords[1].trim());
-                                    System.out.println("Updating DarkDog Position to: " + x + ", " + y);
-                                    gamePanel.updateDarkDogPosition(x, y);
-                                    gamePanel.getDarkdog().x = x;
-                                    gamePanel.getDarkdog().y = y;
-                                } catch (NumberFormatException e) {
-                                    e.printStackTrace();
-                                }
-                            }
-                        } else {
-                            System.out.println(msg.getUserID() + " says: " + msg.getMessage());
-                        }
-                        break;
-
-                    case ChatMsg.MODE_SPAWN_UNIT: // 유닛 소환 처리
-                        if (msg.getMessage().equals("MOUSE")) {
-                            System.out.println("Spawning Zombie for DarkDog.");
-                            gamePanel.spawnZombieForDarkDog();
-                        }
-                        break;
-
-                    case ChatMsg.MODE_SPAWN_SKILL: // 스킬 소환 처리
-                        if (msg.getMessage().equals("PUNCH")) {
-                            System.out.println("Spawning DarkDog Punch.");
-                            gamePanel.spawnDarkDogPunch();
-                        }
-                        break;
-
-                    case ChatMsg.MODE_TX_STRING: // 텍스트 채팅 메시지 처리
-                        // 채팅 메시지를 UI에 추가
-                        gamePanel.appendChatMessage(msg.getUserID() + ": " + msg.getMessage());
-                        break;
-
-                    case ChatMsg.MODE_TX_IMAGE: // 이미지 채팅 메시지 처리
-                        // 이미지 데이터를 저장하거나 UI에 추가
-                        try {
-                            String fileName = "received_image_" + System.currentTimeMillis() + ".png";
-                            File imageFile = new File(fileName);
-                            try (FileOutputStream fos = new FileOutputStream(imageFile)) {
-                                fos.write(msg.getImage());
-                            }
-                            System.out.println("Image received and saved as " + fileName);
-                            gamePanel.appendChatMessage(msg.getUserID() + ": [Image received: " + fileName + "]");
-                        } catch (IOException e) {
-                            System.err.println("Failed to save received image.");
-                            e.printStackTrace();
-                        }
-                        break;
-
-
-                }
-            }
-            switch (msg.getMode()) {
-
-//                case ChatMsg.MODE_ROOM_LIST:
-//                    List<String> rooms = (List<String>) msg.getData(); // 서버에서 최신 방 목록 수신
-//                    roomListModel.clear(); // 기존 방 목록 삭제
-//                    rooms.forEach(roomListModel::addElement); // 새로운 방 목록 추가
-//                    break;
-                case ChatMsg.MODE_ROOM_LIST:
-                    List<String> rooms = (List<String>) msg.getData(); // 서버에서 최신 방 목록 수신
-                    roomListModel.clear(); // 기존 방 목록 삭제
-                    rooms.forEach(roomListModel::addElement); // 새로운 방 목록 추가
-                    //setupHomeScreen(); // 홈 화면으로 돌아가기
-                    break;
-
-
-//                        case ChatMsg.MODE_ROOM_JOIN:
-//                            setupRoomScreen();
-//                            break;
-//                        case ChatMsg.MODE_ROOM_JOIN:
-//                            List<String> players = (List<String>) msg.getData(); // 사용자 목록 수신
-//                            setupRoomScreen(players); // 대기방 화면으로 전환
-//                            break;
-//                        case ChatMsg.MODE_ROOM_JOIN:
-//                            if (msg.getData() instanceof List) {
-//                                List<String> players = (List<String>) msg.getData(); // 사용자 목록 수신
-//                                if (players != null) {
-//                                    setupRoomScreen(players); // 대기방 화면으로 전환
-//                                } else {
-//                                    System.out.println("대기방의 사용자 목록이 비어 있습니다.");
-//                                }
-//                            }
-//                            break;
-//                        case ChatMsg.MODE_ROOM_JOIN:
-//                            if (msg.getData() instanceof List) {
-//                                List<String> players = (List<String>) msg.getData(); // 사용자 목록 수신
-//                                String roomName = msg.getMessage(); // 방 이름 수신
-//                                if (players != null && roomName != null) {
-//                                    setupRoomScreen(roomName, players); // 대기방 화면으로 전환
-//                                } else {
-//                                    System.out.println("대기방의 데이터가 비어 있습니다.");
-//                                }
-//                            }
-//                            break;
-
-                case ChatMsg.MODE_ROOM_JOIN:
-                    if (msg.getData() instanceof List) {
-                        List<String> players = (List<String>) msg.getData(); // 사용자 목록 수신
-                        String roomName = msg.getMessage(); // 방 이름 수신
-                        if (players != null && roomName != null) {
-                            System.out.println("방에 입장: " + roomName);
-                            setupRoomScreen(roomName, players); // 대기방 화면으로 전환
-                        }
-                    }
-                    break;
-
-
-
-                case ChatMsg.MODE_GAME_START:
-                    SwingUtilities.invokeLater(() -> {
-                        System.out.println("게임 시작: GamePanel 화면으로 전환");
-                        startGamePanel(); // 게임 화면 실행
-                    });
-                    break;
-
-                case ChatMsg.MODE_ROOM_FULL:
-                    JOptionPane.showMessageDialog(null, "방이 꽉 찼습니다.");
-                    break;
-
-//                case ChatMsg.MODE_LOGOUT:
-//                    //이때 업데이트하는 로직이 있어야할듯
-//                    setupHomeScreen(); // 방에서 나갔을 때 홈 화면으로 돌아가기
-//                    break;
-                case ChatMsg.MODE_LOGOUT:
-                    System.out.println("서버로부터 로그아웃 메시지 수신: 방에서 나감");
-                    // 서버에 방 목록 요청
-                    sendMessage(new ChatMsg(clientId, ChatMsg.MODE_ROOM_LIST, null));
-                    break;
-
-                case ChatMsg.MODE_READY:
-                    System.out.println(msg.getUserID() + " 준비 완료!");
-                    break;
-            }
-        }
-
-        private void closeResources() {
-            try {
-                if (in != null) in.close();
-                if (out != null) out.close();
-                if (socket != null && !socket.isClosed()) socket.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-    }
-
-//    class GameClientHandler extends Thread {
-//        public void run() {
-//            try {
-//                while (true) {
-//                    ChatMsg msg = (ChatMsg) in.readObject();
-//                    if (!msg.getUserID().equals(clientId)) {
-//                        switch (msg.getMode()) {
-//
-//                            case ChatMsg.MODE_TX_COORDINATE: // 좌표 메시지 처리
-//                                if (msg.getMessage().contains(",")) {
-//                                    String[] coords = msg.getMessage().split(",");
-//                                    if (coords.length == 2) {
-//                                        try {
-//                                            int x = Integer.parseInt(coords[0].trim());
-//                                            int y = Integer.parseInt(coords[1].trim());
-//                                            System.out.println("Updating DarkDog Position to: " + x + ", " + y);
-//                                            gamePanel.updateDarkDogPosition(x, y);
-//                                            gamePanel.getDarkdog().x = x;
-//                                            gamePanel.getDarkdog().y = y;
-//                                        } catch (NumberFormatException e) {
-//                                            e.printStackTrace();
-//                                        }
-//                                    }
-//                                } else {
-//                                    System.out.println(msg.getUserID() + " says: " + msg.getMessage());
-//                                }
-//                                break;
-//
-//                            case ChatMsg.MODE_SPAWN_UNIT: // 유닛 소환 처리
-//                                if (msg.getMessage().equals("MOUSE")) {
-//                                    System.out.println("Spawning Zombie for DarkDog.");
-//                                    gamePanel.spawnZombieForDarkDog();
-//                                }
-//                                break;
-//
-//                            case ChatMsg.MODE_SPAWN_SKILL: // 스킬 소환 처리
-//                                if (msg.getMessage().equals("PUNCH")) {
-//                                    System.out.println("Spawning DarkDog Punch.");
-//                                    gamePanel.spawnDarkDogPunch();
-//                                }
-//                                break;
-//
-//                            case ChatMsg.MODE_TX_STRING: // 텍스트 채팅 메시지 처리
-//                                // 채팅 메시지를 UI에 추가
-//                                gamePanel.appendChatMessage(msg.getUserID() + ": " + msg.getMessage());
-//                                break;
-//
-//                            case ChatMsg.MODE_TX_IMAGE: // 이미지 채팅 메시지 처리
-//                                // 이미지 데이터를 저장하거나 UI에 추가
-//                                try {
-//                                    String fileName = "received_image_" + System.currentTimeMillis() + ".png";
-//                                    File imageFile = new File(fileName);
-//                                    try (FileOutputStream fos = new FileOutputStream(imageFile)) {
-//                                        fos.write(msg.getImage());
-//                                    }
-//                                    System.out.println("Image received and saved as " + fileName);
-//                                    gamePanel.appendChatMessage(msg.getUserID() + ": [Image received: " + fileName + "]");
-//                                } catch (IOException e) {
-//                                    System.err.println("Failed to save received image.");
-//                                    e.printStackTrace();
-//                                }
-//                                break;
-//
-//
-//                        }
-//                    }
-//                    switch (msg.getMode()) {
-////                        case ChatMsg.MODE_ROOM_LIST:
-////                            List<String> rooms = (List<String>) msg.getData();
-////                            roomListModel.clear();
-////                            rooms.forEach(roomListModel::addElement);
-////                            break;
-//                        case ChatMsg.MODE_ROOM_LIST:
-//                            List<String> rooms = (List<String>) msg.getData(); // 서버에서 최신 방 목록 수신
-//                            roomListModel.clear(); // 기존 방 목록 삭제
-//                            rooms.forEach(roomListModel::addElement); // 새로운 방 목록 추가
-//                            break;
-//
-//
-////                        case ChatMsg.MODE_ROOM_JOIN:
-////                            setupRoomScreen();
-////                            break;
-////                        case ChatMsg.MODE_ROOM_JOIN:
-////                            List<String> players = (List<String>) msg.getData(); // 사용자 목록 수신
-////                            setupRoomScreen(players); // 대기방 화면으로 전환
-////                            break;
-////                        case ChatMsg.MODE_ROOM_JOIN:
-////                            if (msg.getData() instanceof List) {
-////                                List<String> players = (List<String>) msg.getData(); // 사용자 목록 수신
-////                                if (players != null) {
-////                                    setupRoomScreen(players); // 대기방 화면으로 전환
-////                                } else {
-////                                    System.out.println("대기방의 사용자 목록이 비어 있습니다.");
-////                                }
-////                            }
-////                            break;
-////                        case ChatMsg.MODE_ROOM_JOIN:
-////                            if (msg.getData() instanceof List) {
-////                                List<String> players = (List<String>) msg.getData(); // 사용자 목록 수신
-////                                String roomName = msg.getMessage(); // 방 이름 수신
-////                                if (players != null && roomName != null) {
-////                                    setupRoomScreen(roomName, players); // 대기방 화면으로 전환
-////                                } else {
-////                                    System.out.println("대기방의 데이터가 비어 있습니다.");
-////                                }
-////                            }
-////                            break;
-//
-//                        case ChatMsg.MODE_ROOM_JOIN:
-//                            if (msg.getData() instanceof List) {
-//                                List<String> players = (List<String>) msg.getData(); // 사용자 목록 수신
-//                                String roomName = msg.getMessage(); // 방 이름 수신
-//                                if (players != null && roomName != null) {
-//                                    System.out.println("방에 입장: " + roomName);
-//                                    setupRoomScreen(roomName, players); // 대기방 화면으로 전환
-//                                }
-//                            }
-//                            break;
-//
-//
-//
-//                        case ChatMsg.MODE_GAME_START:
-//                            SwingUtilities.invokeLater(() -> {
-//                                System.out.println("게임 시작: GamePanel 화면으로 전환");
-//                                startGamePanel(); // 게임 화면 실행
-//                            });
-//                            break;
-//
-//                        case ChatMsg.MODE_ROOM_FULL:
-//                            JOptionPane.showMessageDialog(null, "방이 꽉 찼습니다.");
-//                            break;
-//
-//                        case ChatMsg.MODE_LOGOUT:
-//                            setupHomeScreen(); // 방에서 나갔을 때 홈 화면으로 돌아가기
-//                            break;
-//
-//                        case ChatMsg.MODE_READY:
-//                            System.out.println(msg.getUserID() + " 준비 완료!");
-//                            break;
-//                    }
-//                }
-//            } catch (IOException | ClassNotFoundException e) {
-//                System.out.println("Disconnected from server.");
-//            }
-//        }
-//    }
-
-    // 채팅 관련 이벤트 리스너 설정
-    private void setupChatListeners() {
-        // 텍스트 메시지 전송 리스너
-        gamePanel.getSendButton().addActionListener(e -> {
-            String text = gamePanel.getChatInput(); // 입력 필드에서 텍스트 가져오기
-            if (!text.isEmpty()) {
-                ChatMsg chatMsg = new ChatMsg(clientId, ChatMsg.MODE_TX_STRING, text);
-                sendMessage(chatMsg); // 서버로 메시지 전송
-                gamePanel.appendChatMessage("Me: " + text); // 로컬에서도 채팅 추가
-            }
-            gamePanel.requestFocusInWindow(); // 채팅 후 GamePanel에 포커스 다시 설정
-        });
-
-        // 이미지 전송 버튼 리스너 (추가 가능)
-//        JButton sendImageButton = gamePanel.getSendImageButton(); // 이미지 전송 버튼 참조
-//        if (sendImageButton != null) { // 이미지 전송 기능이 있는 경우
-//            sendImageButton.addActionListener(e -> {
-//                JFileChooser fileChooser = new JFileChooser();
-//                if (fileChooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
-//                    File file = fileChooser.getSelectedFile();
-//                    try (FileInputStream fis = new FileInputStream(file)) {
-//                        byte[] imageData = fis.readAllBytes();
-//                        ChatMsg chatMsg = new ChatMsg(clientId, ChatMsg.MODE_TX_IMAGE, "[Image]", imageData);
-//                        sendMessage(chatMsg);
-//                        gamePanel.appendChatMessage("Me: [Image Sent]");
-//                    } catch (IOException ex) {
-//                        System.err.println("Failed to send image.");
-//                        ex.printStackTrace();
-//                    }
-//                }
-//            });
-//        }
-    }
-
     private GamePanel startGamePanel() {
         gamePanel = new GamePanel();
         setupChatListeners();
@@ -1107,6 +528,293 @@ public class GameClient extends JFrame {
             }
         });
         return gamePanel;
+    }
+
+    // 채팅 관련 이벤트 리스너 설정
+    private void setupChatListeners() {
+        // 텍스트 메시지 전송 리스너
+        gamePanel.getSendButton().addActionListener(e -> {
+            String text = gamePanel.getChatInput(); // 입력 필드에서 텍스트 가져오기
+            if (!text.isEmpty()) {
+                ChatMsg chatMsg = new ChatMsg(clientId, ChatMsg.MODE_TX_STRING, text);
+                sendMessage(chatMsg); // 서버로 메시지 전송
+                gamePanel.appendChatMessage("Me: " + text); // 로컬에서도 채팅 추가
+            }
+            gamePanel.requestFocusInWindow(); // 채팅 후 GamePanel에 포커스 다시 설정
+        });
+
+    }
+
+    private void sendMessage(ChatMsg msg) {
+        try {
+            out.writeObject(msg);
+            out.flush();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    class GameClientHandler extends Thread {
+        public void run() {
+            try {
+                while (true) {
+                    try {
+                        ChatMsg msg = (ChatMsg) in.readObject(); // 서버로부터 메시지 수신
+                        if (msg == null) break; // 메시지가 null이면 루프 종료
+                        processMessage(msg); // 메시지 처리
+                    } catch (SocketException se) {
+                        System.out.println("소켓 오류: 서버와의 연결이 끊겼습니다.");
+                        break; // 소켓 오류 시 루프 종료
+                    } catch (EOFException eof) {
+                        System.out.println("서버와의 연결이 종료되었습니다.");
+                        reconnectStreams(); // 스트림 재연결
+                    } catch (IOException | ClassNotFoundException e) {
+                        System.out.println("데이터 수신 오류: " + e.getMessage());
+                        reconnectStreams(); // 스트림 재연결
+                    }
+                }
+            } finally {
+                System.out.println("서버와의 연결이 종료되었습니다. 클라이언트를 종료합니다.");
+                closeResources();
+            }
+        }
+
+        private void processMessage(ChatMsg msg) {
+            // 수신한 메시지 처리 로직
+            if (!msg.getUserID().equals(clientId)) {
+                switch (msg.getMode()) {
+
+                    case ChatMsg.MODE_TX_COORDINATE: // 좌표 메시지 처리
+                        if (msg.getMessage().contains(",")) {
+                            String[] coords = msg.getMessage().split(",");
+                            if (coords.length == 2) {
+                                try {
+                                    int x = Integer.parseInt(coords[0].trim());
+                                    int y = Integer.parseInt(coords[1].trim());
+                                    System.out.println("Updating DarkDog Position to: " + x + ", " + y);
+                                    gamePanel.updateDarkDogPosition(x, y);
+                                    gamePanel.getDarkdog().x = x;
+                                    gamePanel.getDarkdog().y = y;
+                                } catch (NumberFormatException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        } else {
+                            System.out.println(msg.getUserID() + " says: " + msg.getMessage());
+                        }
+                        break;
+
+                    case ChatMsg.MODE_SPAWN_UNIT: // 유닛 소환 처리
+                        if (msg.getMessage().equals("MOUSE")) {
+                            System.out.println("Spawning Zombie for DarkDog.");
+                            gamePanel.spawnZombieForDarkDog();
+                        }
+                        break;
+
+                    case ChatMsg.MODE_SPAWN_SKILL: // 스킬 소환 처리
+                        if (msg.getMessage().equals("PUNCH")) {
+                            System.out.println("Spawning DarkDog Punch.");
+                            gamePanel.spawnDarkDogPunch();
+                        }
+                        break;
+
+                    case ChatMsg.MODE_TX_STRING: // 텍스트 채팅 메시지 처리
+                        // 채팅 메시지를 UI에 추가
+                        gamePanel.appendChatMessage(msg.getUserID() + ": " + msg.getMessage());
+                        break;
+
+                    case ChatMsg.MODE_TX_IMAGE: // 이미지 채팅 메시지 처리
+                        // 이미지 데이터를 저장하거나 UI에 추가
+                        try {
+                            String fileName = "received_image_" + System.currentTimeMillis() + ".png";
+                            File imageFile = new File(fileName);
+                            try (FileOutputStream fos = new FileOutputStream(imageFile)) {
+                                fos.write(msg.getImage());
+                            }
+                            System.out.println("Image received and saved as " + fileName);
+                            gamePanel.appendChatMessage(msg.getUserID() + ": [Image received: " + fileName + "]");
+                        } catch (IOException e) {
+                            System.err.println("Failed to save received image.");
+                            e.printStackTrace();
+                        }
+                        break;
+
+
+                }
+            }
+            switch (msg.getMode()) {
+
+                case ChatMsg.MODE_ROOM_LIST:
+                    List<String> rooms = (List<String>) msg.getData(); // 서버에서 최신 방 목록 수신
+                    roomListModel.clear(); // 기존 방 목록 삭제
+                    rooms.forEach(roomListModel::addElement); // 새로운 방 목록 추가
+                    //setupHomeScreen(); // 홈 화면으로 돌아가기
+                    break;
+
+
+                case ChatMsg.MODE_ROOM_JOIN:
+                    if (msg.getData() instanceof List) {
+                        List<String> players = (List<String>) msg.getData(); // 사용자 목록 수신
+                        String roomName = msg.getMessage(); // 방 이름 수신
+                        if (players != null && roomName != null) {
+                            System.out.println("방에 입장: " + roomName);
+                            setupRoomScreen(roomName, players); // 대기방 화면으로 전환
+                        }
+                    }
+                    break;
+
+
+
+                case ChatMsg.MODE_GAME_START:
+                    SwingUtilities.invokeLater(() -> {
+                        System.out.println("게임 시작: GamePanel 화면으로 전환");
+                        startGamePanel(); // 게임 화면 실행
+                    });
+                    break;
+
+                case ChatMsg.MODE_ROOM_FULL:
+                    JOptionPane.showMessageDialog(null, "방이 꽉 찼습니다.");
+                    break;
+
+                case ChatMsg.MODE_LOGOUT:
+                    System.out.println("서버로부터 로그아웃 메시지 수신: 방에서 나감");
+                    // 서버에 방 목록 요청
+                    sendMessage(new ChatMsg(clientId, ChatMsg.MODE_ROOM_LIST, null));
+                    break;
+
+                case ChatMsg.MODE_READY:
+                    System.out.println(msg.getUserID() + " 준비 완료!");
+                    break;
+            }
+        }
+
+        private void closeResources() {
+            try {
+                if (in != null) in.close();
+                if (out != null) out.close();
+                if (socket != null && !socket.isClosed()) socket.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+
+
+    // 홈 화면 (방 목록과 방 만들기)
+    private void setupHomeScreen() {
+        getContentPane().removeAll();
+        homePanel = new JPanel(new BorderLayout());
+
+        roomListModel = new DefaultListModel<>();
+        roomList = new JList<>(roomListModel);
+        JScrollPane scrollPane = new JScrollPane(roomList);
+
+        b_createRoom = new JButton("방 만들기");
+
+        homePanel.add(new JLabel("방 목록", SwingConstants.CENTER), BorderLayout.NORTH);
+        homePanel.add(scrollPane, BorderLayout.CENTER);
+        homePanel.add(b_createRoom, BorderLayout.SOUTH);
+
+//        b_createRoom.addActionListener(e -> {
+//            sendMessage(new ChatMsg(clientId, ChatMsg.MODE_ROOM_CREATE, null));
+//        });
+        b_createRoom.addActionListener(e -> {
+            sendMessage(new ChatMsg(clientId, ChatMsg.MODE_ROOM_CREATE, "create_room", null));
+        });
+
+
+        roomList.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                if (evt.getClickCount() == 2) {
+                    String selectedRoom = roomList.getSelectedValue();
+                    sendMessage(new ChatMsg(clientId, ChatMsg.MODE_ROOM_JOIN, selectedRoom));
+                }
+            }
+        });
+
+        add(homePanel);
+        setSize(400, 400);
+        revalidate();
+        repaint();
+
+        new GameClientHandler().start();
+    }
+
+    private void setupRoomScreen(String roomName, List<String> players) {
+        getContentPane().removeAll();
+        roomPanel = new JPanel(new BorderLayout());
+
+        // 준비 상태를 나타내기 위해 사용자 목록 표시
+        DefaultListModel<String> playerListModel = new DefaultListModel<>();
+        JList<String> playerList = new JList<>(playerListModel);
+        JScrollPane scrollPane = new JScrollPane(playerList);
+
+        // 버튼 패널: 준비 버튼과 홈으로 나가기 버튼
+        JPanel buttonPanel = new JPanel(new GridLayout(1, 2, 10, 10));
+        JButton b_ready = new JButton("준비");
+        JButton b_exit = new JButton("홈으로 나가기");
+
+        buttonPanel.add(b_ready);
+        buttonPanel.add(b_exit);
+
+        // 사용자 목록과 준비 상태 업데이트
+        updatePlayerList(playerListModel, players);
+
+        // 준비 버튼 클릭 이벤트
+        b_ready.addActionListener(e -> {
+            sendMessage(new ChatMsg(clientId, ChatMsg.MODE_READY, "Ready"));
+            b_ready.setEnabled(false); // 준비 버튼 비활성화
+        });
+
+        b_exit.addActionListener(e -> {
+            sendMessage(new ChatMsg(clientId, ChatMsg.MODE_LOGOUT, "Leave Room"));
+            reconnectStreams(); // 스트림 재연결
+            setupHomeScreen();  // 홈 화면으로 돌아가기
+        });
+
+
+
+        // 화면 구성
+        JLabel roomLabel = new JLabel("대기방: " + roomName, SwingConstants.CENTER);
+        roomLabel.setFont(new Font("맑은 고딕", Font.BOLD, 16));
+
+        roomPanel.add(roomLabel, BorderLayout.NORTH);
+        roomPanel.add(scrollPane, BorderLayout.CENTER);
+        roomPanel.add(buttonPanel, BorderLayout.SOUTH);
+
+        add(roomPanel);
+        setSize(400, 400);
+        revalidate();
+        repaint();
+    }
+
+    private void reconnectStreams() {
+        try {
+            System.out.println("스트림 재연결 중...");
+            if (socket != null && !socket.isClosed()) {
+                in.close();
+                out.close();
+
+                // 스트림 재생성
+                out = new ObjectOutputStream(socket.getOutputStream());
+                out.flush();
+                in = new ObjectInputStream(socket.getInputStream());
+
+                // 재연결 후 서버에 상태 전송
+                sendMessage(new ChatMsg(clientId, ChatMsg.MODE_ROOM_LIST, null));
+                System.out.println("스트림 재연결 성공");
+            }
+        } catch (IOException ex) {
+            System.err.println("스트림 재연결 실패: " + ex.getMessage());
+        }
+    }
+
+    private void updatePlayerList(DefaultListModel<String> playerListModel, List<String> players) {
+        playerListModel.clear();
+        for (String player : players) {
+            playerListModel.addElement(player); // 사용자 이름과 준비 상태 추가
+        }
     }
 
     public static void main(String[] args) {
