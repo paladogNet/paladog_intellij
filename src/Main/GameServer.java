@@ -79,16 +79,25 @@ public class GameServer extends JFrame{
             userID = msg.getUserID();
             switch (msg.getMode()) { // switch문으로 모드를 조회하여 각 모드에 맞는 차별적인 동작을 수행하도록 했습니다.
                 case ChatMsg.MODE_TX_COORDINATE:
+                    printDisplay(msg.getUserID()+"로부터 메시지 수신: "+msg.getMessage());
+                    broadcastMessage(msg);
+                    break;
                 case ChatMsg.MODE_SPAWN_SKILL:
+                    printDisplay(msg.getUserID()+"로부터 메시지 수신: "+msg.getMessage());
+                    broadcastMessage(msg);
+                    break;
                 case ChatMsg.MODE_SPAWN_UNIT:
+                    printDisplay(msg.getUserID()+"로부터 메시지 수신: "+msg.getMessage());
                     broadcastMessage(msg);
                     break;
 
                 case ChatMsg.MODE_TX_STRING: // 텍스트 채팅 메시지 처리
+                    printDisplay(msg.getUserID()+"로부터 메시지 수신: "+msg.getMessage());
                     broadcastMessage(msg);
                     break;
 
                 case ChatMsg.MODE_TX_IMAGE: // 이미지 채팅 메시지 처리
+                    printDisplay(msg.getUserID()+"로부터 메시지 수신: "+msg.getMessage());
                     broadcastMessage(msg);
                     break;
 
@@ -108,6 +117,7 @@ public class GameServer extends JFrame{
                     broadcastRoomList();
                     break;
                 case ChatMsg.MODE_ROOM_JOIN:
+                    printDisplay(msg.getUserID()+"로부터 메시지 수신: "+msg.getMessage());
                     Room roomToJoin = rooms.get(msg.getMessage());
                     if (roomToJoin != null && roomToJoin.addPlayer(this)) {
                         joinRoom(roomToJoin);
@@ -120,6 +130,7 @@ public class GameServer extends JFrame{
                     break;
 
                 case ChatMsg.MODE_READY:
+                    printDisplay(msg.getUserID()+"로부터 메시지 수신: "+msg.getMessage());
                     currentRoom.setReady(this);
                     if (currentRoom.isGameReady()) {
                         currentRoom.startGame();
@@ -127,10 +138,12 @@ public class GameServer extends JFrame{
                     break;
 
                 case ChatMsg.MODE_ROOM_LIST:
+                    printDisplay(msg.getUserID()+"로부터 메시지 수신: "+msg.getMessage());
                     broadcastRoomListToClient(this);
                     break;
 
                 case ChatMsg.MODE_LOGOUT:// 로그아웃 처리 -> 방에서 퇴장할 때(홈으로 나가기) 사용하는 모드 채널입니다.
+                    printDisplay(msg.getUserID()+"로부터 메시지 수신: "+msg.getMessage());
                     if (currentRoom != null) {
                         currentRoom.removePlayer(this);
                     }
@@ -139,10 +152,12 @@ public class GameServer extends JFrame{
 
                 // 내 팔라독을 움직이려 방향키를 누르면 서버 주도 렌더링을 하기 위해서 바로 클라이언트에서
                 case ChatMsg.MODE_PALADOG_MOVE_LEFT:
+                    printDisplay(msg.getUserID()+"로부터 메시지 수신: "+msg.getMessage());
                     broadcastMessage(msg);
                     break;
 
                 case ChatMsg.MODE_PALADOG_MOVE_RIGHT:
+                    printDisplay(msg.getUserID()+"로부터 메시지 수신: "+msg.getMessage());
                     broadcastMessage(msg);
                     break;
             }
