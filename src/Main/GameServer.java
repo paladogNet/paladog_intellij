@@ -9,11 +9,11 @@ import java.net.*;
 import java.util.*;
 import java.util.List;
 
-public class GameServer extends JFrame {
+public class GameServer extends JFrame{
     private static final int PORT = 12345;
-    private static final List<ClientHandler> clientHandlers = new ArrayList<>(); // 모든 클라이언트 핸들러 저장
     private ServerSocket serverSocket;
-    private volatile boolean isRunning = false;
+    private final List<ClientHandler> clientHandlers = new ArrayList<>();
+    private final Map<String, Room> rooms = new HashMap<>(); // 방 관리
     private static JTextArea t_display;
 
     public GameServer() {
@@ -36,19 +36,9 @@ public class GameServer extends JFrame {
         t_display = new JTextArea();
         t_display.setEditable(false);
 
-        startButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                startServer();
-            }
-        });
+        startButton.addActionListener(e -> startServer());
 
-        stopButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                stopServer();
-            }
-        });
+        stopButton.addActionListener(e -> stopServer());
 
         logPanel.add(new JScrollPane(t_display), BorderLayout.CENTER);
         buttonPanel.add(startButton);
@@ -58,68 +48,120 @@ public class GameServer extends JFrame {
         this.add(buttonPanel, BorderLayout.SOUTH);
     }
 
-    // 클라이언트와 통신을 처리하는 핸들러
-    private static class ClientHandler extends Thread {
-        private static int clientCounter = 0; // 클라이언트 고유 ID 생성용 카운터
-        private final String clientId; // 클라이언트 고유 ID
+    class ClientHandler extends Thread {
         private Socket socket;
         private ObjectInputStream in;
         private ObjectOutputStream out;
+        String userID;
+        private Room currentRoom;
 
         public ClientHandler(Socket socket) {
             this.socket = socket;
-            this.clientId = "CLIENT_" + (++clientCounter); // 고유 ID 생성
             try {
                 out = new ObjectOutputStream(socket.getOutputStream());
-                out.flush();
                 in = new ObjectInputStream(socket.getInputStream());
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            } catch (IOException e) { e.printStackTrace(); }
         }
 
-        private void sendMessage(ChatMsg message) {
-            try {
-                synchronized (out) {
-                    out.writeObject(message);
-                    out.flush();
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-
-        @Override
         public void run() {
             try {
-                System.out.println("클라이언트 핸들러 시작: " + clientId);
-
-                ChatMsg loginMsg = new ChatMsg(clientId, ChatMsg.MODE_LOGIN, "Welcome!");
-                sendMessage(loginMsg);
-
-                // 메시지 처리 루프
-                ChatMsg message;
-                while ((message = (ChatMsg) in.readObject()) != null) {
-                    printDisplay(clientId + "로부터 메시지 수신: " + message);
-                    broadcastMessage(message);
+                while (true) {
+                    ChatMsg msg = (ChatMsg) in.readObject();
+                    handleMessage(msg);
                 }
             } catch (IOException | ClassNotFoundException e) {
-                e.printStackTrace();
-            } finally {
-                closeResources();
+                System.out.println(userID + " 연결 종료");
             }
         }
 
-        private void closeResources() {
-            try {
-                if (in != null) in.close();
-                if (out != null) out.close();
-                if (socket != null) socket.close();
-            } catch (IOException e) {
-                e.printStackTrace();
+        private void handleMessage(ChatMsg msg) throws IOException {
+            userID = msg.getUserID();
+            switch (msg.getMode()) {
+                case ChatMsg.MODE_TX_COORDINATE:
+                case ChatMsg.MODE_SPAWN_SKILL:
+                case ChatMsg.MODE_SPAWN_UNIT:
+                    broadcastMessage(msg);
+                    break;
+
+                case ChatMsg.MODE_TX_STRING: // 텍스트 채팅 메시지 처리
+                    broadcastMessage(msg);
+                    break;
+
+                case ChatMsg.MODE_TX_IMAGE: // 이미지 채팅 메시지 처리
+                    broadcastMessage(msg);
+                    break;
+
+                case ChatMsg.MODE_ROOM_CREATE:
+                    // 방 생성
+                    Room room = new Room(this); // 현재 ClientHandler 객체(this)를 방에 추가
+                    rooms.put(room.getRoomName(), room); // 방 목록에 추가
+                    printDisplay("방 생성됨: " + room.getRoomName());
+
+                    // 클라이언트를 자동으로 방에 입장시키기
+                    joinRoom(room);
+
+                    // 방 입장 메시지 전송
+                    sendMessage(new ChatMsg("SERVER", ChatMsg.MODE_ROOM_JOIN, room.getRoomName(), room.getPlayerList()));
+
+                    // 모든 클라이언트에게 방 목록 갱신
+                    broadcastRoomList();
+                    break;
+                case ChatMsg.MODE_ROOM_JOIN:
+                    Room roomToJoin = rooms.get(msg.getMessage());
+                    if (roomToJoin != null && roomToJoin.addPlayer(this)) {
+                        joinRoom(roomToJoin);
+                        // 방 이름과 사용자 목록을 함께 전송
+                        sendMessage(new ChatMsg("SERVER", ChatMsg.MODE_ROOM_JOIN, roomToJoin.getRoomName(), roomToJoin.getPlayerList()));
+                        broadcastRoomList();
+                    } else {
+                        sendMessage(new ChatMsg("SERVER", ChatMsg.MODE_ROOM_FULL, "방이 꽉 찼습니다."));
+                    }
+                    break;
+
+                case ChatMsg.MODE_READY:
+                    currentRoom.setReady(this);
+                    if (currentRoom.isGameReady()) {
+                        currentRoom.startGame();
+                    }
+                    break;
+
+                case ChatMsg.MODE_ROOM_LIST:
+                    broadcastRoomListToClient(this);
+                    break;
+
+                case ChatMsg.MODE_LOGOUT:
+                    if (currentRoom != null) {
+                        currentRoom.removePlayer(this);
+                        //currentRoom = null;
+                    }
+                    broadcastRoomList();
+                    break;
             }
         }
 
+        // 클라이언트에게만 방 목록 전송
+        private void broadcastRoomListToClient(ClientHandler client) throws IOException {
+            List<String> roomNames = new ArrayList<>(rooms.keySet());
+            client.sendMessage(new ChatMsg("SERVER", ChatMsg.MODE_ROOM_LIST, "방 목록", roomNames));
+        }
+
+        private void joinRoom(Room room) throws IOException {
+            currentRoom = room;
+            currentRoom.addPlayer(this); //?????????????????????????????????????
+            sendMessage(new ChatMsg("SERVER", ChatMsg.MODE_ROOM_JOIN, "방에 입장했습니다."));
+        }
+
+        private void sendMessage(ChatMsg msg) throws IOException {
+            out.writeObject(msg);
+            out.flush();
+        }
+
+        private void broadcastRoomList() throws IOException {
+            List<String> roomNames = new ArrayList<>(rooms.keySet());
+            for (ClientHandler client : clientHandlers) {
+                client.sendMessage(new ChatMsg("SERVER", ChatMsg.MODE_ROOM_LIST, "방 목록", roomNames));
+            }
+        }
 
         // 메시지를 모든 클라이언트에게 브로드캐스트
         private void broadcastMessage(ChatMsg message) {
@@ -136,29 +178,105 @@ public class GameServer extends JFrame {
                 }
             }
         }
-
     }
 
-    private void startGameIfReady() {
-        synchronized (clientHandlers) {
-            if (clientHandlers.size() == 2) {
-                // 클라이언트 2명 연결됨 -> 시작 신호 전송
-                ChatMsg startMsg = new ChatMsg("SERVER", ChatMsg.MODE_GAME_START, null);
-                for (ClientHandler handler : clientHandlers) {
-                    handler.sendMessage(startMsg);
+    private String getLocalAddr(){
+        try{
+            return InetAddress.getLocalHost().getHostAddress(); //로컬 IP 주소 반환
+        } catch (UnknownHostException e){
+            return "Unknown"; //IP 주소를 얻지 못했을 때 기본값 반환
+        }
+    }
+
+    class Room {
+        private String roomName;
+        private Map<ClientHandler, Boolean> players = new HashMap<>();
+
+        public Room(ClientHandler clientHandler) {
+            this.roomName = clientHandler.userID + "_Room";
+            players.put(clientHandler, false);
+        }
+        public boolean isEmpty() {
+            return players.isEmpty();
+        }
+
+        public String getRoomName() { return roomName; }
+
+
+        public synchronized boolean addPlayer(ClientHandler handler) {
+            if (players.size() < 2) {
+                players.put(handler, false);
+                broadcastPlayerList(); // 사용자 추가 시 사용자 목록 브로드캐스트
+                return true;
+            }
+            return false;
+        }
+
+
+        public synchronized void setReady(ClientHandler clientHandler) {
+            players.put(clientHandler, true); // 준비 상태 설정
+            broadcastPlayerList(); // 준비 상태 변경 시 사용자 목록 브로드캐스트
+        }
+
+        public synchronized void broadcastPlayerList() {
+            List<String> playerStatus = getPlayerList(); // 사용자 목록과 준비 상태 가져오기
+            for (ClientHandler player : players.keySet()) {
+                try {
+                    player.sendMessage(new ChatMsg("SERVER", ChatMsg.MODE_ROOM_JOIN, roomName, playerStatus));
+                } catch (IOException e) {
+                    e.printStackTrace();
                 }
             }
         }
+        public synchronized void removePlayer(ClientHandler handler) {
+            players.remove(handler); // 사용자 제거
+            broadcastPlayerList(); // 남은 사용자에게 목록 브로드캐스트
+        }
+
+
+        public synchronized boolean isGameReady() {
+            return players.size() == 2 && players.values().stream().allMatch(ready -> ready);
+        }
+
+        public synchronized List<String> getPlayerList() {
+            List<String> playerList = new ArrayList<>();
+            for (ClientHandler player : players.keySet()) {
+                String readyStatus = players.get(player) ? " (준비 완료)" : " (대기 중)";
+                playerList.add(player.userID + readyStatus);
+            }
+            return playerList;
+        }
+
+        public void startGame() throws IOException {
+            ChatMsg startMsg = new ChatMsg("SERVER", ChatMsg.MODE_GAME_START, "Game Start!");
+            for (Map.Entry<ClientHandler, Boolean> entry : players.entrySet()) {
+                ClientHandler player = entry.getKey(); // ClientHandler 객체 //???????????????????????????????????????????????????
+                player.sendMessage(startMsg);
+                System.out.println(player.userID + " 에게 게임 시작 메시지 전송");
+            }
+        }
+
+        public List<String> getPlayers() {
+            List<String> playerList = new ArrayList<>();
+            for (ClientHandler handler : players.keySet()) {
+                String status = players.get(handler) ? "(준비 완료)" : "(대기 중)";
+                playerList.add(handler.userID + " " + status);
+            }
+            return playerList;
+        }
+
     }
 
     private void startServer() {
         printDisplay("서버 실행 중...");
-        isRunning = true;
+        //isRunning = true;
 
         new Thread(() -> {
             try {
                 serverSocket = new ServerSocket(PORT);
-                while (isRunning) {
+                printDisplay("서버가 시작되었습니다: " + getLocalAddr()); //서버 시작 메시지 출력
+
+                while (true) {
                     Socket clientSocket = serverSocket.accept();
                     printDisplay("클라이언트 연결됨: " + clientSocket.getInetAddress());
 
@@ -168,22 +286,19 @@ public class GameServer extends JFrame {
                         clientHandlers.add(clientHandler); // 핸들러 리스트에 추가
                     }
                     clientHandler.start(); // 스레드 시작
-
-                    startGameIfReady();
                 }
             } catch (IOException e) {
-                if (isRunning) {
-                    e.printStackTrace();
-                }
-            } /*finally {
+                e.printStackTrace();
+
+            } finally {
                 stopServer(); // 서버 소켓이 닫힌 경우 서버 종료 처리
-            }*/
+            }
         }).start();
     }
 
     private void stopServer() {
         System.out.println("서버 중지 중...");
-        isRunning = false;
+        //isRunning = false;
 
         // 클라이언트 핸들러 종료
         synchronized (clientHandlers) {
@@ -213,9 +328,8 @@ public class GameServer extends JFrame {
         t_display.append(msg + "\n");
         t_display.setCaretPosition(t_display.getDocument().getLength());
     }
-
-
     public static void main(String[] args) {
-        GameServer gameServer = new GameServer();
+        new GameServer();
     }
 }
+
