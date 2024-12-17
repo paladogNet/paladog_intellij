@@ -36,19 +36,9 @@ public class GameServer extends JFrame{
         t_display = new JTextArea();
         t_display.setEditable(false);
 
-        startButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                startServer();
-            }
-        });
+        startButton.addActionListener(e -> startServer());
 
-        stopButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                stopServer();
-            }
-        });
+        stopButton.addActionListener(e -> stopServer());
 
         logPanel.add(new JScrollPane(t_display), BorderLayout.CENTER);
         buttonPanel.add(startButton);
@@ -205,6 +195,7 @@ public class GameServer extends JFrame{
                     Room roomToJoin = rooms.get(msg.getMessage());
                     if (roomToJoin != null && roomToJoin.addPlayer(this)) {
                         joinRoom(roomToJoin);
+                        sendMessage(new ChatMsg("SERVER", ChatMsg.MODE_ROOM_JOIN, "방에 입장했습니다.", roomToJoin.getPlayerList()));
                         broadcastRoomList();
                     } else {
                         sendMessage(new ChatMsg("SERVER", ChatMsg.MODE_ROOM_FULL, "방이 꽉 찼습니다."));
@@ -213,7 +204,7 @@ public class GameServer extends JFrame{
 
 
                 case ChatMsg.MODE_READY:
-                    currentRoom.setReady(this); // this는 현재 ClientHandler 객체
+                    currentRoom.setReady(this);
                     if (currentRoom.isGameReady()) {
                         currentRoom.startGame();
                     }
@@ -227,7 +218,7 @@ public class GameServer extends JFrame{
 
         private void joinRoom(Room room) throws IOException {
             currentRoom = room;
-            currentRoom.addPlayer(this);
+            currentRoom.addPlayer(this); //?????????????????????????????????????
             sendMessage(new ChatMsg("SERVER", ChatMsg.MODE_ROOM_JOIN, "방에 입장했습니다."));
         }
 
@@ -287,17 +278,26 @@ public class GameServer extends JFrame{
             return players.size() == 2 && players.values().stream().allMatch(ready -> ready);
         }
 
+        public synchronized List<String> getPlayerList() {
+            List<String> playerList = new ArrayList<>();
+            for (ClientHandler player : players.keySet()) {
+                String readyStatus = players.get(player) ? " (준비 완료)" : " (대기 중)";
+                playerList.add(player.userID + readyStatus);
+            }
+            return playerList;
+        }
+
         public void startGame() throws IOException {
             ChatMsg startMsg = new ChatMsg("SERVER", ChatMsg.MODE_GAME_START, "Game Start!");
             for (Map.Entry<ClientHandler, Boolean> entry : players.entrySet()) {
-                ClientHandler player = entry.getKey(); // ClientHandler 객체
+                ClientHandler player = entry.getKey(); // ClientHandler 객체 //???????????????????????????????????????????????????
                 player.sendMessage(startMsg);
                 System.out.println(player.userID + " 에게 게임 시작 메시지 전송");
             }
         }
 
-
     }
+
 }
 
 

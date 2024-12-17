@@ -460,29 +460,92 @@ public class GameClient extends JFrame {
         new GameClientHandler().start();
     }
 
-    // 대기방 화면
-    private void setupRoomScreen() {
-        getContentPane().removeAll();
-        roomPanel = new JPanel(new BorderLayout());
+//    // 대기방 화면
+//    private void setupRoomScreen() {
+//        getContentPane().removeAll();
+//        roomPanel = new JPanel(new BorderLayout());
+//
+//        JTextArea playerArea = new JTextArea();
+//        playerArea.setEditable(false);
+//        JScrollPane scrollPane = new JScrollPane(playerArea);
+//
+//        JButton b_ready = new JButton("준비");
+//
+//        roomPanel.add(new JLabel("대기방", SwingConstants.CENTER), BorderLayout.NORTH);
+//        roomPanel.add(scrollPane, BorderLayout.CENTER);
+//        roomPanel.add(b_ready, BorderLayout.SOUTH);
+//
+//        b_ready.addActionListener(e -> {
+//            sendMessage(new ChatMsg(clientId, ChatMsg.MODE_READY, "Ready"));
+//        });
+//
+//        add(roomPanel);
+//        setSize(400, 400);
+//        revalidate();
+//        repaint();
+//    }
+// 대기방 화면
+private void setupRoomScreen(List<String> players) {
+    getContentPane().removeAll();
+    roomPanel = new JPanel(new BorderLayout());
 
-        JTextArea playerArea = new JTextArea();
-        playerArea.setEditable(false);
-        JScrollPane scrollPane = new JScrollPane(playerArea);
+    // 사용자 목록과 준비 상태를 보여주는 JTextArea
+    JTextArea playerArea = new JTextArea();
+    playerArea.setEditable(false);
+    JScrollPane scrollPane = new JScrollPane(playerArea);
 
-        JButton b_ready = new JButton("준비");
+    // 버튼 패널: 준비 버튼과 홈으로 나가기 버튼
+    JPanel buttonPanel = new JPanel(new GridLayout(1, 2, 10, 10));
+    JButton b_ready = new JButton("준비");
+    JButton b_exit = new JButton("홈으로 나가기");
 
-        roomPanel.add(new JLabel("대기방", SwingConstants.CENTER), BorderLayout.NORTH);
-        roomPanel.add(scrollPane, BorderLayout.CENTER);
-        roomPanel.add(b_ready, BorderLayout.SOUTH);
+    buttonPanel.add(b_ready);
+    buttonPanel.add(b_exit);
 
-        b_ready.addActionListener(e -> {
-            sendMessage(new ChatMsg(clientId, ChatMsg.MODE_READY, "Ready"));
-        });
+    // 사용자 목록 갱신
+    updatePlayerArea(playerArea, players);
 
-        add(roomPanel);
-        setSize(400, 400);
-        revalidate();
-        repaint();
+    // 준비 버튼 클릭 이벤트
+    b_ready.addActionListener(e -> {
+        sendMessage(new ChatMsg(clientId, ChatMsg.MODE_READY, "Ready"));
+    });
+
+    // 홈으로 나가기 버튼 클릭 이벤트
+    b_exit.addActionListener(e -> {
+        sendMessage(new ChatMsg(clientId, ChatMsg.MODE_LOGOUT, "Leave Room"));
+        setupHomeScreen(); // 홈 화면으로 돌아가기
+    });
+
+    // 화면 구성
+    roomPanel.add(new JLabel("대기방", SwingConstants.CENTER), BorderLayout.NORTH);
+    roomPanel.add(scrollPane, BorderLayout.CENTER);
+    roomPanel.add(buttonPanel, BorderLayout.SOUTH);
+
+    add(roomPanel);
+    setSize(400, 400);
+    revalidate();
+    repaint();
+}
+
+    // 사용자 목록 업데이트
+//    private void updatePlayerArea(JTextArea playerArea, List<String> players) {
+//        StringBuilder sb = new StringBuilder();
+//        sb.append("참여자 목록:\n");
+//        for (String player : players) {
+//            sb.append(player).append("\n");
+//        }
+//        playerArea.setText(sb.toString());
+//    }
+    private void updatePlayerArea(JTextArea playerArea, List<String> players) {
+        if (players == null) {
+            players = new ArrayList<>(); // 빈 리스트로 초기화
+        }
+        StringBuilder sb = new StringBuilder();
+        sb.append("참여자 목록:\n");
+        for (String player : players) {
+            sb.append(player).append("\n");
+        }
+        playerArea.setText(sb.toString());
     }
 
     private void sendMessage(ChatMsg msg) {
@@ -567,9 +630,24 @@ public class GameClient extends JFrame {
                             rooms.forEach(roomListModel::addElement);
                             break;
 
+//                        case ChatMsg.MODE_ROOM_JOIN:
+//                            setupRoomScreen();
+//                            break;
+//                        case ChatMsg.MODE_ROOM_JOIN:
+//                            List<String> players = (List<String>) msg.getData(); // 사용자 목록 수신
+//                            setupRoomScreen(players); // 대기방 화면으로 전환
+//                            break;
                         case ChatMsg.MODE_ROOM_JOIN:
-                            setupRoomScreen();
+                            if (msg.getData() instanceof List) {
+                                List<String> players = (List<String>) msg.getData(); // 사용자 목록 수신
+                                if (players != null) {
+                                    setupRoomScreen(players); // 대기방 화면으로 전환
+                                } else {
+                                    System.out.println("대기방의 사용자 목록이 비어 있습니다.");
+                                }
+                            }
                             break;
+
 
                         case ChatMsg.MODE_GAME_START:
                             SwingUtilities.invokeLater(() -> {
@@ -582,6 +660,13 @@ public class GameClient extends JFrame {
                             JOptionPane.showMessageDialog(null, "방이 꽉 찼습니다.");
                             break;
 
+                        case ChatMsg.MODE_LOGOUT:
+                            setupHomeScreen(); // 방에서 나갔을 때 홈 화면으로 돌아가기
+                            break;
+
+                        case ChatMsg.MODE_READY:
+                            System.out.println(msg.getUserID() + " 준비 완료!");
+                            break;
                     }
                 }
             } catch (IOException | ClassNotFoundException e) {
