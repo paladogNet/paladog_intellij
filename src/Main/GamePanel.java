@@ -190,7 +190,7 @@ public class GamePanel extends JPanel  {
 
 		HpLabelMoving hpLabelMoving = new HpLabelMoving();
 		hpLabelMoving.start();
-		
+
 		mouse.Mouse_attack(mouselist, zombielist, darkdog);
 		bear.Bear_attack(bearlist, zombielist, darkdog);
 		zombie.Zombie_attack(mouselist, zombielist, paladog);
@@ -203,7 +203,7 @@ public class GamePanel extends JPanel  {
 		죽는스레드 죽는스레드 = new 죽는스레드();
 		죽는스레드.start();
 
-		
+
 	}
 
 	public void setting() {
@@ -323,10 +323,15 @@ public class GamePanel extends JPanel  {
 									if (skillmp > 10) {
 										palaDogPunch = new PalaDogPunch();
 										paladogpunchlist.add(palaDogPunch);
-										panel.add(palaDogPunch);
-										palaDogPunch.moveRight();
+
 										palaDogPunch.Punchx = paladog.x + 50;
 										palaDogPunch.Punchy = paladog.y + 50;
+
+										palaDogPunch.setBounds(palaDogPunch.Punchx, palaDogPunch.Punchy, palaDogPunch.getWidth(), palaDogPunch.getHeight());
+										panel.add(palaDogPunch);
+										panel.repaint();
+
+										palaDogPunch.moveRight();
 										skillmp -= 10;
 									}
 								}
@@ -424,30 +429,30 @@ public class GamePanel extends JPanel  {
 							panel.repaint();
 						}
 					}
-					
+
 					for (int i = 0; i < paladogpunchlist.size(); i++) {
 						if(paladogpunchlist.get(i).getX() >1000) {
 							panel.remove(paladogpunchlist.get(i));
 							paladogpunchlist.remove(i);
 							panel.repaint();
-							
+
 						}
 					}
-					
+
 					if(paladog.hp <=0) {
 						isEnding=false;
 						new GameOver();
 						setVisible(false);
-						
-						
+
+
 					}
-					
+
 					if(darkdog.hp <=0) {
 						isEnding=false;
 						new EndImg();
 						setVisible(false);
-					
-						
+
+
 					}
 				}
 			} catch (Exception e) {
@@ -549,7 +554,7 @@ public class GamePanel extends JPanel  {
 					}
 
 				}
-//   
+//
 				for (int i = 0; i < bearlist.size(); i++) {
 					try {
 						Thread.sleep(1);
@@ -777,10 +782,13 @@ public class GamePanel extends JPanel  {
 					darkDogPunch = new DarkDogPunch();
 					darkdogpunchlist.add(darkDogPunch);
 
-					panel.setLayout(null);
 					darkDogPunch.Punchx = darkdog.x - 50;
 					darkDogPunch.Punchy = darkdog.y + 50;
+
+					darkDogPunch.setBounds(darkDogPunch.Punchx, darkDogPunch.Punchy, darkDogPunch.getWidth(), darkDogPunch.getHeight());
 					panel.add(darkDogPunch);
+					panel.repaint();
+
 					darkDogPunch.moveLeft();
 
 				}

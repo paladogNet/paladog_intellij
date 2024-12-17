@@ -11,9 +11,21 @@
   <component name="ChangeListManager">
     <list default="true" id="b31e0590-2f0d-4958-b218-26fccf8df671" name="변경" comment="Feat : 각 클라이언트 팔라독 움직이면 상대 화면에 다크독 움직이도록 함. 근데 샤샤샥 있음">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/Main/GameClient$GameClientHandler.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/Main/GameClient$GameClientHandler.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/Main/GameClient.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/Main/GameClient.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Main/GameClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main/GameClient.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/Main/GamePanel$1$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/Main/GamePanel$1$2.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/Main/GamePanel$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/Main/GamePanel$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/Main/GamePanel$BearHpLabel.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/Main/GamePanel$BearHpLabel.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/Main/GamePanel$DarkDogHpLabel.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/Main/GamePanel$DarkDogHpLabel.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/Main/GamePanel$GoldLabel.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/Main/GamePanel$GoldLabel.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/Main/GamePanel$HpLabelMoving.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/Main/GamePanel$HpLabelMoving.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/Main/GamePanel$MouseHpLabel.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/Main/GamePanel$MouseHpLabel.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/Main/GamePanel$MyPanel.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/Main/GamePanel$MyPanel.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/Main/GamePanel$PalaDogHpLabel.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/Main/GamePanel$PalaDogHpLabel.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/Main/GamePanel$SkillLabel.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/Main/GamePanel$SkillLabel.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/Main/GamePanel$ZombieHpLabel.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/Main/GamePanel$ZombieHpLabel.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/Main/GamePanel$ZombieSoHwan.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/Main/GamePanel$ZombieSoHwan.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/Main/GamePanel$죽는스레드.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/Main/GamePanel$죽는스레드.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/Main/GamePanel.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/Main/GamePanel.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Main/GamePanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main/GamePanel.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -168,7 +180,7 @@
       <workItem from="1734243155089" duration="201000" />
       <workItem from="1734329891964" duration="2628000" />
       <workItem from="1734332605294" duration="4053000" />
-      <workItem from="1734407904270" duration="8965000" />
+      <workItem from="1734407904270" duration="10983000" />
     </task>
     <task id="LOCAL-00001" summary="Feat : 두 클라이언트 간 메시지 통신구현완료. 각 클라이언트 화면 렌더링로직 수정필요.">
       <option name="closed" value="true" />
