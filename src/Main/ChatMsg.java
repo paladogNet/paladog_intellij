@@ -1,5 +1,6 @@
 package Main;
 
+import javax.swing.*;
 import java.io.Serializable;
 
 // ChatMsg 클래스는 채팅 메시지를 나타내며, 직렬화 가능
@@ -23,7 +24,7 @@ public class ChatMsg implements Serializable {
     private String userID;   // 사용자 ID
     private int mode;        // 메시지 모드
     private String message;  // 메시지 내용
-    private byte[] image;    // 이미지 데이터
+    private ImageIcon image;    // 이미지 데이터
 
     // 생성자: 텍스트 메시지용
     public ChatMsg(String userID, int mode, String message) {
@@ -34,7 +35,7 @@ public class ChatMsg implements Serializable {
     }
 
     // 생성자 오버로딩: 이미지 포함 메시지용
-    public ChatMsg(String userID, int mode, String message, byte[] image) {
+    public ChatMsg(String userID, int mode, String message, ImageIcon image) {
         this.userID = userID;
         this.mode = mode;
         this.message = message;
@@ -57,7 +58,7 @@ public class ChatMsg implements Serializable {
     }
 
     // 이미지 데이터 반환
-    public byte[] getImage() {
+    public ImageIcon getImage() {
         return image;
     }
 

@@ -7,6 +7,7 @@ import java.net.*;
 import java.awt.event.*;
 import javax.swing.*;
 import javax.swing.Timer;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 public class GameClient extends JFrame {
     private Socket socket; // 서버와의 연결을 위한 소켓
@@ -186,37 +187,58 @@ public class GameClient extends JFrame {
     // 채팅 관련 이벤트 리스너 설정
     private void setupChatListeners() {
         // 텍스트 메시지 전송 리스너
+
+        JTextField chatInput = gamePanel.getChatInput();
         gamePanel.getSendButton().addActionListener(e -> {
-            String text = gamePanel.getChatInput(); // 입력 필드에서 텍스트 가져오기
+            String text = gamePanel.getChat();
+             // 입력 필드에서 텍스트 가져오기
             if (!text.isEmpty()) {
                 ChatMsg chatMsg = new ChatMsg(clientId, ChatMsg.MODE_TX_STRING, text);
                 sendMessage(chatMsg); // 서버로 메시지 전송
-                gamePanel.appendChatMessage("Me: " + text); // 로컬에서도 채팅 추가
+                gamePanel.printDisplay("Me: " + text); // 로컬에서도 채팅 추가
             }
             gamePanel.requestFocusInWindow(); // 채팅 후 GamePanel에 포커스 다시 설정
         });
 
         // 이미지 전송 버튼 리스너 (추가 가능)
-//        JButton sendImageButton = gamePanel.getSendImageButton(); // 이미지 전송 버튼 참조
-//        if (sendImageButton != null) { // 이미지 전송 기능이 있는 경우
-//            sendImageButton.addActionListener(e -> {
-//                JFileChooser fileChooser = new JFileChooser();
-//                if (fileChooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
-//                    File file = fileChooser.getSelectedFile();
-//                    try (FileInputStream fis = new FileInputStream(file)) {
-//                        byte[] imageData = fis.readAllBytes();
-//                        ChatMsg chatMsg = new ChatMsg(clientId, ChatMsg.MODE_TX_IMAGE, "[Image]", imageData);
-//                        sendMessage(chatMsg);
-//                        gamePanel.appendChatMessage("Me: [Image Sent]");
-//                    } catch (IOException ex) {
-//                        System.err.println("Failed to send image.");
-//                        ex.printStackTrace();
-//                    }
-//                }
-//            });
-//        }
+        JButton sendImageButton = gamePanel.getSendImageButton(); // 이미지 전송 버튼 참조
+        sendImageButton.addActionListener(new ActionListener() {
+
+            JFileChooser chooser = new JFileChooser();
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                FileNameExtensionFilter filter = new FileNameExtensionFilter("JPG & GIF & PNG Images", "jpg", "gif", "png");
+
+                chooser.setFileFilter(filter);
+
+                int ret = chooser.showOpenDialog(gamePanel);
+                if (ret != JFileChooser.APPROVE_OPTION) {
+                    JOptionPane.showMessageDialog(gamePanel, "파일을 선택하지 않았습니다.", "경고", JOptionPane.WARNING_MESSAGE);
+                    return;
+                }
+
+                chatInput.setText(chooser.getSelectedFile().getAbsolutePath());
+                sendImage();
+            }
+        });
+
     }
 
+    private void sendImage() {
+        JTextField chatInput = gamePanel.getChatInput();
+        String filename = chatInput.getText().trim();
+        if (filename.isEmpty()) return;
+
+        File file = new File(filename);
+        if(!file.exists()) {
+            System.out.println(">>파일이 존재하지 않습니다: " + filename);
+            return;
+        }
+
+        ImageIcon icon = new ImageIcon(filename);
+        sendMessage(new ChatMsg(clientId, ChatMsg.MODE_TX_IMAGE, file.getName(), icon));
+    }
 
     // 서버로 메시지를 전송 (ChatMsg 객체 사용)
     public void sendMessage(ChatMsg msg) {
@@ -315,23 +337,26 @@ public class GameClient extends JFrame {
 
                         case ChatMsg.MODE_TX_STRING: // 텍스트 채팅 메시지 처리
                             // 채팅 메시지를 UI에 추가
-                            gamePanel.appendChatMessage(msg.getUserID() + ": " + msg.getMessage());
+                            gamePanel.printDisplay(msg.getUserID() + ": " + msg.getMessage());
                             break;
 
                         case ChatMsg.MODE_TX_IMAGE: // 이미지 채팅 메시지 처리
                             // 이미지 데이터를 저장하거나 UI에 추가
-                            try {
-                                String fileName = "received_image_" + System.currentTimeMillis() + ".png";
-                                File imageFile = new File(fileName);
-                                try (FileOutputStream fos = new FileOutputStream(imageFile)) {
-                                    fos.write(msg.getImage());
-                                }
-                                System.out.println("Image received and saved as " + fileName);
-                                gamePanel.appendChatMessage(msg.getUserID() + ": [Image received: " + fileName + "]");
-                            } catch (IOException e) {
-                                System.err.println("Failed to save received image.");
-                                e.printStackTrace();
-                            }
+//                            try {
+//                                String fileName = "received_image_" + System.currentTimeMillis() + ".png";
+//                                File imageFile = new File(fileName);
+//                                try (FileOutputStream fos = new FileOutputStream(imageFile)) {
+//                                    fos.write(msg.getImage());
+//                                }
+//                                System.out.println("Image received and saved as " + fileName);
+//                                gamePanel.printDisplay(msg.getUserID() + ": [Image received: " + fileName + "]");
+//                            } catch (IOException e) {
+//                                System.err.println("Failed to save received image.");
+//                                e.printStackTrace();
+//                            }
+                            gamePanel.printDisplay(msg.getUserID() + ": " + msg.getMessage());
+                            gamePanel.printDisplay(msg.getImage());
+
                             break;
 
                         default:
