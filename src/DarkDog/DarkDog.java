@@ -109,7 +109,7 @@ public class DarkDog extends JLabel {
 
 										mouse.get(j).hp = mouse.get(j).hp - punchlist.get(i).attack;
 
-										panel.setLayout(null);
+//										panel.setLayout(null);
 										panel.remove(punchlist.get(i));
 										punchlist.remove(i);
 										panel.repaint();
@@ -123,7 +123,7 @@ public class DarkDog extends JLabel {
 							}
 							try {
 								if (punchlist.get(i).getX() <= paladog.x + 50) {
-									System.out.println("다크독 펀치 맞음");
+									System.out.println("팔라독 펀치 맞음");
 									paladog.hp -= punchlist.get(i).attack;
 
 									// 펀치 제거

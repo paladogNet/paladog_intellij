@@ -439,6 +439,15 @@ public class GamePanel extends JPanel  {
 						}
 					}
 
+					for (int i = 0; i < darkdogpunchlist.size(); i++) {
+						if(darkdogpunchlist.get(i).getX() < 0) {
+							panel.remove(paladogpunchlist.get(i));
+							darkdogpunchlist.remove(i);
+							panel.repaint();
+
+						}
+					}
+
 					if(paladog.hp <=0) {
 						isEnding=false;
 						new GameOver();
