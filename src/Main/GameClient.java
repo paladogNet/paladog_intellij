@@ -189,6 +189,21 @@ public class GameClient extends JFrame {
         // 텍스트 메시지 전송 리스너
 
         JTextField chatInput = gamePanel.getChatInput();
+
+        chatInput.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String text = gamePanel.getChat();
+                // 입력 필드에서 텍스트 가져오기
+                if (!text.isEmpty()) {
+                    ChatMsg chatMsg = new ChatMsg(clientId, ChatMsg.MODE_TX_STRING, text);
+                    sendMessage(chatMsg); // 서버로 메시지 전송
+                    gamePanel.printDisplay("Me: " + text); // 로컬에서도 채팅 추가
+                }
+                gamePanel.requestFocusInWindow(); // 채팅 후 GamePanel에 포커스 다시 설정
+            }
+        });
+
         gamePanel.getSendButton().addActionListener(e -> {
             String text = gamePanel.getChat();
              // 입력 필드에서 텍스트 가져오기
@@ -238,6 +253,8 @@ public class GameClient extends JFrame {
 
         ImageIcon icon = new ImageIcon(filename);
         sendMessage(new ChatMsg(clientId, ChatMsg.MODE_TX_IMAGE, file.getName(), icon));
+        chatInput.setText("");
+        gamePanel.printDisplay(icon);
     }
 
     // 서버로 메시지를 전송 (ChatMsg 객체 사용)
