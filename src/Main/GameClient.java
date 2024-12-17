@@ -439,6 +439,7 @@ public class GameClient extends JFrame {
         });
 
 
+
         roomList.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 if (evt.getClickCount() == 2) {
