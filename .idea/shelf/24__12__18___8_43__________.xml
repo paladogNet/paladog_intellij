@@ -1,0 +1,29 @@
+<changelist name="24__12__18__오전_8_43,_체크아웃_전에_커밋되지_않은_변경_내용_[변경]" date="1734479030918" recycled="true" deleted="true">
+  <option name="PATH" value="$PROJECT_DIR$/.idea/shelf/24__12__18__오전_8_43,_체크아웃_전에_커밋되지_않은_변경_내용_[변경]/shelved.patch" />
+  <option name="DESCRIPTION" value="24. 12. 18. 오전 8:43, 체크아웃 전에 커밋되지 않은 변경 내용 [변경]" />
+  <binary>
+    <option name="BEFORE_PATH" value="bin/Main/GameClient$GameClientHandler.class" />
+    <option name="AFTER_PATH" value="bin/Main/GameClient$GameClientHandler.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/24__12__18__오전_8_43,_체크아웃_전에_커밋되지_않은_변경_내용_[변경]/GameClient$GameClientHandler.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="bin/Main/GameClient.class" />
+    <option name="AFTER_PATH" value="bin/Main/GameClient.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/24__12__18__오전_8_43,_체크아웃_전에_커밋되지_않은_변경_내용_[변경]/GameClient.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="bin/Main/GameServer$ClientHandler.class" />
+    <option name="AFTER_PATH" value="bin/Main/GameServer$ClientHandler.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/24__12__18__오전_8_43,_체크아웃_전에_커밋되지_않은_변경_내용_[변경]/GameServer$ClientHandler.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="bin/Main/GameServer.class" />
+    <option name="AFTER_PATH" value="bin/Main/GameServer.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/24__12__18__오전_8_43,_체크아웃_전에_커밋되지_않은_변경_내용_[변경]/GameServer.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="bin/Main/GameClient$1.class" />
+    <option name="AFTER_PATH" value="bin/Main/GameClient$1.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/24__12__18__오전_8_43,_체크아웃_전에_커밋되지_않은_변경_내용_[변경]/GameClient$1.class" />
+  </binary>
+</changelist>

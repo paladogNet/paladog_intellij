@@ -260,6 +260,11 @@ public class GameClient extends JFrame {
         sendMessage(new ChatMsg(clientId, ChatMsg.MODE_TX_IMAGE, file.getName(), icon));
         chatInput.setText("");
         gamePanel.printDisplay(icon);
+
+        // 추가: 이미지 전송 후 게임 화면에 포커스 요청하도록 했습니다.
+        // GamePanel 포커스 설정
+        gamePanel.setFocusable(true);
+        gamePanel.requestFocusInWindow(); // 포커스를 요청
     }
 
     // 서버로 메시지를 전송 (ChatMsg 객체 사용)
