@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ArtifactsWorkspaceSettings">
     <artifacts-to-build>
-      <artifact name="palaDog:jar2" />
+      <artifact name="palaDog:jar" />
     </artifacts-to-build>
   </component>
   <component name="AutoImportSettings">
@@ -11,9 +11,7 @@
   <component name="ChangeListManager">
     <list default="true" id="b31e0590-2f0d-4958-b218-26fccf8df671" name="변경" comment="Feat : 각 클라이언트 팔라독 움직이면 상대 화면에 다크독 움직이도록 함. 근데 샤샤샥 있음">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/received_image_1734346548922.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/received_image_1734348827864.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/received_image_1734348844536.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Main/GameServer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main/GameServer.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -61,7 +59,7 @@
     &quot;Application.GameServer.executor&quot;: &quot;Run&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;result&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;dongihwa&quot;,
     &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
     &quot;last_opened_file_path&quot;: &quot;C:/Users/김정훈/Desktop/paladog&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
@@ -84,7 +82,7 @@
       <recent name="C:\Users\김정훈\Desktop\paladog\images" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.GameClient">
+  <component name="RunManager" selected="애플리케이션.GameClient">
     <configuration name="GameClient" type="Application" factoryName="Application" singleton="false" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="Main.GameClient" />
       <module name="palaDog" />
@@ -138,11 +136,19 @@
       </method>
     </configuration>
     <list>
-      <item itemvalue="Application.GameClient" />
-      <item itemvalue="Application.GameServer" />
-      <item itemvalue="Application.PalaDogApp" />
-      <item itemvalue="Application.WithTalk" />
+      <item itemvalue="애플리케이션.GameClient" />
+      <item itemvalue="애플리케이션.GameServer" />
+      <item itemvalue="애플리케이션.PalaDogApp" />
+      <item itemvalue="애플리케이션.WithTalk" />
     </list>
+    <recent_temporary>
+      <list>
+        <item itemvalue="애플리케이션.GameClient" />
+        <item itemvalue="애플리케이션.GameServer" />
+        <item itemvalue="애플리케이션.WithTalk" />
+        <item itemvalue="애플리케이션.PalaDogApp" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="SharedIndexes">
     <attachedChunks>
@@ -168,7 +174,6 @@
       <workItem from="1734329891964" duration="2628000" />
       <workItem from="1734332605294" duration="4053000" />
       <workItem from="1734407904270" duration="12981000" />
-      <workItem from="1734478953577" duration="914000" />
     </task>
     <task id="LOCAL-00001" summary="Feat : 두 클라이언트 간 메시지 통신구현완료. 각 클라이언트 화면 렌더링로직 수정필요.">
       <option name="closed" value="true" />
